@@ -20,141 +20,53 @@
             color: var(--gold-static); overflow: hidden;
         }
 
-        /* 🖼️ 1. BACKGROUND & GLOW */
-        .kingdom-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('Ne.jpg'); 
-            background-size: cover; background-position: center; z-index: 1; 
-        }
+        .kingdom-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('Ne.jpg'); background-size: cover; background-position: center; z-index: 1; }
+        .dna-glow { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%); filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out; }
 
-        .dna-glow {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
-            filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out;
-        }
+        #login-screen { position: relative; z-index: 10000; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        .login-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+        .passport-input { background: transparent; border: 1px solid var(--gold-static); color: #fff; padding: 15px; font-family: 'Orbitron'; font-size: 1rem; text-align: center; border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase; }
 
-        /* 🛡️ LOGIN SCREEN */
-        #login-screen {
-            position: relative; z-index: 10000; height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-        }
-        .login-box {
-            background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); 
-            border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-        }
-        .passport-input {
-            background: transparent; border: 1px solid var(--gold-static); color: #fff; padding: 15px;
-            font-family: 'Orbitron'; font-size: 1rem; text-align: center; border-radius: 5px; margin: 20px 0; width: 80%;
-            text-transform: uppercase;
-        }
-
-        /* ⚡ 2. ACTIVATION SCREEN (Loading) */
-        #activation-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9000;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
+        #activation-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; }
         .progress-container { width: 300px; height: 2px; background: #222; position: relative; }
         .progress-bar { width: 0%; height: 100%; background: var(--gold-static); box-shadow: 0 0 15px var(--gold-static); animation: grow 2.5s forwards; }
 
-        /* 🏰 3. UI LAYERS */
-        .screen-layer {
-            position: relative; z-index: 10; height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            padding: 40px 20px; box-sizing: border-box; opacity: 0; transition: 1s; display: none; overflow-y: auto;
-        }
-
-        .header-badge {
-            background: linear-gradient(135deg, #5e0000 0%, #200000 100%);
-            border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center;
-            border-radius: 40px 10px 40px 10px; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2), 0 15px 30px rgba(0,0,0,0.8);
-            position: relative; margin-bottom: 20px;
-        }
-        .header-badge::before {
-            content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 1px dashed rgba(212, 175, 55, 0.5); border-radius: 34px 6px 34px 6px; pointer-events: none;
-        }
+        .screen-layer { position: relative; z-index: 10; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px 20px; box-sizing: border-box; opacity: 0; transition: 1s; display: none; overflow-y: auto; }
+        .header-badge { background: linear-gradient(135deg, #5e0000 0%, #200000 100%); border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center; border-radius: 40px 10px 40px 10px; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2), 0 15px 30px rgba(0,0,0,0.8); position: relative; margin-bottom: 20px; }
         .header-badge h2 { margin: 0; letter-spacing: 5px; font-family: 'Orbitron'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.2rem; }
 
-        /* 🐝 4. BEE COIN HEARTBEAT */
-        .bee-coin {
-            width: 300px; height: 300px; border: none; background: transparent;
-            display: flex; align-items: center; justify-content: center; position: relative;
-            filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; 
-            margin: 40px 0;
-        }
-        .bee-coin::before {
-            content: ''; position: absolute; width: 95%; height: 95%;
-            background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat;
-        }
+        .bee-coin { width: 250px; height: 250px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; position: relative; filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; margin: 20px 0; }
+        .bee-coin::before { content: ''; position: absolute; width: 95%; height: 95%; background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat; }
 
-        /* 🛡️ 5. MENU GRID & BUTTONS */
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 900px; }
-        .royal-btn {
-            background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%);
-            border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px;
-            box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6);
-            color: #d4af37; padding: 15px 10px; text-align: center;
-            font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold;
-            letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none; position: relative; overflow: hidden;
-        }
-        .royal-btn::after {
-            content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none;
-        }
-        .btn-text::before { content: '🙤 '; } .btn-text::after { content: ' 🙦'; }
-        
-        .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.03); }
-        .royal-btn:hover .btn-text::before, .royal-btn:hover .btn-text::after { color: #000; }
-        .royal-btn:active { background: linear-gradient(180deg, #b38728 0%, #d4af37 100%); transform: translateY(2px) scale(0.98); box-shadow: inset 0 5px 10px rgba(0,0,0,0.8); }
+        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron'; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.2s; text-decoration: none; position: relative; overflow: hidden; }
+        .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; transform: translateY(-5px); }
 
-        /* 🧬 6. DNA PROGRESS GRID */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 15px; width: 90%; max-width: 900px; margin-top: 20px; }
-        .dna-cell {
-            aspect-ratio: 1; border: 2px solid #333; border-radius: 10px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer;
-            background: rgba(0,0,0,0.8); transition: 0.3s; position: relative; color: #666;
-        }
+        .dna-cell { aspect-ratio: 1; border: 2px solid #333; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.3s; color: #666; }
         .dna-cell.completed { background: rgba(74, 4, 4, 0.6); border-color: var(--gold-static); color: var(--gold-static); }
-        .dna-cell.completed::after { content: '✔'; position: absolute; font-size: 1.5rem; opacity: 0.3; }
-        .dna-cell.active { border-color: var(--gold-static); color: #fff; text-shadow: 0 0 5px var(--gold-static); box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.5), 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; background: rgba(212, 175, 55, 0.2); }
+        .dna-cell.active { border-color: var(--gold-static); color: #fff; box-shadow: 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; }
         .dna-cell.locked { opacity: 0.5; cursor: not-allowed; }
 
-        /* ☀️🌙 7. AM/PM SELECTION */
         .cycle-container { display: flex; gap: 30px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
-        .cycle-box { width: 180px; padding: 30px; border: 2px solid #444; border-radius: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+        .cycle-box { width: 180px; padding: 30px; border: 2px solid #444; border-radius: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.4s; }
         .cycle-box.active { border-color: var(--gold-static); box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-        .cycle-box.active:hover { transform: translateY(-5px); box-shadow: 0 0 40px var(--gold-static); }
-        .cycle-box.locked { filter: grayscale(1); opacity: 0.5; }
-        .cycle-box .icon { font-size: 3.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--gold-static)); }
-        .cycle-box .label { font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; color: var(--gold-static); }
+        .cycle-box.locked { filter: grayscale(1); opacity: 0.5; cursor: not-allowed; }
 
-        /* 📺 8. VIDEO PAGE */
-        .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); margin-top: 20px; }
+        .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); margin-top: 20px; }
 
-        /* 🚫 9. ACCESS DENIED SCREEN (ANIMATED) */
-        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: warningPulse 1s infinite alternate, shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 11000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: shake 0.5s; }
 
-        /* ✨ 10. ROYAL ALERT */
         #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         .alert-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; max-width: 450px; animation: popIn 0.4s forwards; }
 
-        /* 🎬 ANIMATIONS */
-        @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); } 15% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.9)); } 30% { transform: scale(1); } 45% { transform: scale(1.15); filter: drop-shadow(0 0 60px rgba(212, 175, 55, 1)); } 60% { transform: scale(1); } }
-        @keyframes pulseBg { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; } }
-        @keyframes warningPulse { 0% { box-shadow: inset 0 0 20px rgba(255,0,0,0.2), 0 0 30px rgba(255,0,0,0.4); border-color: #ff4d4d; } 100% { box-shadow: inset 0 0 50px rgba(255,0,0,0.6), 0 0 80px rgba(255,0,0,0.8); border-color: #ff0000; } }
+        @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.08); } 45% { transform: scale(1.15); } }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes grow { to { width: 100%; } }
-        @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
         @keyframes cellPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-        @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
-
-        @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; margin: 20px 0; } .header-badge { padding: 15px 30px; } .cycle-box { width: 140px; padding: 20px; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
     </style>
 </head>
 <body>
@@ -164,263 +76,200 @@
 
     <div id="login-screen">
         <div class="login-box">
-            <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 5px;">ENTER THE KINGDOM</h2>
-            <p style="color: #aaa; font-size: 0.8rem;">Provide your DNA Passport Code to synchronize</p>
-            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX">
+            <h2 style="font-family: 'Orbitron';">ENTER THE KINGDOM</h2>
+            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-PASSPORT-CODE">
             <br>
             <button class="royal-btn" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
         </div>
     </div>
 
     <div id="activation-screen">
-        <div class="sync-text" id="sync-msg">NEURAL SYNCING...</div>
+        <div class="sync-text">NEURAL SYNCING...</div>
         <div class="progress-container"><div class="progress-bar"></div></div>
     </div>
 
     <div id="main-hub" class="screen-layer">
         <header class="header-badge"><h2>ROYAL BEE HEART KINGDOM</h2></header>
         <div class="bee-coin"></div>
-        <div style="font-size: 0.75rem; letter-spacing: 6px; font-family: 'Orbitron'; color: #fff; text-shadow: 0 0 10px var(--gold-static); margin-bottom: 30px;">PROTOCOL: ACTIVE</div>
-
         <nav class="menu-grid">
-            <div class="royal-btn" onclick="switchScreen('main-hub', 'grid-screen')"><span class="btn-text">BEGIN QUEST</span></div>
-            <div class="royal-btn"><span class="btn-text">BEEHIVE CONTROL</span></div>
-            <div class="royal-btn"><span class="btn-text">ROYAL LEDGER</span></div>
-            <div class="royal-btn"><span class="btn-text">LIVE FEED</span></div>
-            <div class="royal-btn"><span class="btn-text">ARCHITECTS</span></div>
-            <div class="royal-btn"><span class="btn-text">LEAVE KINGDOM</span></div>
+            <div class="royal-btn" onclick="switchScreen('main-hub', 'grid-screen')">BEGIN QUEST</div>
+            <div class="royal-btn">BEEHIVE CONTROL</div>
+            <div class="royal-btn">ROYAL LEDGER</div>
+            <div class="royal-btn">LIVE FEED</div>
+            <div class="royal-btn">ARCHITECTS</div>
+            <div class="royal-btn" onclick="location.reload()">LEAVE KINGDOM</div>
         </nav>
     </div>
 
     <div id="grid-screen" class="screen-layer">
         <header class="header-badge"><h2>NEURAL EVOLUTION GRID</h2></header>
-        <div style="font-family: 'Orbitron'; font-size: 0.8rem; color: #ccc; margin-bottom: 10px;">YOUR PROGRESS: DAY <span id="current-day-text">1</span>/66</div>
         <div class="grid-container" id="dna-grid"></div>
-        <div class="royal-btn" style="margin-top: 40px; width: 250px;" onclick="switchScreen('grid-screen', 'main-hub')"><span class="btn-text">RETURN TO HUB</span></div>
+        <div class="royal-btn" style="margin-top: 40px; width: 250px;" onclick="switchScreen('grid-screen', 'main-hub')">RETURN TO HUB</div>
     </div>
 
     <div id="protocol-selection" class="screen-layer">
-        <header class="header-badge"><h2 id="protocol-day-title">DAY 01: SELECT PROTOCOL</h2></header>
+        <header class="header-badge"><h2 id="protocol-day-title">SELECT PROTOCOL</h2></header>
         <div class="cycle-container">
-            <div id="am-box" class="cycle-box active" onclick="startVideo('AM')">
-                <div class="icon">☀️</div>
-                <div class="label">MORNING AWAKENING</div>
-                <div style="color: #0f0; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px;">AVAILABLE</div>
+            <div id="am-box" class="cycle-box active" onclick="handleAMClick()">
+                <div style="font-size: 3rem;">☀️</div>
+                <div style="font-family: 'Orbitron'; font-size: 0.8rem; margin-top: 10px;">MORNING AWAKENING</div>
             </div>
-            <div id="pm-box" class="cycle-box locked" onclick="if(!this.classList.contains('locked')) { startVideo('PM') } else { triggerAccessDenied('ඔබගේ ස්නායුක සම්බන්ධතාවය ප්‍රතික්ෂේප විය.<br>කරුණාකර පෙර පියවර සම්පූර්ණ කරන්න.') }">
-                <div class="icon">🌙</div>
-                <div class="label">EVENING INTEGRATION</div>
-                <div class="pm-status-text" style="color: #ff4d4d; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px;">LOCKED</div>
+            <div id="pm-box" class="cycle-box locked" onclick="handlePMClick()">
+                <div style="font-size: 3rem;">🌙</div>
+                <div style="font-family: 'Orbitron'; font-size: 0.8rem; margin-top: 10px;">EVENING INTEGRATION</div>
             </div>
         </div>
-        <div class="royal-btn" style="margin-top: 50px; width: 250px;" onclick="switchScreen('protocol-selection', 'grid-screen')"><span class="btn-text">BACK TO GRID</span></div>
+        <div class="royal-btn" style="margin-top: 50px; width: 250px;" onclick="switchScreen('protocol-selection', 'grid-screen')">BACK TO GRID</div>
     </div>
 
     <div id="video-page" class="screen-layer">
-        <h2 id="video-page-title" style="font-family: 'Orbitron'; margin-bottom: 20px; letter-spacing: 3px; text-shadow: 0 0 10px var(--gold-static);">MORNING NEURAL SYNC</h2>
+        <h2 id="video-page-title" style="font-family: 'Orbitron';">NEURAL SYNC</h2>
         <div class="video-box">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0" frameborder="0" allowfullscreen></iframe>
+            <iframe id="video-frame" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
         </div>
-        <div class="royal-btn" style="margin-top: 40px; padding: 15px 40px;" onclick="markComplete()"><span class="btn-text">MARK AS COMPLETED 🛡️</span></div>
+        <div class="royal-btn" style="margin-top: 40px; padding: 15px 40px;" onclick="markComplete()">MARK AS COMPLETED 🛡️</div>
     </div>
 
     <div id="access-denied-screen">
-        <div class="denied-box" id="denied-anim-box">
-            <div style="font-size: 4rem; filter: drop-shadow(0 0 20px #ff0000); margin-bottom: 10px;">⚠️</div>
-            <h1 class="glitch-text" style="font-family: 'Orbitron'; color: #ff4d4d; letter-spacing: 5px; margin: 0;">ACCESS DENIED</h1>
-            <p id="denied-msg-text" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.9rem; margin-top: 20px; line-height: 1.5;"></p>
-            <button onclick="closeDeniedScreen()" class="royal-btn" style="margin-top: 30px; border-color: #ff4d4d; color: #ff4d4d;">RECALIBRATE</button>
+        <div class="denied-box">
+            <div style="font-size: 4rem;">⚠️</div>
+            <h1 style="color: #ff4d4d; font-family: 'Orbitron';">ACCESS DENIED</h1>
+            <p id="denied-msg" style="color: #ccc; margin-top: 20px;"></p>
+            <button onclick="location.reload()" class="royal-btn" style="margin-top: 30px;">RECALIBRATE</button>
         </div>
     </div>
 
     <div id="royal-alert-screen">
         <div class="alert-box">
-            <div style="font-size: 3.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 20px var(--gold-static));">🛡️</div>
-            <h2 id="alert-title" style="font-family: 'Orbitron'; color: var(--gold-static); letter-spacing: 3px; margin: 0;">PROTOCOL COMPLETE</h2>
-            <p id="alert-message-text" style="font-family: 'Cinzel'; color: #ddd; font-size: 1rem; margin-top: 20px; line-height: 1.6;"></p>
-            <button onclick="closeRoyalAlert()" class="royal-btn" style="margin-top: 30px; padding: 12px 40px;">PROCEED</button>
+            <h2 id="alert-title" style="color: var(--gold-static);">PROTOCOL</h2>
+            <p id="alert-message-text" style="color: #ddd; margin-top: 20px;"></p>
+            <button onclick="closeRoyalAlert()" class="royal-btn" style="margin-top: 30px;">PROCEED</button>
         </div>
     </div>
 
     <script>
-        // 🔗 Supabase Connection
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        let totalDays = 66;
         let currentActiveDay = 1; 
-        let currentProtocolType = 'AM'; 
         let selectedDayForVideo = 1;
+        let currentProtocolType = 'AM';
         let userPassport = "";
+        let amCompletedToday = false;
 
-        // 🧬 Strict Security Login with Custom Alert
         async function checkKingdomAccess() {
             userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
-            if(!userPassport) {
-                triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!");
-                return;
-            }
+            if(!userPassport) { triggerAccessDenied("කරුණාකර DNA කේතය ඇතුළත් කරන්න."); return; }
 
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("activation-screen").style.display = "flex";
 
-            let { data, error } = await supabaseClient
-                .from('users')
-                .select('*')
-                .eq('passport_code', userPassport)
-                .single();
+            let { data, error } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport).single();
 
             if (data) {
-                currentActiveDay = data.current_day; 
-                startActivationSequence();
-            } else {
-                // 🔴 මෙතන තමයි අර අලුත් ඇනිමේෂන් මැසේජ් එක එන්නේ
-                document.getElementById("login-screen").style.display = "flex";
-                document.getElementById("activation-screen").style.display = "none";
-                triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම මාලිගාවට ඇතුළු වීමට ඔබට අවසර නැත. 🛡️");
-            }
-        }
+                currentActiveDay = data.current_day;
+                const urlParams = new URLSearchParams(window.location.search);
+                const qrDay = urlParams.get('day');
+                const qrTime = urlParams.get('time');
 
-        // ⚡ Activation Animation
-        function startActivationSequence() {
-            buildGrid(); 
-            setTimeout(() => {
-                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED";
-                document.getElementById('sync-msg').style.color = "#d4af37";
-                
-                setTimeout(() => {
-                    document.getElementById('activation-screen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('activation-screen').style.display = 'none';
-                        document.getElementById('main-hub').style.display = 'flex';
-                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
-                    }, 500);
-                }, 1000);
-            }, 2500);
+                if(qrDay && qrTime) {
+                    if(parseInt(qrDay) > currentActiveDay) {
+                        triggerAccessDenied("ඔබ තවම මෙම දිනයට පැමිණ නැත. කරුණාකර පිළිවෙළින් පැමිණෙන්න.");
+                        return;
+                    }
+                    selectedDayForVideo = parseInt(qrDay);
+                    startActivationSequence(() => {
+                        openDaySelection(selectedDayForVideo, selectedDayForVideo < currentActiveDay ? 'completed' : 'active');
+                        // QR එකෙන් ආවත් වෙලාව පරීක්ෂා කිරීම
+                        if(qrTime === 'AM') handleAMClick();
+                        else if(qrTime === 'PM') handlePMClick();
+                    });
+                } else {
+                    startActivationSequence(() => switchScreen('activation-screen', 'main-hub'));
+                }
+            } else { triggerAccessDenied("අසම්මත DNA කේතයකි! මාලිගාවට ඇතුළු විය නොහැක."); }
         }
 
         function buildGrid() {
             const grid = document.getElementById('dna-grid');
             grid.innerHTML = '';
-            document.getElementById('current-day-text').innerText = currentActiveDay;
-
-            for (let i = 1; i <= totalDays; i++) {
+            for (let i = 1; i <= 66; i++) {
                 let cell = document.createElement('div');
                 cell.className = 'dna-cell';
                 cell.innerHTML = `<div>DAY</div><div style="font-size: 1.2rem; font-weight: bold;">${i}</div>`;
-                
-                if (i < currentActiveDay) {
-                    cell.classList.add('completed');
-                    cell.onclick = () => openDaySelection(i, 'completed');
-                } else if (i === currentActiveDay) {
-                    cell.classList.add('active');
-                    cell.onclick = () => openDaySelection(i, 'active');
-                } else {
-                    cell.classList.add('locked');
-                    cell.onclick = () => triggerAccessDenied("ඔබගේ ස්නායුක සම්බන්ධතාවය ප්‍රතික්ෂේප විය.<br>කරුණාකර පෙර පියවර සම්පූර්ණ කරන්න.");
-                }
+                if (i < currentActiveDay) { cell.classList.add('completed'); cell.onclick = () => openDaySelection(i, 'completed'); }
+                else if (i === currentActiveDay) { cell.classList.add('active'); cell.onclick = () => openDaySelection(i, 'active'); }
+                else { cell.classList.add('locked'); cell.onclick = () => triggerAccessDenied("මෙම දිනය තවමත් විවෘත වී නැත."); }
                 grid.appendChild(cell);
             }
         }
 
-        function switchScreen(hideId, showId) {
-            let hideEl = document.getElementById(hideId);
-            let showEl = document.getElementById(showId);
-            hideEl.style.opacity = '0';
-            setTimeout(() => { hideEl.style.display = 'none'; showEl.style.display = 'flex'; setTimeout(() => { showEl.style.opacity = '1'; }, 50); }, 500);
+        function handleAMClick() {
+            const now = new Date();
+            const currentHour = now.getHours();
+
+            // උදේ 5 ට පෙර බලන්න හැදුවොත් (අද දවසේ එක)
+            if (selectedDayForVideo === currentActiveDay && currentHour < 5) {
+                triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි.");
+            } else {
+                startVideo('AM');
+            }
         }
 
-        function openDaySelection(dayNum, status) {
-            selectedDayForVideo = dayNum;
-            document.getElementById('protocol-day-title').innerText = `DAY ${dayNum < 10 ? '0'+dayNum : dayNum}: SELECT PROTOCOL`;
-            let pmBox = document.getElementById('pm-box');
-            let pmStatusText = pmBox.querySelector('.pm-status-text');
+        function handlePMClick() {
+            const now = new Date();
+            const currentHour = now.getHours();
 
-            if (status === 'completed') {
-                pmBox.classList.remove('locked'); pmBox.classList.add('active');
-                pmStatusText.innerText = "AVAILABLE"; pmStatusText.style.color = "#0f0";
-            } else {
-                pmBox.classList.remove('active'); pmBox.classList.add('locked');
-                pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
+            if(document.getElementById('pm-box').classList.contains('locked')) {
+                triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න.");
+            } 
+            else if (currentHour < 17) { // හවස 5 (17:00) ට පෙර
+                triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි.");
+            } 
+            else {
+                startVideo('PM');
             }
-            switchScreen('grid-screen', 'protocol-selection');
         }
 
         function startVideo(type) {
             currentProtocolType = type;
-            document.getElementById('video-page-title').innerText = type === 'AM' ? "MORNING NEURAL SYNC" : "EVENING INTEGRATION";
+            document.getElementById('video-page-title').innerText = `${type === 'AM' ? 'MORNING' : 'EVENING'} SYNC - DAY ${selectedDayForVideo}`;
+            // වීඩියෝ ලින්ක් එක (day සහ type අනුව වෙනස් විය හැක)
+            document.getElementById('video-frame').src = "https://www.youtube.com/embed/dQw4w9WgXcQ";
             switchScreen('protocol-selection', 'video-page');
         }
 
         async function markComplete() {
-            let alertTitle = document.getElementById('alert-title');
-            let alertMsg = document.getElementById('alert-message-text');
-
             if (currentProtocolType === 'AM') {
-                alertTitle.innerText = "MORNING PROTOCOL COMPLETE";
-                alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
-                document.getElementById('royal-alert-screen').style.display = 'flex';
+                amCompletedToday = true;
+                showRoyalAlert("MORNING COMPLETE", "උදෑසන ප්‍රොටොකෝලය අවසන්! සවස 5:00 න් පසු සවස ප්‍රොටොකෝලය විවෘත වේ.");
             } else {
-                if(selectedDayForVideo === currentActiveDay) { 
+                if(selectedDayForVideo === currentActiveDay) {
                     let nextDay = currentActiveDay + 1;
-                    const { error } = await supabaseClient
-                        .from('users')
-                        .update({ current_day: nextDay })
-                        .eq('passport_code', userPassport);
-
-                    if (!error) {
-                        currentActiveDay = nextDay; 
-                        buildGrid(); 
-                        alertTitle.innerText = "DAY MISSION ACCOMPLISHED";
-                        alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>ඔබගේ ස්නායුක පද්ධතිය යාවත්කාලීන විය.";
-                        document.getElementById('royal-alert-screen').style.display = 'flex';
-                    } else {
-                        triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න.");
+                    const { error } = await supabaseClient.from('users').update({ current_day: nextDay }).eq('passport_code', userPassport);
+                    if (!error) { 
+                        currentActiveDay = nextDay; amCompletedToday = false; buildGrid(); 
+                        showRoyalAlert("DAY COMPLETE", "අද දින මෙහෙයුම අවසන්! හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ."); 
                     }
-                } else {
-                    alertTitle.innerText = "REVIEW ACCOMPLISHED";
-                    alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
-                    document.getElementById('royal-alert-screen').style.display = 'flex';
-                }
+                } else { showRoyalAlert("REVIEW COMPLETE", "ඔබ මෙම දවස මීට පෙර අවසන් කර ඇත."); }
             }
         }
 
-        function closeRoyalAlert() {
-            document.getElementById('royal-alert-screen').style.display = 'none';
-            if (currentProtocolType === 'AM') {
-                switchScreen('video-page', 'protocol-selection');
-                let pmBox = document.getElementById('pm-box');
-                pmBox.classList.remove('locked'); pmBox.classList.add('active');
-                let statusText = pmBox.querySelector('.pm-status-text');
-                statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
-            } else {
-                switchScreen('video-page', 'grid-screen');
-            }
+        function openDaySelection(dayNum, status) {
+            selectedDayForVideo = dayNum;
+            document.getElementById('protocol-day-title').innerText = `DAY ${dayNum}: SELECT PROTOCOL`;
+            let pmBox = document.getElementById('pm-box');
+            if (status === 'completed' || amCompletedToday) { pmBox.classList.remove('locked'); pmBox.classList.add('active'); }
+            else { pmBox.classList.add('locked'); pmBox.classList.remove('active'); }
+            switchScreen(status === 'active' ? 'grid-screen' : 'main-hub', 'protocol-selection');
         }
 
-        // 🔴 Custom Animated & Haptic Denied Function
-        function triggerAccessDenied(message) { 
-            document.getElementById('denied-msg-text').innerHTML = message;
-            
-            // Animation Restart 
-            let animBox = document.getElementById('denied-anim-box');
-            animBox.classList.remove('shake-anim');
-            void animBox.offsetWidth; // trigger reflow
-            animBox.classList.add('shake-anim');
-            
-            document.getElementById('access-denied-screen').style.display = 'flex'; 
-
-            // Haptic Vibration for Mobile Devices (බ්‍රර්... බ්‍රර්...)
-            if (navigator.vibrate) {
-                navigator.vibrate([200, 100, 200]);
-            }
-        }
-        
-        function closeDeniedScreen() { 
-            document.getElementById('access-denied-screen').style.display = 'none'; 
-            document.getElementById("passportCode").value = ""; // Clear input
-        }
+        function startActivationSequence(cb) { buildGrid(); setTimeout(() => { cb(); }, 2000); }
+        function triggerAccessDenied(msg) { document.getElementById('denied-msg').innerHTML = msg; document.getElementById('access-denied-screen').style.display = 'flex'; if(navigator.vibrate) navigator.vibrate([200, 100, 200]); }
+        function switchScreen(h, s) { document.getElementById(h).style.display = 'none'; document.getElementById(s).style.display = 'flex'; setTimeout(() => document.getElementById(s).style.opacity = '1', 50); }
+        function showRoyalAlert(t, m) { document.getElementById('alert-title').innerText = t; document.getElementById('alert-message-text').innerText = m; document.getElementById('royal-alert-screen').style.display = 'flex'; }
+        function closeRoyalAlert() { document.getElementById('royal-alert-screen').style.display = 'none'; if(currentProtocolType === 'AM') switchScreen('video-page', 'protocol-selection'); else switchScreen('video-page', 'grid-screen'); }
     </script>
 </body>
 </html>
