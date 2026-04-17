@@ -20,7 +20,7 @@
             color: var(--gold-static); overflow: hidden;
         }
 
-        /* 🖼️ 1. BACKGROUND & GLOW */
+        /* 🖼️ BACKGROUND */
         .kingdom-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('Ne.jpg'); 
@@ -34,97 +34,68 @@
         }
 
         /* 🛡️ LOGIN SCREEN */
-        #login-screen {
-            position: relative; z-index: 10000; height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-        }
-        .login-box {
-            background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); 
-            border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-        }
+        #login-screen { position: relative; z-index: 10000; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        .login-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+        
+        /* ✨ FIXED INPUT BOX AESTHETICS */
         .passport-input {
-            background: transparent; border: 1px solid var(--gold-static); color: #fff; padding: 15px;
-            font-family: 'Orbitron'; font-size: 1rem; text-align: center; border-radius: 5px; margin: 20px 0; width: 80%;
-            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.6) !important; 
+            border: 1px solid var(--gold-static) !important; 
+            color: var(--gold-static) !important; 
+            padding: 15px; font-family: 'Orbitron'; font-size: 1.1rem; text-align: center; 
+            border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
         }
+        .passport-input:focus {
+            outline: none !important;
+            border-color: #fff !important;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), inset 0 0 15px rgba(212, 175, 55, 0.3) !important;
+            background: rgba(0, 0, 0, 0.9) !important;
+            color: #fff !important;
+        }
+        /* Stop Browser Autofill from turning it white */
+        input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px black inset !important;
+            -webkit-text-fill-color: var(--gold-static) !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+        .passport-input::placeholder { color: rgba(212, 175, 55, 0.4); }
 
-        /* ⚡ 2. ACTIVATION SCREEN (Loading) */
-        #activation-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9000;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
+        /* ⚡ ACTIVATION SCREEN */
+        #activation-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; }
         .progress-container { width: 300px; height: 2px; background: #222; position: relative; }
         .progress-bar { width: 0%; height: 100%; background: var(--gold-static); box-shadow: 0 0 15px var(--gold-static); animation: grow 2.5s forwards; }
 
-        /* 🏰 3. UI LAYERS */
-        .screen-layer {
-            position: relative; z-index: 10; height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            padding: 40px 20px; box-sizing: border-box; opacity: 0; transition: 1s; display: none; overflow-y: auto;
-        }
-
-        .header-badge {
-            background: linear-gradient(135deg, #5e0000 0%, #200000 100%);
-            border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center;
-            border-radius: 40px 10px 40px 10px; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2), 0 15px 30px rgba(0,0,0,0.8);
-            position: relative; margin-bottom: 20px;
-        }
-        .header-badge::before {
-            content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 1px dashed rgba(212, 175, 55, 0.5); border-radius: 34px 6px 34px 6px; pointer-events: none;
-        }
+        /* 🏰 UI LAYERS */
+        .screen-layer { position: relative; z-index: 10; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px 20px; box-sizing: border-box; opacity: 0; transition: 1s; display: none; overflow-y: auto; }
+        
+        .header-badge { background: linear-gradient(135deg, #5e0000 0%, #200000 100%); border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center; border-radius: 40px 10px 40px 10px; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2), 0 15px 30px rgba(0,0,0,0.8); position: relative; margin-bottom: 20px; }
+        .header-badge::before { content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border: 1px dashed rgba(212, 175, 55, 0.5); border-radius: 34px 6px 34px 6px; pointer-events: none; }
         .header-badge h2 { margin: 0; letter-spacing: 5px; font-family: 'Orbitron'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.2rem; }
 
-        /* 🐝 4. BEE COIN HEARTBEAT */
-        .bee-coin {
-            width: 300px; height: 300px; border: none; background: transparent;
-            display: flex; align-items: center; justify-content: center; position: relative;
-            filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; 
-            margin: 40px 0;
-        }
-        .bee-coin::before {
-            content: ''; position: absolute; width: 95%; height: 95%;
-            background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat;
-        }
+        .bee-coin { width: 300px; height: 300px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; position: relative; filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; margin: 40px 0; }
+        .bee-coin::before { content: ''; position: absolute; width: 95%; height: 95%; background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat; }
 
-        /* 🛡️ 5. MENU GRID & BUTTONS */
+        /* 🛡️ MENU GRID */
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 900px; }
-        .royal-btn {
-            background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%);
-            border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px;
-            box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6);
-            color: #d4af37; padding: 15px 10px; text-align: center;
-            font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold;
-            letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none; position: relative; overflow: hidden;
-        }
-        .royal-btn::after {
-            content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none;
-        }
+        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; }
+        .royal-btn::after { content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none; }
         .btn-text::before { content: '🙤 '; } .btn-text::after { content: ' 🙦'; }
-        
         .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.03); }
         .royal-btn:hover .btn-text::before, .royal-btn:hover .btn-text::after { color: #000; }
         .royal-btn:active { background: linear-gradient(180deg, #b38728 0%, #d4af37 100%); transform: translateY(2px) scale(0.98); box-shadow: inset 0 5px 10px rgba(0,0,0,0.8); }
 
-        /* 🧬 6. DNA PROGRESS GRID */
+        /* 🧬 DNA PROGRESS GRID */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 15px; width: 90%; max-width: 900px; margin-top: 20px; }
-        .dna-cell {
-            aspect-ratio: 1; border: 2px solid #333; border-radius: 10px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer;
-            background: rgba(0,0,0,0.8); transition: 0.3s; position: relative; color: #666;
-        }
+        .dna-cell { aspect-ratio: 1; border: 2px solid #333; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.3s; position: relative; color: #666; }
         .dna-cell.completed { background: rgba(74, 4, 4, 0.6); border-color: var(--gold-static); color: var(--gold-static); }
         .dna-cell.completed::after { content: '✔'; position: absolute; font-size: 1.5rem; opacity: 0.3; }
         .dna-cell.active { border-color: var(--gold-static); color: #fff; text-shadow: 0 0 5px var(--gold-static); box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.5), 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; background: rgba(212, 175, 55, 0.2); }
         .dna-cell.locked { opacity: 0.5; cursor: not-allowed; }
 
-        /* ☀️🌙 7. AM/PM SELECTION */
+        /* ☀️🌙 AM/PM SELECTION */
         .cycle-container { display: flex; gap: 30px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
         .cycle-box { width: 180px; padding: 30px; border: 2px solid #444; border-radius: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .cycle-box.active { border-color: var(--gold-static); box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
@@ -133,14 +104,14 @@
         .cycle-box .icon { font-size: 3.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--gold-static)); }
         .cycle-box .label { font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; color: var(--gold-static); }
 
-        /* 📺 8. VIDEO PAGE */
+        /* 📺 VIDEO PAGE */
         .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); margin-top: 20px; }
 
-        /* 🚫 9. ACCESS DENIED SCREEN (ANIMATED) */
+        /* 🚫 ACCESS DENIED SCREEN */
         #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: warningPulse 1s infinite alternate, shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 
-        /* ✨ 10. ROYAL ALERT */
+        /* ✨ ROYAL ALERT */
         #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         .alert-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; max-width: 450px; animation: popIn 0.4s forwards; }
 
@@ -165,10 +136,10 @@
     <div id="login-screen">
         <div class="login-box">
             <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 5px;">ENTER THE KINGDOM</h2>
-            <p style="color: #aaa; font-size: 0.8rem;">Provide your DNA Passport Code to synchronize</p>
-            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX">
+            <p style="color: #ccc; font-size: 0.8rem; margin-bottom: 20px;">Provide your DNA Passport Code to synchronize</p>
+            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX" autocomplete="off">
             <br>
-            <button class="royal-btn" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
+            <button class="royal-btn" style="width: 200px; margin-top: 10px;" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
         </div>
     </div>
 
@@ -266,6 +237,12 @@
             if (data) {
                 currentActiveDay = data.current_day; 
                 
+                // Check local storage for AM completion today
+                let todayStr = new Date().toDateString();
+                if (localStorage.getItem(userPassport + '_amDate') === todayStr) {
+                    amCompletedToday = true;
+                }
+
                 const urlParams = new URLSearchParams(window.location.search);
                 const qrDay = urlParams.get('day');
                 const qrTime = urlParams.get('time');
@@ -348,16 +325,24 @@
                 pmBox.classList.remove('active'); pmBox.classList.add('locked');
                 pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
             }
-            switchScreen(status === 'completed' ? 'main-hub' : 'grid-screen', 'protocol-selection');
+            switchScreen('grid-screen', 'protocol-selection');
         }
 
         function handleAMClick() {
             const now = new Date();
+            let todayStr = now.toDateString();
+            let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
+
             if (selectedDayForVideo < currentActiveDay) {
                 startVideo('AM');
-            } else if (now.getHours() < 5) {
+            } 
+            else if (lastCompleted === todayStr) {
+                triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳");
+            } 
+            else if (now.getHours() < 5) {
                 triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි.");
-            } else {
+            } 
+            else {
                 startVideo('AM');
             }
         }
@@ -365,14 +350,22 @@
         function handlePMClick() {
             const now = new Date();
             let pmBox = document.getElementById('pm-box');
+            let todayStr = now.toDateString();
+            let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
             
             if (selectedDayForVideo < currentActiveDay) {
                 startVideo('PM');
-            } else if (pmBox.classList.contains('locked')) {
+            } 
+            else if (lastCompleted === todayStr) {
+                triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳");
+            }
+            else if (pmBox.classList.contains('locked')) {
                 triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න.");
-            } else if (now.getHours() < 17) {
+            } 
+            else if (now.getHours() < 17) {
                 triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි.");
-            } else {
+            } 
+            else {
                 startVideo('PM');
             }
         }
@@ -390,6 +383,8 @@
 
             if (currentProtocolType === 'AM') {
                 amCompletedToday = true;
+                localStorage.setItem(userPassport + '_amDate', new Date().toDateString());
+
                 alertTitle.innerText = "MORNING PROTOCOL COMPLETE";
                 alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
                 document.getElementById('royal-alert-screen').style.display = 'flex';
@@ -401,9 +396,11 @@
                     if (!error) {
                         currentActiveDay = nextDay; 
                         amCompletedToday = false; 
+                        localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString());
                         buildGrid(); 
+                        
                         alertTitle.innerText = "DAY MISSION ACCOMPLISHED";
-                        alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>ඔබගේ ස්නායුක පද්ධතිය යාවත්කාලීන විය.";
+                        alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
                         document.getElementById('royal-alert-screen').style.display = 'flex';
                     } else {
                         triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න.");
