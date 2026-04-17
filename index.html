@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invincible Kingdom | Sovereign Mind</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,11 +33,26 @@
             filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out;
         }
 
+        /* 🛡️ LOGIN SCREEN (New) */
+        #login-screen {
+            position: relative; z-index: 10000; height: 100vh; width: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+        }
+        .login-box {
+            background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); 
+            border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+        .passport-input {
+            background: transparent; border: 1px solid var(--gold-static); color: #fff; padding: 15px;
+            font-family: 'Orbitron'; font-size: 1rem; text-align: center; border-radius: 5px; margin: 20px 0; width: 80%;
+        }
+
         /* ⚡ 2. ACTIVATION SCREEN (Loading Screen) */
         #activation-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
         }
         .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; }
         .progress-container { width: 300px; height: 2px; background: #222; position: relative; }
@@ -179,6 +195,16 @@
     <div class="kingdom-bg"></div>
     <div class="dna-glow"></div>
 
+    <div id="login-screen">
+        <div class="login-box">
+            <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 5px;">ENTER THE KINGDOM</h2>
+            <p style="color: #aaa; font-size: 0.8rem;">Provide your DNA Passport Code to synchronize</p>
+            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX">
+            <br>
+            <button class="royal-btn" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
+        </div>
+    </div>
+
     <div id="activation-screen">
         <div class="sync-text" id="sync-msg">NEURAL SYNCING...</div>
         <div class="progress-container"><div class="progress-bar"></div></div>
@@ -186,7 +212,6 @@
 
     <div id="main-hub" class="screen-layer">
         <header class="header-badge"><h2>ROYAL BEE HEART KINGDOM</h2></header>
-        
         <div class="bee-coin"></div>
         <div style="font-size: 0.75rem; letter-spacing: 6px; font-family: 'Orbitron'; color: #fff; text-shadow: 0 0 10px var(--gold-static); margin-bottom: 30px;">PROTOCOL: ACTIVE</div>
 
@@ -251,12 +276,73 @@
     </div>
 
     <script>
+        // 🔗 Supabase Connection
+        const SUPABASE_URL = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         let totalDays = 66;
-        let currentActiveDay = 1; // පටන් ගන්නේ Day 1 සිට
+        let currentActiveDay = 1; 
         let currentProtocolType = 'AM'; 
         let selectedDayForVideo = 1;
+        let userPassport = "";
 
-        // 🧬 Grid එක හදන ආකාරය
+        // 🧬 Login & Sync with Database
+        async function checkKingdomAccess() {
+            userPassport = document.getElementById("passportCode").value.trim();
+            if(!userPassport) {
+                alert("Please enter a valid Passport Code!");
+                return;
+            }
+
+            // Show Login button state changes
+            document.getElementById("login-screen").style.display = "none";
+            document.getElementById("activation-screen").style.display = "flex";
+
+            // Database Check
+            let { data, error } = await supabase
+                .from('users')
+                .select('*')
+                .eq('passport_code', userPassport)
+                .single();
+
+            if (data) {
+                currentActiveDay = data.current_day; // Get existing day
+                startActivationSequence();
+            } else {
+                // New User Creation
+                const { error: insertError } = await supabase
+                    .from('users')
+                    .insert([{ passport_code: userPassport, current_day: 1 }]);
+                if (!insertError) {
+                    currentActiveDay = 1;
+                    startActivationSequence();
+                } else {
+                    alert("Error syncing to the Hive Mind. Recalibrate and try again.");
+                    document.getElementById("login-screen").style.display = "flex";
+                    document.getElementById("activation-screen").style.display = "none";
+                }
+            }
+        }
+
+        // ⚡ Activation Animation Sequence
+        function startActivationSequence() {
+            buildGrid(); 
+            setTimeout(() => {
+                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED";
+                document.getElementById('sync-msg').style.color = "#d4af37";
+                
+                setTimeout(() => {
+                    document.getElementById('activation-screen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('activation-screen').style.display = 'none';
+                        document.getElementById('main-hub').style.display = 'flex';
+                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
+                    }, 500);
+                }, 1000);
+            }, 2500);
+        }
+
         function buildGrid() {
             const grid = document.getElementById('dna-grid');
             grid.innerHTML = '';
@@ -280,27 +366,6 @@
                 grid.appendChild(cell);
             }
         }
-
-        // ⚡ PAGE LOAD SEQUENCE (ලෝඩින් ස්ක්‍රීන් එක)
-        window.onload = function() {
-            buildGrid(); // මුලින්ම ග්‍රිඩ් එක ලෑස්ති කරනවා
-
-            // තත්පර 2.5කින් පසු "STATUS: ACTIVATED" ලෙස වෙනස් වේ
-            setTimeout(() => {
-                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED";
-                document.getElementById('sync-msg').style.color = "#d4af37";
-                
-                // තවත් තත්පර 1කින් පසු ලෝඩින් ස්ක්‍රීන් එක ඉවත්වී Dashboard එක පෙනේ
-                setTimeout(() => {
-                    document.getElementById('activation-screen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('activation-screen').style.display = 'none';
-                        document.getElementById('main-hub').style.display = 'flex';
-                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
-                    }, 500);
-                }, 1000);
-            }, 2500);
-        };
 
         function switchScreen(hideId, showId) {
             let hideEl = document.getElementById(hideId);
@@ -331,19 +396,39 @@
             switchScreen('protocol-selection', 'video-page');
         }
 
-        function markComplete() {
+        async function markComplete() {
             let alertTitle = document.getElementById('alert-title');
             let alertMsg = document.getElementById('alert-message-text');
 
             if (currentProtocolType === 'AM') {
                 alertTitle.innerText = "MORNING PROTOCOL COMPLETE";
                 alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
+                document.getElementById('royal-alert-screen').style.display = 'flex';
             } else {
-                alertTitle.innerText = "DAY MISSION ACCOMPLISHED";
-                alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>ඔබගේ ස්නායුක පද්ධතිය යාවත්කාලීන විය.";
-                if(selectedDayForVideo === currentActiveDay) { currentActiveDay++; buildGrid(); }
+                // PM අවසන් කළාම ඩේටාබේස් එක Update කරනවා
+                if(selectedDayForVideo === currentActiveDay) { 
+                    let nextDay = currentActiveDay + 1;
+                    const { error } = await supabase
+                        .from('users')
+                        .update({ current_day: nextDay })
+                        .eq('passport_code', userPassport);
+
+                    if (!error) {
+                        currentActiveDay = nextDay; 
+                        buildGrid(); 
+                        alertTitle.innerText = "DAY MISSION ACCOMPLISHED";
+                        alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>ඔබගේ ස්නායුක පද්ධතිය යාවත්කාලීන විය.";
+                        document.getElementById('royal-alert-screen').style.display = 'flex';
+                    } else {
+                        alert("Error saving progress to the kingdom!");
+                    }
+                } else {
+                    // පරණ දවසක් නම් නිකන්ම සම්පූර්ණයි කියලා පෙන්වනවා
+                    alertTitle.innerText = "REVIEW ACCOMPLISHED";
+                    alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
+                    document.getElementById('royal-alert-screen').style.display = 'flex';
+                }
             }
-            document.getElementById('royal-alert-screen').style.display = 'flex';
         }
 
         function closeRoyalAlert() {
