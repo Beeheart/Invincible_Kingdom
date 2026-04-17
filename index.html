@@ -279,7 +279,9 @@
         // 🔗 Supabase Connection
         const SUPABASE_URL = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // BUG FIX: මම කලින් "supabase" කියලා දීපු නම වෙනස් කළා!
+        const myPalaceDB = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let totalDays = 66;
         let currentActiveDay = 1; 
@@ -295,30 +297,31 @@
                 return;
             }
 
-            // Show Login button state changes
+            // Show Loading Screen
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("activation-screen").style.display = "flex";
 
             // Database Check
-            let { data, error } = await supabase
+            let { data, error } = await myPalaceDB
                 .from('users')
                 .select('*')
                 .eq('passport_code', userPassport)
                 .single();
 
             if (data) {
-                currentActiveDay = data.current_day; // Get existing day
+                currentActiveDay = data.current_day;
                 startActivationSequence();
             } else {
                 // New User Creation
-                const { error: insertError } = await supabase
+                const { error: insertError } = await myPalaceDB
                     .from('users')
                     .insert([{ passport_code: userPassport, current_day: 1 }]);
+                
                 if (!insertError) {
                     currentActiveDay = 1;
                     startActivationSequence();
                 } else {
-                    alert("Error syncing to the Hive Mind. Recalibrate and try again.");
+                    alert("Error syncing! Supabase RLS ලොක් එක අයින් කරලා නැහැ වගේ.");
                     document.getElementById("login-screen").style.display = "flex";
                     document.getElementById("activation-screen").style.display = "none";
                 }
@@ -405,10 +408,9 @@
                 alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
                 document.getElementById('royal-alert-screen').style.display = 'flex';
             } else {
-                // PM අවසන් කළාම ඩේටාබේස් එක Update කරනවා
                 if(selectedDayForVideo === currentActiveDay) { 
                     let nextDay = currentActiveDay + 1;
-                    const { error } = await supabase
+                    const { error } = await myPalaceDB
                         .from('users')
                         .update({ current_day: nextDay })
                         .eq('passport_code', userPassport);
@@ -420,10 +422,9 @@
                         alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>ඔබගේ ස්නායුක පද්ධතිය යාවත්කාලීන විය.";
                         document.getElementById('royal-alert-screen').style.display = 'flex';
                     } else {
-                        alert("Error saving progress to the kingdom!");
+                        alert("Error saving progress! Check RLS policies.");
                     }
                 } else {
-                    // පරණ දවසක් නම් නිකන්ම සම්පූර්ණයි කියලා පෙන්වනවා
                     alertTitle.innerText = "REVIEW ACCOMPLISHED";
                     alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
                     document.getElementById('royal-alert-screen').style.display = 'flex';
