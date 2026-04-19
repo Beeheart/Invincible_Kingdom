@@ -137,7 +137,7 @@
         
         /* 📊 NEURAL STABILITY METER */
         .meter-container { width: 100%; height: 12px; background: #000; border: 1px solid #333; border-radius: 20px; margin: 15px 0; overflow: hidden; position: relative; box-shadow: inset 0 0 10px #000; }
-        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); box-shadow: 0 0 15px var(--gold-static); transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); box-shadow: 0 0 15px var(--gold-static); transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .stat-label { font-family: 'Orbitron'; font-size: 0.65rem; color: #fff; letter-spacing: 3px; text-transform: uppercase; }
 
         /* 🛡️ QUESTION BOXES */
@@ -193,26 +193,42 @@
             <div style="text-align: left; margin-top: 30px;">
                 <div class="q-box">
                     <label class="stat-label">LINK WHATSAPP IDENTITY (With Country Code)</label>
-                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter(10)">
+                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter(8)">
+                </div>
+
+                <div class="q-box">
+                    <label class="stat-label">NEURAL LINGUISTIC PREFERENCE</label>
+                    <p style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">ඔබේ යටිසිතට තොරතුරු ග්‍රහණය කරගැනීමට වඩාත් පහසු මාධ්‍යය කුමක්ද?</p>
+                    <select id="q-lang" class="passport-input" onchange="updateMeter(16)">
+                        <option value="">භාෂාව තෝරන්න...</option>
+                        <option value="SIN">සිංහල (Emotional & Deep Subconscious Processing)</option>
+                        <option value="ENG">English (Logical & Analytical Processing)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <label class="stat-label">CHRONOBIOLOGICAL ORIGIN (Date of Birth)</label>
+                    <p style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">ඔබේ සෛලීය වයස සහ පාරිසරික ජාන හැඩගැස්ම (Epigenetics) ගණනය කිරීම සඳහා.</p>
+                    <input type="date" id="q-dob" class="passport-input" onchange="updateMeter(24)">
                 </div>
 
                 <div class="q-box">
                     <p>1. ඔබේ මොළය වඩාත්ම තියුණු ලෙස (Peak Alertness) ක්‍රියා කරන්නේ කුමන කාලයේදීද?</p>
-                    <select id="q1" class="passport-input" onchange="updateMeter(20)">
+                    <select id="q1" class="passport-input" onchange="updateMeter(34)">
                         <option value="">පිළිතුර තෝරන්න...</option>
                         <option value="early">අලුයම සහ උදෑසන (Early Chronotype)</option>
                         <option value="intermediate">දහවල් සහ සවස (Intermediate)</option>
                         <option value="late">රාත්‍රී කාලයේ (Late Chronotype)</option>
                     </select>
                     <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter(30)"></div>
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter(40)"></div>
+                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter(40)"></div>
+                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter(48)"></div>
                     </div>
                 </div>
 
                 <div class="q-box">
                     <p>2. පීඩාකාරී අවස්ථාවකදී ඔබේ ස්නායු පද්ධතියේ පළමු ප්‍රතිචාරය කුමක්ද?</p>
-                    <select id="q2" class="passport-input" onchange="updateMeter(50)">
+                    <select id="q2" class="passport-input" onchange="updateMeter(56)">
                         <option value="">පිළිතුර තෝරන්න...</option>
                         <option value="fight">වහාම ක්‍රියාත්මක වීම (Fight - Adrenaline)</option>
                         <option value="freeze">මනස අවහිර වීම (Freeze - Overwhelm)</option>
@@ -222,7 +238,7 @@
 
                 <div class="q-box">
                     <p>3. ඔබේ ජීවිතයේ ඔබට වඩාත්ම තෘප්තියක් ගෙන දෙන්නේ කුමක්ද?</p>
-                    <select id="q3" class="passport-input" onchange="updateMeter(60)">
+                    <select id="q3" class="passport-input" onchange="updateMeter(64)">
                         <option value="">පිළිතුර තෝරන්න...</option>
                         <option value="dopamine">අභියෝග සහ ජයග්‍රහණ (Dopamine)</option>
                         <option value="serotonin">පිළිගැනීම සහ සැලසුම් (Serotonin)</option>
@@ -232,7 +248,7 @@
 
                 <div class="q-box">
                     <p>4. අලුත් තොරතුරක් තේරුම් ගැනීමේදී ඔබේ මොළයේ සැකසුම් රටාව?</p>
-                    <select id="q4" class="passport-input" onchange="updateMeter(70)">
+                    <select id="q4" class="passport-input" onchange="updateMeter(72)">
                         <option value="">පිළිතුර තෝරන්න...</option>
                         <option value="analytical">තර්කානුකූලව සහ විශ්ලේෂණාත්මකව (Left Brain)</option>
                         <option value="holistic">සම්පූර්ණ චිත්‍රය සහ සහජ ඉව (Right Brain)</option>
@@ -284,6 +300,63 @@
                     <span class="btn-text">SEAL MY ROYAL DESTINY</span>
                 </button>
             </div>
+        </div>
+    </div>
+
+    <div id="neural-report-screen" class="screen-layer" style="background: rgba(0,0,0,0.98); z-index: 14000; overflow-y: auto; padding-top: 40px; padding-bottom: 40px;">
+        <div class="sandeshaya-border" style="width: 95%; max-width: 800px; text-align: left; position: relative;">
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0; text-shadow: 0 0 15px var(--neon-blue);">NEURAL BIO-DOSSIER</h2>
+                <div class="stat-label" style="color: #ccc; margin-top: 5px;">CLASSIFIED GENETIC REPORT</div>
+            </div>
+
+            <hr style="border: 0.5px solid rgba(212, 175, 55, 0.3); margin: 20px 0;">
+
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div class="stat-label">YOUR NEURO-ARCHETYPE</div>
+                <h1 id="rep-archetype" style="font-family: 'Cinzel'; color: var(--gold-static); font-size: 1.8rem; margin: 5px 0; text-shadow: 0 0 20px var(--gold-static);">THE SOVEREIGN STRATEGIST</h1>
+                <p id="rep-description" style="font-family: 'Cinzel'; color: #ddd; font-size: 0.9rem; line-height: 1.6;"></p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px;">
+                <h3 style="font-family: 'Orbitron'; color: #fff; font-size: 1rem; margin-top: 0; letter-spacing: 2px;">🧪 NEURO-CHEMICAL BASELINE</h3>
+                
+                <div style="margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between;"><span class="stat-label">DOPAMINE (Motivation & Focus)</span><span class="stat-label" id="rep-dopa-val">0%</span></div>
+                    <div class="meter-container"><div class="meter-fill" id="rep-dopa-bar" style="background: #00ff88; width: 0%;"></div></div>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between;"><span class="stat-label">CORTISOL (Stress Vulnerability)</span><span class="stat-label" id="rep-cort-val">0%</span></div>
+                    <div class="meter-container"><div class="meter-fill" id="rep-cort-bar" style="background: #ff4d4d; width: 0%;"></div></div>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between;"><span class="stat-label">VAGAL TONE (Emotional Recovery)</span><span class="stat-label" id="rep-vagal-val">0%</span></div>
+                    <div class="meter-container"><div class="meter-fill" id="rep-vagal-bar" style="background: #00d4ff; width: 0%;"></div></div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: rgba(0, 212, 255, 0.05); padding: 15px; border-left: 3px solid #00d4ff; border-radius: 0 5px 5px 0;">
+                    <h4 style="font-family: 'Orbitron'; color: #00d4ff; margin: 0 0 10px 0; font-size: 0.8rem; letter-spacing: 1px;">🧬 DOMINANT GENETIC EXPRESSION</h4>
+                    <p id="rep-dna" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.85rem; margin: 0; line-height: 1.5;"></p>
+                </div>
+                <div style="background: rgba(255, 77, 77, 0.05); padding: 15px; border-left: 3px solid #ff4d4d; border-radius: 0 5px 5px 0;">
+                    <h4 style="font-family: 'Orbitron'; color: #ff4d4d; margin: 0 0 10px 0; font-size: 0.8rem; letter-spacing: 1px;">⚠️ SUBCONSCIOUS BLOCK</h4>
+                    <p id="rep-block" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.85rem; margin: 0; line-height: 1.5;"></p>
+                </div>
+            </div>
+
+            <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-left: 3px solid var(--gold-static); margin-top: 15px; border-radius: 0 5px 5px 0;">
+                <h4 style="font-family: 'Orbitron'; color: var(--gold-static); margin: 0 0 10px 0; font-size: 0.8rem; letter-spacing: 1px;">⏳ EPIGENETIC & COGNITIVE PROFILE</h4>
+                <p id="rep-biorhythm" style="font-family: 'Cinzel'; color: #e6cc80; font-size: 0.85rem; margin: 0; line-height: 1.6;"></p>
+            </div>
+
+            <button class="royal-btn" style="margin-top: 30px; width: 100%;" onclick="enterKingdomFromReport()">
+                <span class="btn-text">ACCEPT PROFILE & ENTER KINGDOM</span>
+            </button>
         </div>
     </div>
 
@@ -376,7 +449,7 @@
             if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
-        // 1. Initial Load Sound (Plays once when user clicks input box)
+        // 1. Initial Load Sound
         function playInitialShimmer() {
             if(isInitialShimmerPlayed) return;
             initAudio();
@@ -393,18 +466,18 @@
             isInitialShimmerPlayed = true;
         }
 
-        // 2. Calm Background Drone for Bio-Form
+        // 2. ULTRA-CALM THETA DRONE (Scientific 136.1 Hz + 140.1 Hz)
         function startCalmDrone() {
             initAudio();
             calmDrone1 = audioCtx.createOscillator();
             calmDrone2 = audioCtx.createOscillator();
             droneGain = audioCtx.createGain();
-            calmDrone1.type = 'sine'; calmDrone2.type = 'triangle';
-            calmDrone1.frequency.value = 110.00; // A2
-            calmDrone2.frequency.value = 164.81; // E3
+            
+            calmDrone1.type = 'sine'; calmDrone1.frequency.value = 136.1; // OM Frequency
+            calmDrone2.type = 'sine'; calmDrone2.frequency.value = 140.1; // 4Hz difference = Deep Theta State
             
             droneGain.gain.setValueAtTime(0, audioCtx.currentTime);
-            droneGain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 3); // Slow fade in
+            droneGain.gain.linearRampToValueAtTime(0.02, audioCtx.currentTime + 5); // 5 sec soft fade in
             
             calmDrone1.connect(droneGain); calmDrone2.connect(droneGain);
             droneGain.connect(audioCtx.destination);
@@ -413,7 +486,7 @@
 
         function stopCalmDrone() {
             if(droneGain) {
-                droneGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2); // Slow fade out
+                droneGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2); 
                 setTimeout(() => {
                     if(calmDrone1) calmDrone1.stop();
                     if(calmDrone2) calmDrone2.stop();
@@ -424,13 +497,13 @@
         // 3. Grand Majestic Hub Entrance
         function playMajesticHub() {
             initAudio();
-            const chords = [261.63, 329.63, 392.00]; // C Major Chord (C4, E4, G4)
+            const chords = [261.63, 329.63, 392.00]; 
             chords.forEach(freq => {
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
                 let filter = audioCtx.createBiquadFilter();
                 
-                osc.type = 'sawtooth'; // Brass-like
+                osc.type = 'sawtooth'; 
                 osc.frequency.value = freq;
                 
                 filter.type = 'lowpass';
@@ -438,15 +511,15 @@
                 filter.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.5);
                 
                 gain.gain.setValueAtTime(0, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5); // Attack
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 4); // Release
+                gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5); 
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 4); 
                 
                 osc.connect(filter).connect(gain).connect(audioCtx.destination);
                 osc.start(); osc.stop(audioCtx.currentTime + 4);
             });
         }
 
-        // 4. UI Interaction Sounds (Hover, Click, Error, Success, Blip)
+        // 4. UI Interaction Sounds
         function playInteractionSound(type) {
             initAudio();
             const osc = audioCtx.createOscillator();
@@ -492,7 +565,7 @@
             }
         }
 
-        // Attach global event listeners for Gaming Button Sounds
+        // Attach global event listeners
         document.addEventListener('DOMContentLoaded', () => {
             document.body.addEventListener('click', (e) => {
                 if(e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell')) {
@@ -561,12 +634,12 @@
                     } else {
                         startActivationSequence(() => {
                             if (user.bio_completed === true) {
-                                playMajesticHub(); // 🔊 Play Grand Hub Sound
+                                playMajesticHub(); 
                                 document.getElementById('main-hub').style.display = 'flex';
                                 setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
                             } else {
                                 playInteractionSound('scan'); 
-                                startCalmDrone(); // 🔊 Start Calm Background Drone
+                                startCalmDrone(); 
                                 document.getElementById('bio-profile-screen').style.display = 'flex';
                                 setTimeout(() => { document.getElementById('bio-profile-screen').style.opacity = '1'; }, 50);
                             }
@@ -587,53 +660,112 @@
             }
         }
 
-        // 📊 DYNAMIC METER FUNCTION
         function updateMeter(percent) {
             document.getElementById('nsi-meter').style.width = percent + "%";
             playInteractionSound('blip'); 
             if (navigator.vibrate) navigator.vibrate(20); 
         }
 
-        // 💾 SAVE BIO-PROFILE FUNCTION
+        // 💾 SAVE BIO-PROFILE & GENERATE SUPER HUMAN REPORT
         async function saveBioProfile() {
             const wa = document.getElementById('wa-number').value.trim();
+            const lang = document.getElementById('q-lang').value;
+            const dob = document.getElementById('q-dob').value;
             const wake = document.getElementById('wake-time').value;
             const sleep = document.getElementById('sleep-time').value;
-            const q1 = document.getElementById('q1').value;
-            const q2 = document.getElementById('q2').value;
-            const q3 = document.getElementById('q3').value;
-            const q4 = document.getElementById('q4').value;
-            const q5 = document.getElementById('q5').value;
-            const q6 = document.getElementById('q6').value;
-            const q7 = document.getElementById('q7').value;
-            const q8 = document.getElementById('q8').value;
+            
+            const answers = {
+                q1: document.getElementById('q1').value, q2: document.getElementById('q2').value,
+                q3: document.getElementById('q3').value, q4: document.getElementById('q4').value,
+                q5: document.getElementById('q5').value, q6: document.getElementById('q6').value,
+                q7: document.getElementById('q7').value, q8: document.getElementById('q8').value
+            };
 
-            if(!wa || !wake || !sleep || !q1 || !q2 || !q3 || !q4 || !q5 || !q6 || !q7 || !q8) {
-                triggerAccessDenied("කරුණාකර සියලුම ජීව විද්‍යාත්මක දත්ත සම්පූර්ණ කරන්න.");
-                return;
+            if(!wa || !lang || !dob || !wake || !sleep || Object.values(answers).includes("")) {
+                triggerAccessDenied("කරුණාකර සියලුම ජීව විද්‍යාත්මක දත්ත සම්පූර්ණ කරන්න."); return;
             }
 
+            // 🧮 1. ARCHETYPE CALCULATION
+            let countA = 0, countB = 0, countC = 0;
+            for(let key in answers) {
+                if(['early', 'fight', 'dopamine', 'analytical', 'intro', 'perfection', 'defend', 'digital'].includes(answers[key])) countA++;
+                else if(['intermediate', 'freeze', 'serotonin', 'holistic', 'extro', 'boredom', 'ruminate', 'thoughts'].includes(answers[key])) countB++;
+                else countC++;
+            }
+
+            let archetype = "", description = "", dna = "", block = "", dopa = 50, cort = 50, vagal = 50;
+
+            if (countA >= Math.max(countB, countC)) {
+                archetype = "THE SOVEREIGN STRATEGIST";
+                description = "ඔබ අධික බුද්ධිමය ධාරිතාවයක් සහ ඉලක්ක හඹා යාමේ සහජ හැකියාවක් ඇති අයෙකි. මොළයේ ක්‍රියාකාරිත්වය Dopamine මත පදනම් වේ.";
+                dna = "ඔබ තුළ 'DRD4 Gene' (නව්‍යතා සොයන ජානය) සක්‍රිය වීමේ වැඩි සම්භාවිතාවක් ඇත.";
+                block = "සියල්ල පරිපූර්ණව කිරීමට ඇති උත්සාහය (Perfectionism) ඔබේ ප්‍රධාන බාධාවයි.";
+                dopa = 85; cort = 65; vagal = 40;
+            } else if (countB >= Math.max(countA, countC)) {
+                archetype = "THE RESILIENT GUARDIAN";
+                description = "ඔබ සන්සුන්, සැලසුම් සහගත ස්නායු පද්ධතියක් හිමි අයෙකි. Serotonin මඟින් ඔබේ ජීවිතය සමබර කරයි.";
+                dna = "ඔබ තුළ 'COMT Gene' සක්‍රිය වී ඇති අතර එය පීඩනය හමුවේ සිත එකලස් කරගැනීමට උපකාරී වේ.";
+                block = "ඕනෑවට වඩා සිතීම (Overthinking) ඔබේ ප්‍රධාන බාධාවයි.";
+                dopa = 60; cort = 40; vagal = 75;
+            } else {
+                archetype = "THE CREATIVE VISIONARY";
+                description = "ඔබේ දකුණු මොළය අතිශයින් සක්‍රියයි. අන් අයගේ හැඟීම් තේරුම් ගැනීමේ ගැඹුරු ශක්තියක් ඔබට ඇත.";
+                dna = "ඔබේ DNA තුළ 'OXTR Gene' සක්‍රියතාවය ඉහළ වන අතර, එය ගැඹුරු මානව බැඳීම් වලට බලපායි.";
+                block = "අන් අයගේ ප්‍රශ්න සහ චිත්තවේග ඔබ තුළට උරා ගැනීමෙන් ඔබ ඉක්මනින් වෙහෙසට පත් වේ.";
+                dopa = 50; cort = 70; vagal = 85;
+            }
+
+            // 🧮 2. SUPER HUMAN LOGIC: Epigenetics
+            let birthMonth = new Date(dob).getMonth() + 1;
+            let currentAge = new Date().getFullYear() - new Date(dob).getFullYear();
+            let bioRhythmText = `සෛලීය වයස (Cellular Age): වසර ${currentAge} යි. `;
+            
+            if(birthMonth >= 3 && birthMonth <= 8) {
+                bioRhythmText += `ඔබ ඉපදී ඇත්තේ සූර්ය ශක්තිය අධික කාලයක බැවින්, ඔබේ පරිවෘත්තීය ක්‍රියාවලිය (Metabolic adaptability) ඉතා වේගවත්ය. ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
+            } else {
+                bioRhythmText += `ඔබ ඉපදී ඇත්තේ පෘථිවියේ සිසිල් කාලයක බැවින්, ස්වභාවිකවම පීඩනය දරාගැනීමේ (Cortisol Conservation) අද්විතීය ජානමය හැකියාවක් ඔබට ඇත. ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
+            }
+
+            // ⚠️ Database Save (Update table with ALL new columns)
             const { error } = await supabaseClient.from('users').update({
-                whatsapp_id: wa, wake_up_time: wake, sleep_time: sleep,
-                chronotype: q1, ans_response: q2, neuro_type: q3, processing_style: q4,
-                energy_battery: q5, subconscious_block: q6, ego_trigger: q7, dopamine_trap: q8, 
+                whatsapp_id: wa, language_pref: lang, date_of_birth: dob, 
+                wake_up_time: wake, sleep_time: sleep,
+                chronotype: answers.q1, ans_response: answers.q2, neuro_type: answers.q3, processing_style: answers.q4,
+                energy_battery: answers.q5, subconscious_block: answers.q6, ego_trigger: answers.q7, dopamine_trap: answers.q8, 
                 bio_completed: true
             }).eq('passport_code', userPassport);
 
             if (!error) {
-                stopCalmDrone(); // 🔊 Stop the calm drone
-                playInteractionSound('success'); 
-                document.getElementById('alert-title').innerText = "NEURAL BRIDGING COMPLETE";
-                document.getElementById('alert-message-text').innerHTML = "විශිෂ්ටයි! ඔබගේ ගැඹුරු ජීව විද්‍යාත්මක දත්ත පද්ධතියට සාර්ථකව සම්බන්ධ විය.<br>ඔබේ රාජකීය ගමන දැන් ආරම්භ වේ.";
-                document.getElementById('alert-proceed-btn').onclick = function() {
-                    document.getElementById('royal-alert-screen').style.display = 'none';
-                    playMajesticHub(); // 🔊 Play Grand Hub Sound
-                    switchScreen('bio-profile-screen', 'main-hub');
-                };
-                document.getElementById('royal-alert-screen').style.display = 'flex';
+                stopCalmDrone();
+                playInteractionSound('scan'); 
+                
+                document.getElementById('rep-archetype').innerText = archetype;
+                document.getElementById('rep-description').innerText = description;
+                document.getElementById('rep-dna').innerText = dna;
+                document.getElementById('rep-block').innerText = block;
+                document.getElementById('rep-biorhythm').innerText = bioRhythmText; 
+                
+                switchScreen('bio-profile-screen', 'neural-report-screen');
+
+                setTimeout(() => {
+                    document.getElementById('rep-dopa-bar').style.width = dopa + "%";
+                    document.getElementById('rep-dopa-val').innerText = dopa + "%";
+                    document.getElementById('rep-cort-bar').style.width = cort + "%";
+                    document.getElementById('rep-cort-val').innerText = cort + "%";
+                    document.getElementById('rep-vagal-bar').style.width = vagal + "%";
+                    document.getElementById('rep-vagal-val').innerText = vagal + "%";
+                    playInteractionSound('success');
+                }, 1000);
             } else {
                 triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න.");
             }
+        }
+
+        // Action when user clicks "Accept Profile"
+        function enterKingdomFromReport() {
+            playInteractionSound('click');
+            playMajesticHub(); 
+            switchScreen('neural-report-screen', 'main-hub');
         }
 
         function startActivationSequence(callback) {
