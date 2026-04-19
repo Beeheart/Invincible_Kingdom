@@ -107,12 +107,12 @@
         /* 📺 VIDEO PAGE */
         .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); margin-top: 20px; }
 
-        /* 🚫 ACCESS DENIED SCREEN (STRENGTHENED) */
-        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        /* 🚫 ACCESS DENIED SCREEN (Z-INDEX FIXED) */
+        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: warningPulse 1s infinite alternate; }
 
-        /* ✨ ROYAL ALERT */
-        #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        /* ✨ ROYAL ALERT (Z-INDEX FIXED) */
+        #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         .alert-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; max-width: 450px; animation: popIn 0.4s forwards; }
 
         /* 🎬 ANIMATIONS */
@@ -124,7 +124,7 @@
         @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
         @keyframes cellPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         
-        /* 🛠️ SHAKE ANIMATION CLASS FIXED HERE */
+        /* 🛠️ SHAKE ANIMATION CLASS */
         @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
         .shake-anim { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 
@@ -227,51 +227,79 @@
         let selectedDayForVideo = 1;
         let userPassport = "";
         let amCompletedToday = false;
+        
+        // 🛠️ Double Click Lock එක
+        let isAuthenticating = false;
 
         async function checkKingdomAccess() {
+            if (isAuthenticating) return; // දැනටමත් චෙක් කරනවා නම් ආයෙත් රන් වෙන්න දෙන්නෙ නෑ
+            
             userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
             if(!userPassport) { triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!"); return; }
 
+            isAuthenticating = true;
+            
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("activation-screen").style.display = "flex";
+            
+            // Text එක රීසෙට් කිරීම
+            document.getElementById('sync-msg').innerHTML = "NEURAL SYNCING...";
+            document.getElementById('sync-msg').style.color = "";
 
-            let { data, error } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport).single();
+            try {
+                // 🛠️ BUG FIX: .single() ඉවත් කර එය අලුතින් හැසිරවීම (Duplicate errors වළක්වයි)
+                let { data, error } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
 
-            if (data) {
-                currentActiveDay = data.current_day; 
-                
-                // Check local storage for AM completion today
-                let todayStr = new Date().toDateString();
-                if (localStorage.getItem(userPassport + '_amDate') === todayStr) {
-                    amCompletedToday = true;
-                }
-
-                const urlParams = new URLSearchParams(window.location.search);
-                const qrDay = urlParams.get('day');
-                const qrTime = urlParams.get('time');
-
-                if(qrDay && qrTime) {
-                    let requestedDay = parseInt(qrDay);
-                    if(requestedDay > currentActiveDay) {
-                        triggerAccessDenied("ඔබ තවම මෙම දිනයට පැමිණ නැත. කරුණාකර අනුපිළිවෙලින් පැමිණෙන්න.");
-                        return;
+                if (data && data.length > 0) {
+                    let user = data[0]; // පළමු නිවැරදි දත්තය පමණක් ලබා ගනී
+                    currentActiveDay = user.current_day || 1; 
+                    
+                    // Check local storage for AM completion today
+                    let todayStr = new Date().toDateString();
+                    if (localStorage.getItem(userPassport + '_amDate') === todayStr) {
+                        amCompletedToday = true;
+                    } else {
+                        amCompletedToday = false;
                     }
-                    selectedDayForVideo = requestedDay;
-                    startActivationSequence(() => {
-                        openDaySelection(selectedDayForVideo, selectedDayForVideo < currentActiveDay ? 'completed' : 'active');
-                        if(qrTime === 'AM') handleAMClick();
-                        else if(qrTime === 'PM') handlePMClick();
-                    });
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const qrDay = urlParams.get('day');
+                    const qrTime = urlParams.get('time');
+
+                    if(qrDay && qrTime) {
+                        let requestedDay = parseInt(qrDay);
+                        if(requestedDay > currentActiveDay) {
+                            document.getElementById("login-screen").style.display = "flex";
+                            document.getElementById("activation-screen").style.display = "none";
+                            triggerAccessDenied("ඔබ තවම මෙම දිනයට පැමිණ නැත. කරුණාකර අනුපිළිවෙලින් පැමිණෙන්න.");
+                            isAuthenticating = false;
+                            return;
+                        }
+                        selectedDayForVideo = requestedDay;
+                        startActivationSequence(() => {
+                            openDaySelection(selectedDayForVideo, selectedDayForVideo < currentActiveDay ? 'completed' : 'active');
+                            if(qrTime === 'AM') handleAMClick();
+                            else if(qrTime === 'PM') handlePMClick();
+                            isAuthenticating = false;
+                        });
+                    } else {
+                        startActivationSequence(() => {
+                            document.getElementById('main-hub').style.display = 'flex';
+                            setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
+                            isAuthenticating = false;
+                        });
+                    }
                 } else {
-                    startActivationSequence(() => {
-                        document.getElementById('main-hub').style.display = 'flex';
-                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
-                    });
+                    document.getElementById("login-screen").style.display = "flex";
+                    document.getElementById("activation-screen").style.display = "none";
+                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම මාලිගාවට ඇතුළු වීමට ඔබට අවසර නැත. 🛡️");
+                    isAuthenticating = false;
                 }
-            } else {
+            } catch (err) {
                 document.getElementById("login-screen").style.display = "flex";
                 document.getElementById("activation-screen").style.display = "none";
-                triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම මාලිගාවට ඇතුළු වීමට ඔබට අවසර නැත. 🛡️");
+                triggerAccessDenied("දත්ත සමුදායේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න.");
+                isAuthenticating = false;
             }
         }
 
@@ -441,7 +469,7 @@
             
             document.getElementById('access-denied-screen').style.display = 'flex'; 
             
-            // 📳 Strong Vibration added here!
+            // 📳 Strong Vibration
             if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
         }
         
