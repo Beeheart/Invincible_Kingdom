@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="si">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,7 @@
             --neon-blue: rgba(0, 212, 255, 0.3);
             --neon-green: #00ff88;
             --neon-red: #ff4d4d;
+            --mystic-purple: #9d4edd;
         }
 
         body, html {
@@ -46,7 +47,7 @@
             color: var(--gold-static) !important; 
             padding: 15px; font-family: 'Orbitron'; font-size: 1.1rem; text-align: center; 
             border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease; box-sizing: border-box;
             box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
         }
         .passport-input:focus {
@@ -61,7 +62,7 @@
             -webkit-text-fill-color: var(--gold-static) !important;
             transition: background-color 5000s ease-in-out 0s;
         }
-        .passport-input::placeholder { color: rgba(212, 175, 55, 0.4); }
+        .passport-input::placeholder { color: rgba(212, 175, 55, 0.4); text-transform: none; font-size: 0.9rem;}
 
         /* 🎚️ NEURAL SLIDER AESTHETICS */
         .neural-slider {
@@ -96,7 +97,7 @@
 
         /* 🛡️ MENU GRID */
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 900px; }
-        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; width: 100%; }
+        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; width: 100%; box-sizing: border-box;}
         .royal-btn::after { content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none; }
         .btn-text::before { content: '🙤 '; } .btn-text::after { content: ' 🙦'; }
         .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.03); }
@@ -158,9 +159,13 @@
         /* 🛡️ QUESTION BOXES */
         .q-box { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--gold-static); transition: 0.3s; text-align: left; border-radius: 0 10px 10px 0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);}
         .q-box:hover { background: rgba(212, 175, 55, 0.05); border-left: 5px solid var(--gold-static); }
-        .q-box p { font-size: 0.95rem; color: #e6cc80; margin-bottom: 12px; line-height: 1.6; font-family: 'Cinzel', serif; text-shadow: 0 0 5px rgba(0,0,0,0.8); }
+        .q-box.mystic-box { border-left-color: var(--mystic-purple); }
+        .q-box.mystic-box:hover { background: rgba(157, 78, 221, 0.05); border-left-width: 5px; }
         
-        select.passport-input { appearance: none; background: url('data:image/svg+xml;utf8,<svg fill="%23d4af37" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center; background-color: rgba(10, 5, 0, 0.8) !important; font-size: 0.9rem;}
+        .q-box p { font-size: 0.95rem; color: #e6cc80; margin-bottom: 12px; line-height: 1.6; font-family: 'Cinzel', serif; text-shadow: 0 0 5px rgba(0,0,0,0.8); }
+        .mystic-box p { color: #d0a1ff; }
+
+        select.passport-input { appearance: none; background: url('data:image/svg+xml;utf8,<svg fill="%23d4af37" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center; background-color: rgba(10, 5, 0, 0.8) !important; font-size: 0.85rem;}
 
         /* 🎬 ANIMATIONS */
         @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); } 15% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.9)); } 30% { transform: scale(1); } 45% { transform: scale(1.15); filter: drop-shadow(0 0 60px rgba(212, 175, 55, 1)); } 60% { transform: scale(1); } }
@@ -196,80 +201,147 @@
         <div class="progress-container"><div class="progress-bar"></div></div>
     </div>
 
-    <div id="bio-profile-screen" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
+    <div id="bio-step-1" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
         <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
             <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🔱</div>
             <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">SOVEREIGN IDENTITY</h2>
-            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">NEURAL BIO-SCAN INITIATED</p>
+            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">PHASE 1: BEHAVIORAL SCAN</p>
             
             <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
-            <div class="meter-container"><div class="meter-fill" id="nsi-meter"></div></div>
+            <div class="meter-container"><div class="meter-fill" id="nsi-meter-1" style="width: 5%;"></div></div>
 
             <div style="text-align: left; margin-top: 30px;">
                 
                 <div class="q-box">
-                    <label class="stat-label">LINK WHATSAPP IDENTITY (With Country Code)</label>
-                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter(10)">
+                    <label class="stat-label">LINK WHATSAPP IDENTITY</label>
+                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter1(10)">
                 </div>
 
                 <div class="q-box">
                     <label class="stat-label">NEURAL LINGUISTIC PREFERENCE</label>
-                    <p style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">ඔබේ යටිසිතට තොරතුරු ග්‍රහණය කරගැනීමට වඩාත් පහසු මාධ්‍යය කුමක්ද?</p>
-                    <select id="q-lang" class="passport-input" onchange="updateMeter(20)">
+                    <select id="q-lang" class="passport-input" onchange="updateMeter1(16)">
                         <option value="">භාෂාව තෝරන්න...</option>
-                        <option value="SIN">සිංහල (Emotional & Deep Subconscious Processing)</option>
+                        <option value="SIN">සිංහල (Emotional & Subconscious Processing)</option>
                         <option value="ENG">English (Logical & Analytical Processing)</option>
                     </select>
                 </div>
 
                 <div class="q-box">
                     <label class="stat-label">CHRONOBIOLOGICAL ORIGIN (Date of Birth)</label>
-                    <p style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">ඔබේ සෛලීය වයස සහ පාරිසරික ජාන හැඩගැස්ම (Epigenetics) ගණනය කිරීම සඳහා.</p>
-                    <input type="date" id="q-dob" class="passport-input" onchange="updateMeter(30)">
+                    <p style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">ඔබේ සෛලීය වයස ගණනය කිරීම සඳහා.</p>
+                    <input type="text" id="q-dob" class="passport-input" placeholder="YYYY-MM-DD (උදා: 1995-08-25)" onchange="updateMeter1(22)">
                 </div>
 
                 <div class="q-box">
                     <label class="stat-label">CIRCADIAN RHYTHM CYCLE</label>
                     <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter(40)"></div>
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter(50)"></div>
+                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter1(28)"></div>
+                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter1(34)"></div>
                     </div>
                 </div>
 
-                <hr style="border: 0.5px solid rgba(212, 175, 55, 0.2); margin: 30px 0;">
-                <h3 style="font-family: 'Orbitron'; color: var(--gold-static); font-size: 1rem; margin-bottom: 20px; letter-spacing: 2px;">NEURAL CALIBRATION MATRIX</h3>
+                <div class="q-box">
+                    <p>1. මෙම 66-දින ගමනට (Journal) එකතු වීමට ඔබේ ප්‍රධානතම අරමුණ කුමක්ද?</p>
+                    <select id="q-goal" class="passport-input" onchange="updateMeter1(40)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="focus">මානසික අවධානය සහ මතකය වර්ධනය කරගැනීම</option>
+                        <option value="rebuild">කඩා වැටුණු ජීවිතය/ව්‍යාපාරය නැවත ගොඩනැගීම</option>
+                        <option value="scale">පවතින සාර්ථකත්වය ඊළඟ මට්ටමට (10X) ගෙන යාම</option>
+                    </select>
+                </div>
 
                 <div class="q-box">
+                    <p>2. ඔබේ ජීවිතයේ මේ මොහොතේ ඔබ "විනාශ කර දැමීමට" අපේක්ෂා කරන ප්‍රධානතම බාධාව කුමක්ද?</p>
+                    <select id="q-obstacle" class="passport-input" onchange="updateMeter1(46)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="procrastination">කම්මැලිකම, වැඩ කල් දැමීම සහ අරමුණක් නොමැතිකම</option>
+                        <option value="anxiety">අධික සිතුවිලි (Overthinking), බිය සහ අතීතය ගැන පසුතැවීම</option>
+                        <option value="digital">සමාජ මාධ්‍ය සහ ඩිජිටල් තිර වලට ඇති දැඩි ඇබ්බැහිය</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>3. සාමාන්‍ය දවසක ඔබේ නිදහස් කාලය වැඩියෙන්ම වැය වන්නේ කොතැනද?</p>
+                    <select id="q-time" class="passport-input" onchange="updateMeter1(52)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="online">සමාජ මාධ්‍ය සහ අන්තර්ජාලය තුළ (Digital World)</option>
+                        <option value="social">මිතුරන් සහ වෙනත් පුද්ගලයන් සමඟ (Social World)</option>
+                        <option value="alone">හුදෙකලාව මගේම සිතුවිලි සමඟ (Internal World)</option>
+                    </select>
+                </div>
+
+                <hr style="border: 0.5px solid rgba(157, 78, 221, 0.4); margin: 30px 0;">
+                <h3 style="font-family: 'Orbitron'; color: var(--mystic-purple); font-size: 1rem; margin-bottom: 20px; letter-spacing: 2px;">THE SHADOW WORK (යටිසිත ගවේෂණය)</h3>
+
+                <div class="q-box mystic-box">
+                    <p>🔮 <b>(Core Fear)</b> ඔබේ ජීවිතයේ කිසිවෙකුටත් නොකියන, ඔබ තුළ ගැඹුරින්ම සැඟවී ඇති ප්‍රධානතම බිය කුමක්ද?</p>
+                    <select id="q-fear" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(58)">
+                        <option value="">අවංක පිළිතුර තෝරන්න...</option>
+                        <option value="failure">අසාර්ථක වී අන් අයගේ දෝෂාරෝපණයට හෝ විවේචනයට ලක්වීම</option>
+                        <option value="loneliness">හුදෙකලා වීම සහ කිසිවෙකුගේ සැබෑ ආදරයක් නොලැබී යාම</option>
+                        <option value="wasted">පාලනය ගිලිහී ගොස් මගේ ජීවිතය සම්පූර්ණයෙන්ම අපතේ යාම</option>
+                    </select>
+                </div>
+
+                <div class="q-box mystic-box">
+                    <p>🔥 <b>(Core Desire)</b> ඔබට ලෝකයේ කිසිදු බාධාවක් නොමැති නම්, සැබැවින්ම ඔබ ලෝකයට පෙන්වීමට අවශ්‍ය ඔබේ සැබෑ ස්වභාවය කුමක්ද?</p>
+                    <select id="q-desire" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(65)">
+                        <option value="">ඔබේ හදවතේ පිළිතුර තෝරන්න...</option>
+                        <option value="leader">ලෝකය වෙනස් කරන ප්‍රබල නායකයෙක් හෝ විශිෂ්ට ව්‍යාපාරිකයෙක්</option>
+                        <option value="peace">සාමකාමීව, සතුටින් නිදහසේ ජීවත් වන ආදරණීය ආත්මයක්</option>
+                        <option value="genius">ලෝකයේ රහස් සොයා යන සහ අන් අයට මඟපෙන්වන බුද්ධිමතෙක්</option>
+                    </select>
+                </div>
+
+                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="goToStep2()">
+                    <span class="btn-text">NEXT PHASE</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bio-step-2" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
+        <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
+            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🧠</div>
+            <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">NEURAL CALIBRATION</h2>
+            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">PHASE 2: SCIENTIFIC BRAIN MAPPING</p>
+            
+            <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
+            <div class="meter-container"><div class="meter-fill" id="nsi-meter-2" style="width: 65%;"></div></div>
+
+            <div style="text-align: left; margin-top: 30px;">
+                
+                <div class="q-box">
                     <p>1. <b>(Dopamine Drive)</b> මම නිතරම අලුත් අභියෝග සොයා යන අතර, ඉලක්කයක් සපුරා ගත් විට දැඩි උද්‍යෝගයක් දැනේ.</p>
-                    <input type="range" id="q-dopa" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-dopa').innerText=this.value; updateMeter(60);">
+                    <input type="range" id="q-dopa" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-dopa').innerText=this.value; updateMeter2(72);">
                     <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
                     <span class="val-display" id="v-dopa">3</span>
                 </div>
 
                 <div class="q-box">
                     <p>2. <b>(Serotonin Stability)</b> මගේ ජීවිතය සැලසුම් සහගතව සහ පිළිවෙලකට තිබෙන විට මට උපරිම මානසික සුවයක් දැනේ.</p>
-                    <input type="range" id="q-sero" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-sero').innerText=this.value; updateMeter(70);">
+                    <input type="range" id="q-sero" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-sero').innerText=this.value; updateMeter2(79);">
                     <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
                     <span class="val-display" id="v-sero">3</span>
                 </div>
 
                 <div class="q-box">
                     <p>3. <b>(Oxytocin Resonance)</b> මම අන් අයගේ හැඟීම් වලට ඉතා සංවේදී වන අතර, ගැඹුරු මානව බැඳීම් මට ඉතා වැදගත් වේ.</p>
-                    <input type="range" id="q-oxy" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-oxy').innerText=this.value; updateMeter(80);">
+                    <input type="range" id="q-oxy" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-oxy').innerText=this.value; updateMeter2(86);">
                     <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
                     <span class="val-display" id="v-oxy">3</span>
                 </div>
 
                 <div class="q-box">
                     <p>4. <b>(Vagal Tone / Stress Resilience)</b> දැඩි පීඩාකාරී හෝ කෝප ගැන්වෙන අවස්ථාවකදී පවා, මට ඉක්මනින් මගේ සිත සන්සුන් කරගත හැක.</p>
-                    <input type="range" id="q-vagal" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-vagal').innerText=this.value; updateMeter(90);">
+                    <input type="range" id="q-vagal" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-vagal').innerText=this.value; updateMeter2(93);">
                     <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
                     <span class="val-display" id="v-vagal">3</span>
                 </div>
 
                 <div class="q-box">
                     <p>5. <b>(Prefrontal Control)</b> ප්‍රශ්නයක් විසඳීමේදී මම මගේ හැඟීම් වලට වඩා තර්කයට සහ පියවරෙන් පියවර විශ්ලේෂණයට මුල් තැන දෙමි.</p>
-                    <input type="range" id="q-logic" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-logic').innerText=this.value; updateMeter(100);">
+                    <input type="range" id="q-logic" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-logic').innerText=this.value; updateMeter2(100);">
                     <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
                     <span class="val-display" id="v-logic">3</span>
                 </div>
@@ -314,6 +386,18 @@
                     <div style="display: flex; justify-content: space-between;"><span class="stat-label">VAGAL TONE (Emotional Recovery)</span><span class="stat-label" id="rep-vagal-val">0%</span></div>
                     <div class="meter-container"><div class="meter-fill" id="rep-vagal-bar" style="background: #00d4ff; width: 0%;"></div></div>
                 </div>
+            </div>
+
+            <div style="background: rgba(157, 78, 221, 0.05); padding: 20px; border-left: 4px solid var(--mystic-purple); border-radius: 0 10px 10px 0; margin-bottom: 20px; box-shadow: inset 0 0 20px rgba(157, 78, 221, 0.1);">
+                <h4 style="font-family: 'Orbitron'; color: #c77dff; margin: 0 0 10px 0; font-size: 0.9rem; letter-spacing: 2px;">👁️ SUBCONSCIOUS REVELATION (යටිසිතේ කියවීම)</h4>
+                <p id="rep-shadow" style="font-family: 'Cinzel'; color: #e0aaff; font-size: 0.9rem; margin: 0; line-height: 1.6; text-shadow: 0 0 5px rgba(0,0,0,0.8);"></p>
+            </div>
+
+            <div style="background: rgba(0, 255, 136, 0.05); padding: 20px; border: 1px solid #00ff88; margin-bottom: 20px; border-radius: 10px; box-shadow: inset 0 0 20px rgba(0,255,136,0.1);">
+                <h3 style="font-family: 'Orbitron'; color: #00ff88; font-size: 1rem; margin-top: 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.5rem;">🛡️</span> ROYAL DIRECTIVES (නිර්දේශිත පියවර)
+                </h3>
+                <ul id="rep-directives" style="color: #ddd; font-family: 'Cinzel'; font-size: 0.9rem; line-height: 1.8; padding-left: 20px; margin-bottom: 0;"></ul>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -618,8 +702,8 @@
                             } else {
                                 playInteractionSound('scan'); 
                                 startCalmDrone(); 
-                                document.getElementById('bio-profile-screen').style.display = 'flex';
-                                setTimeout(() => { document.getElementById('bio-profile-screen').style.opacity = '1'; }, 50);
+                                document.getElementById('bio-step-1').style.display = 'flex';
+                                setTimeout(() => { document.getElementById('bio-step-1').style.opacity = '1'; }, 50);
                             }
                             isAuthenticating = false;
                         });
@@ -638,38 +722,102 @@
             }
         }
 
-        function updateMeter(percent) {
-            document.getElementById('nsi-meter').style.width = percent + "%";
+        // STEP 1 METER
+        function updateMeter1(percent) {
+            document.getElementById('nsi-meter-1').style.width = percent + "%";
             playInteractionSound('blip'); 
             if (navigator.vibrate) navigator.vibrate(20); 
         }
 
-        // 💾 SAVE BIO-PROFILE & CALCULATE MATHEMATICAL NEURAL STATE
-        async function saveBioProfile() {
+        // STEP 2 METER
+        function updateMeter2(percent) {
+            document.getElementById('nsi-meter-2').style.width = percent + "%";
+            playInteractionSound('blip'); 
+            if (navigator.vibrate) navigator.vibrate(20); 
+        }
+
+        // GO TO STEP 2
+        function goToStep2() {
             const wa = document.getElementById('wa-number').value.trim();
             const lang = document.getElementById('q-lang').value;
-            const dob = document.getElementById('q-dob').value;
+            const dob = document.getElementById('q-dob').value.trim();
             const wake = document.getElementById('wake-time').value;
             const sleep = document.getElementById('sleep-time').value;
+            const goal = document.getElementById('q-goal').value;
+            const obstacle = document.getElementById('q-obstacle').value;
+            const time = document.getElementById('q-time').value;
+            const fear = document.getElementById('q-fear').value;
+            const desire = document.getElementById('q-desire').value;
+
+            if(!wa || !lang || !dob || !wake || !sleep || !goal || !obstacle || !time || !fear || !desire) {
+                triggerAccessDenied("කරුණාකර PHASE 1 හි සියලුම දත්ත සම්පූර්ණ කරන්න."); 
+                return;
+            }
+
+            playInteractionSound('scan');
+            switchScreen('bio-step-1', 'bio-step-2');
+        }
+
+        // 💾 SAVE BIO-PROFILE & CALCULATE MATHEMATICAL NEURAL STATE
+        async function saveBioProfile() {
+            // Fetch all step 1 values again
+            const wa = document.getElementById('wa-number').value.trim();
+            const lang = document.getElementById('q-lang').value;
+            const dob = document.getElementById('q-dob').value.trim();
+            const wake = document.getElementById('wake-time').value;
+            const sleep = document.getElementById('sleep-time').value;
+            const goal = document.getElementById('q-goal').value;
+            const obstacle = document.getElementById('q-obstacle').value;
+            const timeSpent = document.getElementById('q-time').value;
+            const fear = document.getElementById('q-fear').value;
+            const desire = document.getElementById('q-desire').value;
             
-            // Get Numerical Values (1 to 5)
+            // Get Numerical Values (1 to 5) from Step 2
             const dopaScore = parseInt(document.getElementById('q-dopa').value);
             const seroScore = parseInt(document.getElementById('q-sero').value);
             const oxyScore = parseInt(document.getElementById('q-oxy').value);
             const vagalScore = parseInt(document.getElementById('q-vagal').value);
             const logicScore = parseInt(document.getElementById('q-logic').value);
 
-            if(!wa || !lang || !dob || !wake || !sleep) {
-                triggerAccessDenied("කරුණාකර සියලුම ජීව විද්‍යාත්මක දත්ත සහ වේලාවන් සම්පූර්ණ කරන්න."); return;
-            }
-
             // 🧮 SUPER HUMAN MATHEMATICS (Percentages)
             const dopaPercent = Math.round((dopaScore / 5) * 100);
             const vagalPercent = Math.round((vagalScore / 5) * 100);
-            // Cortisol is high if Vagal Tone is low AND Serotonin is low
             let cortPercent = 100 - vagalPercent + ((5 - seroScore) * 10); 
             if(cortPercent > 100) cortPercent = 100;
             if(cortPercent < 0) cortPercent = 0;
+
+            // 🔮 SHADOW WORK REVELATION
+            let shadowReading = "";
+            if(fear === 'failure' && desire === 'leader') {
+                shadowReading = "ඔබ තුළ සිටින්නේ ලෝකය වෙනස් කළ හැකි ප්‍රබල නායකයෙකි. නමුත් අන් අයගේ විවේචනයට ඇති බිය නිසා ඔබ ඔබේම විශිෂ්ටත්වය යටපත් කරගෙන, පෙනෙනවාට වඩා කුඩා වී ජීවත් වේ. ඔබ නිදා සිටින සිංහයෙකි.";
+            } else if(fear === 'failure' && desire === 'peace') {
+                shadowReading = "ඔබ බාහිර ලෝකයට ඉතා කාර්යබහුල බව පෙන්වුවද, ඔබේ යටිසිතට අවශ්‍ය නිදහස සහ සාමයයි. අන් අයගේ බලාපොරොත්තු ඉටු කිරීමට යාමෙන් ඔබ ඔබේම සතුට බිලි දී ඇත.";
+            } else if(fear === 'loneliness' && desire === 'peace') {
+                shadowReading = "ඔබේ හදවත පිරී ඇත්තේ ගැඹුරු ආදරයකිනි. නමුත් ප්‍රතික්ෂේප වීමට ඇති දැඩි බිය නිසා, ඔබ කිසිවෙකුටත් ඔබේ සැබෑ හැඟීම් සම්පූර්ණයෙන්ම පෙන්වන්නේ නැත. ඔබ ඔබ වටා නොපෙනෙන තාප්පයක් බැඳගෙන සිටී.";
+            } else if(fear === 'loneliness' && desire === 'leader') {
+                shadowReading = "ඔබට ඉහළටම යාමට අවශ්‍යයි. නමුත් 'මම තනිවෙයිද?' යන සැකය ඔබේ ගමන ප්‍රමාද කරයි. ඔබේ සාර්ථකත්වයට ඇති ලොකුම බාධාව අන් අයගේ සහයෝගය අඩුවීම නොව, ඔබ ඔබවම විශ්වාස නොකිරීමයි.";
+            } else if(fear === 'wasted' && desire === 'genius') {
+                shadowReading = "ඔබේ මොළය අන් අයට වඩා වේගයෙන් වැඩ කරයි. නමුත් කාලය අපතේ යයි යන දැඩි කලබලකාරී හැඟීම (Anxiety) නිසාම, ඔබ එකම තැන සිරවී සිටී. ඔබට අවශ්‍ය නිවැරදි ඉලක්කයක් (Focus) පමණි.";
+            } else if(fear === 'wasted' && desire === 'leader') {
+                shadowReading = "ඔබ ඉපදී ඇත්තේ සාමාන්‍ය ජීවිතයක් ගත කිරීමට නොවේ. පාලනය ගිලිහී යාමට ඇති බිය නිසා ඔබ සියල්ල එකවර කිරීමට ගොස් වෙහෙසට පත් වේ (Burnout). ඔබේ අසීමිත ශක්තිය නිසි පරිදි මෙහෙයවීම මෙහිදී සිදුවේ.";
+            } else {
+                shadowReading = "ඔබේ මනස සුවිශේෂී සංයෝගයකි. සමාජය ඔබෙන් බලාපොරොත්තු වන දේ සහ ඔබේ ආත්මයට අවශ්‍ය දේ අතර නිරන්තර අභ්‍යන්තර සටනක් පවතී. මෙම 66-දින ගමන එම සටනින් ඔබව මුදා ගනු ඇත.";
+            }
+
+            // 🎯 GENERATE ACTIONABLE DIRECTIVES
+            let directivesHTML = "";
+            if(obstacle === 'procrastination') {
+                directivesHTML += "<li><b>Dopamine Fasting:</b> උදෑසන අවදි වූ වහාම පළමු පැය 2 තුළ ජංගම දුරකථනය භාවිතයෙන් වළකින්න. එය කම්මැලිකම 80% කින් විනාශ කරයි.</li>";
+            } else if(obstacle === 'anxiety') {
+                directivesHTML += "<li><b>Cortisol Flush:</b> රාත්‍රියට නින්දට පෙර විනාඩි 10ක් ජර්නලයේ 'Brain Dump' (සිතුවිලි ලිවීම) කරන්න. මෙය අධික බිය සහ Overthinking නවතාලයි.</li>";
+            } else if(obstacle === 'digital') {
+                directivesHTML += "<li><b>Grayscale Mode:</b> අදම ඔබගේ දුරකථනයේ තිරය කළු-සුදු (Grayscale) බවට පත් කරන්න. කෘතිම ඇබ්බැහිය වහාම අඩපණ වේ.</li>";
+            }
+            if(timeSpent === 'online' || timeSpent === 'alone') {
+                directivesHTML += "<li><b>Vagal Stimulation:</b> දිනකට වරක් සීතල වතුරෙන් මුහුණ සේදීම හෝ ගැඹුරු හුස්ම ගැනීමේ අභ්‍යාසය මගින් ඔබේ හුදෙකලා ආතතිය (Isolation Stress) මකා දමන්න.</li>";
+            } else {
+                directivesHTML += "<li><b>Energy Protection:</b> මිතුරන් සමඟ කාලය ගත කිරීමෙන් පසු විනාඩි 15ක් තනිව සිටීමට (Neuro-Reset) කාලය වෙන් කරන්න.</li>";
+            }
 
             // 🧬 ARCHETYPE DETERMINATION
             let archetype = "", description = "", dna = "", block = "";
@@ -691,18 +839,13 @@
                 block = "අන් අයගේ චිත්තවේග ඔබ තුළට උරා ගැනීමෙන් (Sensory Overload) ඔබ ඉක්මනින් මානසිකව වෙහෙසට පත් වේ.";
             }
 
-            // 🧬 EPIGENETIC ORIGIN
-            let birthMonth = new Date(dob).getMonth() + 1;
-            let currentAge = new Date().getFullYear() - new Date(dob).getFullYear();
+            // 🧬 EPIGENETIC ORIGIN (Extract Year from typable input)
+            let birthYearMatch = dob.match(/\d{4}/);
+            let currentAge = birthYearMatch ? new Date().getFullYear() - parseInt(birthYearMatch[0]) : "Unknown";
             let bioRhythmText = `සෛලීය වයස (Cellular Age): වසර ${currentAge} යි. `;
-            
-            if(birthMonth >= 3 && birthMonth <= 8) {
-                bioRhythmText += `ඔබ ඉපදී ඇත්තේ සූර්ය ශක්තිය අධික කාලයක බැවින්, ඔබේ පරිවෘත්තීය ක්‍රියාවලිය (Metabolism) ඉතා වේගවත්ය. ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
-            } else {
-                bioRhythmText += `ඔබ ඉපදී ඇත්තේ පෘථිවියේ සිසිල් කාලයක බැවින්, ස්වභාවිකවම පීඩනය දරාගැනීමේ අද්විතීය ජානමය හැකියාවක් ඔබට ඇත. ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
-            }
+            bioRhythmText += `ඔබේ තෝරාගත් දත්ත වලට අනුව, ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
 
-            // ⚠️ Database Save (Sending slider values to old TEXT columns to prevent DB crash)
+            // ⚠️ Database Save 
             const { error } = await supabaseClient.from('users').update({
                 whatsapp_id: wa, language_pref: lang, date_of_birth: dob, 
                 wake_up_time: wake, sleep_time: sleep,
@@ -720,8 +863,10 @@
                 document.getElementById('rep-dna').innerText = dna;
                 document.getElementById('rep-block').innerText = block;
                 document.getElementById('rep-biorhythm').innerText = bioRhythmText; 
+                document.getElementById('rep-shadow').innerText = shadowReading; 
+                document.getElementById('rep-directives').innerHTML = directivesHTML; 
                 
-                switchScreen('bio-profile-screen', 'neural-report-screen');
+                switchScreen('bio-step-2', 'neural-report-screen');
 
                 // Animate Mathematical Meters dynamically
                 setTimeout(() => {
