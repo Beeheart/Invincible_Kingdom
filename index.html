@@ -12,6 +12,8 @@
             --gold-static: #d4af37;
             --dark-red: #4a0404;
             --neon-blue: rgba(0, 212, 255, 0.3);
+            --neon-green: #00ff88;
+            --neon-red: #ff4d4d;
         }
 
         body, html {
@@ -54,7 +56,6 @@
             background: rgba(0, 0, 0, 0.9) !important;
             color: #fff !important;
         }
-        /* Stop Browser Autofill from turning it white */
         input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
             -webkit-box-shadow: 0 0 0 30px black inset !important;
             -webkit-text-fill-color: var(--gold-static) !important;
@@ -80,7 +81,7 @@
 
         /* 🛡️ MENU GRID */
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 900px; }
-        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; }
+        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; width: 100%; }
         .royal-btn::after { content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none; }
         .btn-text::before { content: '🙤 '; } .btn-text::after { content: ' 🙦'; }
         .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.03); }
@@ -107,13 +108,44 @@
         /* 📺 VIDEO PAGE */
         .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); margin-top: 20px; }
 
-        /* 🚫 ACCESS DENIED SCREEN (STRENGTHENED) */
-        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        /* 🚫 ACCESS DENIED SCREEN */
+        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 25000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: warningPulse 1s infinite alternate; }
 
         /* ✨ ROYAL ALERT */
-        #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         .alert-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; max-width: 450px; animation: popIn 0.4s forwards; }
+
+        /* 📜 THE ROYAL SCROLL (SANDESHAYA) UI */
+        .sandeshaya-border { 
+            background: linear-gradient(to bottom, #1f1107, #0a0502); 
+            border: 4px solid var(--gold-static); 
+            border-image: var(--royal-gold) 1;
+            padding: 35px; 
+            position: relative; 
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 50px rgba(191, 149, 63, 0.2); 
+            border-radius: 8px; 
+        }
+        .sandeshaya-border::before { 
+            content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; 
+            border: 1px dashed rgba(212, 175, 55, 0.5); pointer-events: none; 
+        }
+        .sandeshaya-border::after {
+            content: '🙤 🙦'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: #000; padding: 0 15px; color: var(--gold-static); font-size: 1.5rem;
+        }
+        
+        /* 📊 NEURAL STABILITY METER */
+        .meter-container { width: 100%; height: 12px; background: #000; border: 1px solid #333; border-radius: 20px; margin: 15px 0; overflow: hidden; position: relative; box-shadow: inset 0 0 10px #000; }
+        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); box-shadow: 0 0 15px var(--gold-static); transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .stat-label { font-family: 'Orbitron'; font-size: 0.65rem; color: #fff; letter-spacing: 3px; text-transform: uppercase; }
+
+        /* 🛡️ QUESTION BOXES */
+        .q-box { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--gold-static); transition: 0.3s; text-align: left; border-radius: 0 10px 10px 0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);}
+        .q-box:hover { background: rgba(212, 175, 55, 0.05); border-left: 5px solid var(--gold-static); }
+        .q-box p { font-size: 0.95rem; color: #e6cc80; margin-bottom: 12px; line-height: 1.6; font-family: 'Cinzel', serif; text-shadow: 0 0 5px rgba(0,0,0,0.8); }
+        
+        select.passport-input { appearance: none; background: url('data:image/svg+xml;utf8,<svg fill="%23d4af37" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center; background-color: rgba(10, 5, 0, 0.8) !important; font-size: 0.9rem;}
 
         /* 🎬 ANIMATIONS */
         @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); } 15% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.9)); } 30% { transform: scale(1); } 45% { transform: scale(1.15); filter: drop-shadow(0 0 60px rgba(212, 175, 55, 1)); } 60% { transform: scale(1); } }
@@ -123,12 +155,10 @@
         @keyframes grow { to { width: 100%; } }
         @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
         @keyframes cellPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-        
-        /* 🛠️ SHAKE ANIMATION CLASS FIXED HERE */
         @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
         .shake-anim { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 
-        @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; margin: 20px 0; } .header-badge { padding: 15px 30px; } .cycle-box { width: 140px; padding: 20px; } }
+        @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; margin: 20px 0; } .header-badge { padding: 15px 30px; } .cycle-box { width: 140px; padding: 20px; } .sandeshaya-border { padding: 20px; width: 95%;} }
     </style>
 </head>
 <body>
@@ -140,7 +170,7 @@
         <div class="login-box">
             <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 5px;">ENTER THE KINGDOM</h2>
             <p style="color: #ccc; font-size: 0.8rem; margin-bottom: 20px;">Provide your DNA Passport Code to synchronize</p>
-            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX" autocomplete="off">
+            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX" autocomplete="off" onfocus="playInitialShimmer()">
             <br>
             <button class="royal-btn" style="width: 200px; margin-top: 10px;" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
         </div>
@@ -149,6 +179,112 @@
     <div id="activation-screen">
         <div class="sync-text" id="sync-msg">NEURAL SYNCING...</div>
         <div class="progress-container"><div class="progress-bar"></div></div>
+    </div>
+
+    <div id="bio-profile-screen" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
+        <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
+            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🔱</div>
+            <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">SOVEREIGN IDENTITY</h2>
+            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">NEURAL BIO-SCAN INITIATED</p>
+            
+            <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
+            <div class="meter-container"><div class="meter-fill" id="nsi-meter"></div></div>
+
+            <div style="text-align: left; margin-top: 30px;">
+                <div class="q-box">
+                    <label class="stat-label">LINK WHATSAPP IDENTITY (With Country Code)</label>
+                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter(10)">
+                </div>
+
+                <div class="q-box">
+                    <p>1. ඔබේ මොළය වඩාත්ම තියුණු ලෙස (Peak Alertness) ක්‍රියා කරන්නේ කුමන කාලයේදීද?</p>
+                    <select id="q1" class="passport-input" onchange="updateMeter(20)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="early">අලුයම සහ උදෑසන (Early Chronotype)</option>
+                        <option value="intermediate">දහවල් සහ සවස (Intermediate)</option>
+                        <option value="late">රාත්‍රී කාලයේ (Late Chronotype)</option>
+                    </select>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter(30)"></div>
+                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter(40)"></div>
+                    </div>
+                </div>
+
+                <div class="q-box">
+                    <p>2. පීඩාකාරී අවස්ථාවකදී ඔබේ ස්නායු පද්ධතියේ පළමු ප්‍රතිචාරය කුමක්ද?</p>
+                    <select id="q2" class="passport-input" onchange="updateMeter(50)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="fight">වහාම ක්‍රියාත්මක වීම (Fight - Adrenaline)</option>
+                        <option value="freeze">මනස අවහිර වීම (Freeze - Overwhelm)</option>
+                        <option value="flight">හුදෙකලා වීම (Flight - Withdrawal)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>3. ඔබේ ජීවිතයේ ඔබට වඩාත්ම තෘප්තියක් ගෙන දෙන්නේ කුමක්ද?</p>
+                    <select id="q3" class="passport-input" onchange="updateMeter(60)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="dopamine">අභියෝග සහ ජයග්‍රහණ (Dopamine)</option>
+                        <option value="serotonin">පිළිගැනීම සහ සැලසුම් (Serotonin)</option>
+                        <option value="oxytocin">ගැඹුරු මානව බැඳීම් (Oxytocin)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>4. අලුත් තොරතුරක් තේරුම් ගැනීමේදී ඔබේ මොළයේ සැකසුම් රටාව?</p>
+                    <select id="q4" class="passport-input" onchange="updateMeter(70)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="analytical">තර්කානුකූලව සහ විශ්ලේෂණාත්මකව (Left Brain)</option>
+                        <option value="holistic">සම්පූර්ණ චිත්‍රය සහ සහජ ඉව (Right Brain)</option>
+                        <option value="social">සාකච්ඡා කිරීම මඟින් (Social Processing)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>5. විශාල පිරිසක් මැද සිටීමෙන් පසු ඔබේ මානසික ශක්තිය පවතින්නේ කෙසේද?</p>
+                    <select id="q5" class="passport-input" onchange="updateMeter(80)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="intro">ශක්තිය හීන වේ (Introverted)</option>
+                        <option value="extro">වැඩි උද්‍යෝගයක් දැනේ (Extroverted)</option>
+                        <option value="empath">අනුන්ගේ හැඟීම් වලට සංවේදී වේ (Empath)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>6. ඔබ අතීතයේ යම් ඉලක්කයක් අතහැර දැමුවා නම්, ඊට සැබෑවටම බලපෑ යටිසිතේ හේතුව කුමක්ද?</p>
+                    <select id="q6" class="passport-input" onchange="updateMeter(88)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="perfection">පරිපූර්ණව කිරීමට නොහැකි වීම ගැන ඇති බිය (Perfectionism)</option>
+                        <option value="boredom">මුල් උද්‍යෝගය නැති වී කම්මැලි වීම (Dopamine Drop)</option>
+                        <option value="isolation">අන් අයගේ සහයෝගයක් නොලැබීම (Attachment Block)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>7. ඔබ ගරු කරන කෙනෙකු ඔබව තදින් විවේචනය කළහොත්, ඔබේ මොළය එයට මුහුණ දෙන්නේ කෙසේද?</p>
+                    <select id="q7" class="passport-input" onchange="updateMeter(95)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="defend">සාධාරණීකරණය කිරීමට / තර්ක කිරීමට පෙළඹෙමි (Ego Shield)</option>
+                        <option value="ruminate">නිහඬ වී දවස් ගණනාවක් ඒ ගැන සිතමි (Internal Rumination)</option>
+                        <option value="escape">එයින් මිදී වෙනත් දේකට අවධානය යොමු කරමි (Dissociation)</option>
+                    </select>
+                </div>
+
+                <div class="q-box">
+                    <p>8. ඔබ වැදගත් රාජකාරියක සිටින විට, ඔබේ අවධානය වඩාත්ම සොරකම් කරන්නේ කුමක් විසින්ද?</p>
+                    <select id="q8" class="passport-input" onchange="updateMeter(100)">
+                        <option value="">පිළිතුර තෝරන්න...</option>
+                        <option value="digital">සමාජ මාධ්‍ය සහ ඩිජිටල් තිර (Digital Dopamine)</option>
+                        <option value="thoughts">නොනවතින සිතුවිලි පරම්පරාව (Overthinking / Anxiety)</option>
+                        <option value="environment">වෙනත් මිනිසුන්ගේ ප්‍රශ්න සහ ශබ්ද (Sensory Overload)</option>
+                    </select>
+                </div>
+
+                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="saveBioProfile()">
+                    <span class="btn-text">SEAL MY ROYAL DESTINY</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div id="main-hub" class="screen-layer">
@@ -212,7 +348,7 @@
             <div style="font-size: 3.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 20px var(--gold-static));">🛡️</div>
             <h2 id="alert-title" style="font-family: 'Orbitron'; color: var(--gold-static); letter-spacing: 3px; margin: 0;">PROTOCOL COMPLETE</h2>
             <p id="alert-message-text" style="font-family: 'Cinzel'; color: #ddd; font-size: 1rem; margin-top: 20px; line-height: 1.6;"></p>
-            <button onclick="closeRoyalAlert()" class="royal-btn" style="margin-top: 30px; padding: 12px 40px;">PROCEED</button>
+            <button onclick="closeRoyalAlert()" class="royal-btn" style="margin-top: 30px; padding: 12px 40px;" id="alert-proceed-btn">PROCEED</button>
         </div>
     </div>
 
@@ -227,51 +363,276 @@
         let selectedDayForVideo = 1;
         let userPassport = "";
         let amCompletedToday = false;
+        let isAuthenticating = false;
+
+        // 🔊 COMPREHENSIVE GAMING & ROYAL AUDIO ENGINE
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        let calmDrone1, calmDrone2, droneGain;
+        let isInitialShimmerPlayed = false;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        // 1. Initial Load Sound (Plays once when user clicks input box)
+        function playInitialShimmer() {
+            if(isInitialShimmerPlayed) return;
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode).connect(audioCtx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 1.5);
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
+            osc.start(); osc.stop(audioCtx.currentTime + 2);
+            isInitialShimmerPlayed = true;
+        }
+
+        // 2. Calm Background Drone for Bio-Form
+        function startCalmDrone() {
+            initAudio();
+            calmDrone1 = audioCtx.createOscillator();
+            calmDrone2 = audioCtx.createOscillator();
+            droneGain = audioCtx.createGain();
+            calmDrone1.type = 'sine'; calmDrone2.type = 'triangle';
+            calmDrone1.frequency.value = 110.00; // A2
+            calmDrone2.frequency.value = 164.81; // E3
+            
+            droneGain.gain.setValueAtTime(0, audioCtx.currentTime);
+            droneGain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 3); // Slow fade in
+            
+            calmDrone1.connect(droneGain); calmDrone2.connect(droneGain);
+            droneGain.connect(audioCtx.destination);
+            calmDrone1.start(); calmDrone2.start();
+        }
+
+        function stopCalmDrone() {
+            if(droneGain) {
+                droneGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2); // Slow fade out
+                setTimeout(() => {
+                    if(calmDrone1) calmDrone1.stop();
+                    if(calmDrone2) calmDrone2.stop();
+                }, 2000);
+            }
+        }
+
+        // 3. Grand Majestic Hub Entrance
+        function playMajesticHub() {
+            initAudio();
+            const chords = [261.63, 329.63, 392.00]; // C Major Chord (C4, E4, G4)
+            chords.forEach(freq => {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                let filter = audioCtx.createBiquadFilter();
+                
+                osc.type = 'sawtooth'; // Brass-like
+                osc.frequency.value = freq;
+                
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.5);
+                
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5); // Attack
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 4); // Release
+                
+                osc.connect(filter).connect(gain).connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + 4);
+            });
+        }
+
+        // 4. UI Interaction Sounds (Hover, Click, Error, Success, Blip)
+        function playInteractionSound(type) {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode).connect(audioCtx.destination);
+
+            if (type === 'hover') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+            } else if (type === 'click') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'blip') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'scan') {
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(300, audioCtx.currentTime + 1.5);
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+                osc.start(); osc.stop(audioCtx.currentTime + 1.5);
+            } else if (type === 'error') {
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'success') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.15); 
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.3); 
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.8);
+            }
+        }
+
+        // Attach global event listeners for Gaming Button Sounds
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.addEventListener('click', (e) => {
+                if(e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell')) {
+                    playInteractionSound('click');
+                }
+            });
+            document.body.addEventListener('mouseover', (e) => {
+                let btn = e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell');
+                if(btn && !btn.dataset.hovered) {
+                    playInteractionSound('hover');
+                    btn.dataset.hovered = "true";
+                    setTimeout(() => delete btn.dataset.hovered, 200);
+                }
+            });
+        });
 
         async function checkKingdomAccess() {
+            initAudio(); 
+            if (isAuthenticating) return; 
+            
             userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
             if(!userPassport) { triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!"); return; }
 
+            isAuthenticating = true;
+            
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("activation-screen").style.display = "flex";
+            
+            document.getElementById('sync-msg').innerHTML = "NEURAL SYNCING...";
+            document.getElementById('sync-msg').style.color = "";
 
-            let { data, error } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport).single();
+            try {
+                let { data, error } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
 
-            if (data) {
-                currentActiveDay = data.current_day; 
-                
-                // Check local storage for AM completion today
-                let todayStr = new Date().toDateString();
-                if (localStorage.getItem(userPassport + '_amDate') === todayStr) {
-                    amCompletedToday = true;
-                }
-
-                const urlParams = new URLSearchParams(window.location.search);
-                const qrDay = urlParams.get('day');
-                const qrTime = urlParams.get('time');
-
-                if(qrDay && qrTime) {
-                    let requestedDay = parseInt(qrDay);
-                    if(requestedDay > currentActiveDay) {
-                        triggerAccessDenied("ඔබ තවම මෙම දිනයට පැමිණ නැත. කරුණාකර අනුපිළිවෙලින් පැමිණෙන්න.");
-                        return;
+                if (data && data.length > 0) {
+                    let user = data[0]; 
+                    currentActiveDay = user.current_day || 1; 
+                    
+                    let todayStr = new Date().toDateString();
+                    if (localStorage.getItem(userPassport + '_amDate') === todayStr) {
+                        amCompletedToday = true;
+                    } else {
+                        amCompletedToday = false;
                     }
-                    selectedDayForVideo = requestedDay;
-                    startActivationSequence(() => {
-                        openDaySelection(selectedDayForVideo, selectedDayForVideo < currentActiveDay ? 'completed' : 'active');
-                        if(qrTime === 'AM') handleAMClick();
-                        else if(qrTime === 'PM') handlePMClick();
-                    });
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const qrDay = urlParams.get('day');
+                    const qrTime = urlParams.get('time');
+
+                    if(qrDay && qrTime) {
+                        let requestedDay = parseInt(qrDay);
+                        if(requestedDay > currentActiveDay) {
+                            document.getElementById("login-screen").style.display = "flex";
+                            document.getElementById("activation-screen").style.display = "none";
+                            triggerAccessDenied("ඔබ තවම මෙම දිනයට පැමිණ නැත. කරුණාකර අනුපිළිවෙලින් පැමිණෙන්න.");
+                            isAuthenticating = false;
+                            return;
+                        }
+                        selectedDayForVideo = requestedDay;
+                        startActivationSequence(() => {
+                            openDaySelection(selectedDayForVideo, selectedDayForVideo < currentActiveDay ? 'completed' : 'active');
+                            if(qrTime === 'AM') handleAMClick();
+                            else if(qrTime === 'PM') handlePMClick();
+                            isAuthenticating = false;
+                        });
+                    } else {
+                        startActivationSequence(() => {
+                            if (user.bio_completed === true) {
+                                playMajesticHub(); // 🔊 Play Grand Hub Sound
+                                document.getElementById('main-hub').style.display = 'flex';
+                                setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
+                            } else {
+                                playInteractionSound('scan'); 
+                                startCalmDrone(); // 🔊 Start Calm Background Drone
+                                document.getElementById('bio-profile-screen').style.display = 'flex';
+                                setTimeout(() => { document.getElementById('bio-profile-screen').style.opacity = '1'; }, 50);
+                            }
+                            isAuthenticating = false;
+                        });
+                    }
                 } else {
-                    startActivationSequence(() => {
-                        document.getElementById('main-hub').style.display = 'flex';
-                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
-                    });
+                    document.getElementById("login-screen").style.display = "flex";
+                    document.getElementById("activation-screen").style.display = "none";
+                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම මාලිගාවට ඇතුළු වීමට ඔබට අවසර නැත. 🛡️");
+                    isAuthenticating = false;
                 }
-            } else {
+            } catch (err) {
                 document.getElementById("login-screen").style.display = "flex";
                 document.getElementById("activation-screen").style.display = "none";
-                triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම මාලිගාවට ඇතුළු වීමට ඔබට අවසර නැත. 🛡️");
+                triggerAccessDenied("දත්ත සමුදායේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න.");
+                isAuthenticating = false;
+            }
+        }
+
+        // 📊 DYNAMIC METER FUNCTION
+        function updateMeter(percent) {
+            document.getElementById('nsi-meter').style.width = percent + "%";
+            playInteractionSound('blip'); 
+            if (navigator.vibrate) navigator.vibrate(20); 
+        }
+
+        // 💾 SAVE BIO-PROFILE FUNCTION
+        async function saveBioProfile() {
+            const wa = document.getElementById('wa-number').value.trim();
+            const wake = document.getElementById('wake-time').value;
+            const sleep = document.getElementById('sleep-time').value;
+            const q1 = document.getElementById('q1').value;
+            const q2 = document.getElementById('q2').value;
+            const q3 = document.getElementById('q3').value;
+            const q4 = document.getElementById('q4').value;
+            const q5 = document.getElementById('q5').value;
+            const q6 = document.getElementById('q6').value;
+            const q7 = document.getElementById('q7').value;
+            const q8 = document.getElementById('q8').value;
+
+            if(!wa || !wake || !sleep || !q1 || !q2 || !q3 || !q4 || !q5 || !q6 || !q7 || !q8) {
+                triggerAccessDenied("කරුණාකර සියලුම ජීව විද්‍යාත්මක දත්ත සම්පූර්ණ කරන්න.");
+                return;
+            }
+
+            const { error } = await supabaseClient.from('users').update({
+                whatsapp_id: wa, wake_up_time: wake, sleep_time: sleep,
+                chronotype: q1, ans_response: q2, neuro_type: q3, processing_style: q4,
+                energy_battery: q5, subconscious_block: q6, ego_trigger: q7, dopamine_trap: q8, 
+                bio_completed: true
+            }).eq('passport_code', userPassport);
+
+            if (!error) {
+                stopCalmDrone(); // 🔊 Stop the calm drone
+                playInteractionSound('success'); 
+                document.getElementById('alert-title').innerText = "NEURAL BRIDGING COMPLETE";
+                document.getElementById('alert-message-text').innerHTML = "විශිෂ්ටයි! ඔබගේ ගැඹුරු ජීව විද්‍යාත්මක දත්ත පද්ධතියට සාර්ථකව සම්බන්ධ විය.<br>ඔබේ රාජකීය ගමන දැන් ආරම්භ වේ.";
+                document.getElementById('alert-proceed-btn').onclick = function() {
+                    document.getElementById('royal-alert-screen').style.display = 'none';
+                    playMajesticHub(); // 🔊 Play Grand Hub Sound
+                    switchScreen('bio-profile-screen', 'main-hub');
+                };
+                document.getElementById('royal-alert-screen').style.display = 'flex';
+            } else {
+                triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න.");
             }
         }
 
@@ -390,6 +751,9 @@
 
                 alertTitle.innerText = "MORNING PROTOCOL COMPLETE";
                 alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
+                
+                playInteractionSound('success');
+                document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert;
                 document.getElementById('royal-alert-screen').style.display = 'flex';
             } else {
                 if(selectedDayForVideo === currentActiveDay) { 
@@ -404,6 +768,9 @@
                         
                         alertTitle.innerText = "DAY MISSION ACCOMPLISHED";
                         alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
+                        
+                        playInteractionSound('success');
+                        document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert;
                         document.getElementById('royal-alert-screen').style.display = 'flex';
                     } else {
                         triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න.");
@@ -411,6 +778,8 @@
                 } else {
                     alertTitle.innerText = "REVIEW ACCOMPLISHED";
                     alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
+                    
+                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert;
                     document.getElementById('royal-alert-screen').style.display = 'flex';
                 }
             }
@@ -431,17 +800,16 @@
         }
 
         function triggerAccessDenied(message) { 
+            playInteractionSound('error'); 
             document.getElementById('denied-msg-text').innerHTML = message;
             let animBox = document.getElementById('denied-anim-box');
             
-            // 🛠️ ඇනිමේෂන් එක නැවත වැඩ කිරීමට Trigger Reflow
             animBox.classList.remove('shake-anim');
             void animBox.offsetWidth; 
             animBox.classList.add('shake-anim');
             
             document.getElementById('access-denied-screen').style.display = 'flex'; 
             
-            // 📳 Strong Vibration added here!
             if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
         }
         
