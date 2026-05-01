@@ -518,7 +518,9 @@
     </div>
 
     <script>
-        const DEEPSEEK_API_KEY = "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";
+        // API Key (OpenRouter හරහා OpenAI භාවිතා කිරීමට)
+        const OPENAI_API_KEY = "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";
+        
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -653,7 +655,7 @@
         // 🫁 NEW BREATH HOLD SENSOR LOGIC
         let breathTimerInt; let breathStart; let breathSecs = 0;
         function startBreathTimer(e) {
-            if(e && (e.type === 'touchstart' || e.type === 'mousedown')) e.preventDefault(); // Prevent double firing
+            if(e && (e.type === 'touchstart' || e.type === 'mousedown')) e.preventDefault(); 
             if (breathStart) return;
             breathStart = Date.now();
             playInteractionSound('click');
@@ -686,7 +688,7 @@
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 💾 AI REPORT & PROFILE GENERATION (FIXED URL & BYPASS DB ERRORS)
+        // 💾 AI REPORT & PROFILE GENERATION (UPDATED TO OPENAI via OPENROUTER)
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -711,39 +713,51 @@
 
             // 2. RANK ASSIGNMENT
             let rank = "", archetype = "", description = "";
-            if (typingSpeedVal > 165 && breathHeld > 45) { rank = "SOLARIS - INVINCIBLE BEE"; archetype = "THE SOVEREIGN (SOLARIS)"; description = "ඔබේ මනස සහ ශරීරය උපරිම තලයේ පවතී. ඕනෑම පීඩනයක් යටතේ නිවැරදි තීරණ ගත හැකි අසමසම හැකියාවක් ඔබට ඇත."; }
-            else if (typingSpeedVal > 115 || breathHeld > 30) { rank = "OBSIDIAN - MATRIX BEE"; archetype = "THE STRATEGIST (OBSIDIAN)"; description = "ඔබේ තර්කනය සහ හැඟීම් පාලනය ඉතා ඉහළයි. ඔබ සමාජයේ Matrix එකෙන් මිදී නිදහස්ව සිතන අයෙකි."; }
-            else if (typingSpeedVal > 75) { rank = "NEXUS - WARRIOR BEE"; archetype = "THE WARRIOR (NEXUS)"; description = "ඔබ තුළ සටන්කාමී ආත්මයක් ඇත. නමුත් සමහර අවස්ථාවල ඔබේ හැඟීම් ඔබව පාලනය කරන බැවින් තවදුරටත් පුහුණුව අවශ්‍ය වේ."; }
-            else { rank = "PULSAR - SCOUT BEE"; archetype = "THE SEEKER (PULSAR)"; description = "ඔබ මේ ගමන ආරම්භ කළා පමණි. ඔබේ මොළය පුහුණු කිරීම හරහා ඔබට අසීමිත ශක්තියක් ගොඩනගා ගත හැක."; }
+            if (typingSpeedVal > 165 && breathHeld > 45) { rank = "NEURAL SOLARIS"; archetype = "THE SOVEREIGN (NEURAL SOLARIS)"; description = "ඔබේ මනස සහ ශරීරය උපරිම තලයේ පවතී. මෙය ඉන්වින්සිබල් බී මට්ටමටත් එහා ගිය ස්නායුක ශක්තියකි."; }
+            else if (typingSpeedVal > 115 || breathHeld > 30) { rank = "NEURAL OBSIDIAN"; archetype = "THE STRATEGIST (NEURAL OBSIDIAN)"; description = "ඔබේ තර්කනය සහ හැඟීම් පාලනය ඉතා ඉහළයි. ඔබ මැට්‍රික්ස් එකෙන් මිදී නිදහස්ව සිතන අයෙකි."; }
+            else if (typingSpeedVal > 75) { rank = "NEURAL NEXUS"; archetype = "THE WARRIOR (NEURAL NEXUS)"; description = "ඔබ තුළ සටන්කාමී ආත්මයක් ඇත. වොරියර් මට්ටමේ සිට ඉහළට යාමට තවදුරටත් පුහුණුව අවශ්‍ය වේ."; }
+            else { rank = "NEURAL PULSAR"; archetype = "THE SEEKER (NEURAL PULSAR)"; description = "ඔබේ ගමන ආරම්භ කළා පමණි. ස්කවුට් මට්ටමේ සිට ඉදිරියට යාමට ඔබේ මොළය පුහුණු කරන්න."; }
 
             document.getElementById('activation-screen').style.display = "flex";
             document.getElementById('sync-msg').innerText = "COMMANDER AI WRITING DOSSIER...";
 
-            // 3. GEMINI AI PROMPT
-            const prompt = `ඔබ "DNA Commander AI" නම් වූ අති නවීන AI විශ්ලේෂකයෙකි. 
-            පරිශීලක Rank එක: ${rank}. 
+            // 3. OPENAI PROMPT SETUP
+            const systemPrompt = `ඔබ "DNA Commander AI" නම් වූ අති නවීන AI විශ්ලේෂකයෙකි.`;
+            const userPrompt = `පරිශීලක Rank එක: ${rank}. 
             ඔහුගේ දත්ත: අරමුණ(${goal}), බිය(${fear}), Yin-Yang ස්වභාවය(${yinyang}), CO2 Tolerance/හුස්ම රඳවාගැනීම(${breathHeld} තත්පර), ආතති ප්‍රතිචාරය(${amygdala}), ටයිප් වේගය(${typingSpeedVal} cpm).
             Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යටිසිතේ ඇති මානසික බාධා පෙන්වා දී, Super Human තත්ත්වයට පත්වීමට සහ දින 66 අභියෝගය සාර්ථක කරගැනීමට අවශ්‍ය ප්‍රායෝගික කරුණු සිංහලෙන් ගැඹුරින් ලියන්න. 
             ඡේද 3ක් සහ Bullet points 3ක් පමණක් ඇතුළත් කරන්න.`;
 
-            // ✅ FIXED URL FOR AI (v1beta -> v1)
-            let aiTextResponse = "AI වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය.";
+            let aiTextResponse = "AI වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය. ඔබගේ අන්තර්ජාල සබඳතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.";
+            
+            // OPENROUTER FETCH API
             try {
-                const resp = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                const resp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "openai/gpt-4o-mini", // වේගවත් සහ වියදම අඩු මොඩලයකි
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: userPrompt }
+                        ]
+                    })
                 });
+                
                 const data = await resp.json();
-                if(data && data.candidates && data.candidates[0].content) { 
-                    aiTextResponse = data.candidates[0].content.parts[0].text; 
+                if(data && data.choices && data.choices.length > 0) { 
+                    aiTextResponse = data.choices[0].message.content; 
                 } else if(data.error) {
-                    aiTextResponse = "AI දෝෂයකි: " + data.error.message;
+                    aiTextResponse = "AI දෝෂයකි: " + (data.error.message || "Unknown Error");
                 }
             } catch (e) { 
-                console.error("AI Fetch Error:", e); 
+                console.error("AI Error:", e); 
             }
 
-            // 4. SAVE TO DB (SILENT MODE - IF DB FAILS, REPORT STILL SHOWS)
+            // 4. SAVE TO DB
             try {
                 await supabaseClient.from('users').update({
                     chronotype: dopaScore.toString(), 
@@ -755,10 +769,9 @@
                     current_rank: rank
                 }).eq('passport_code', userPassport);
             } catch (dbErr) {
-                console.warn("Database sync skipped due to missing columns.");
+                console.warn("Missing Columns in Supabase. Report will still show.");
             }
 
-            // ✅ REPORT WILL ALWAYS SHOW NOW
             document.getElementById('activation-screen').style.display = "none";
             stopCalmDrone(); playInteractionSound('scan'); 
             
@@ -864,7 +877,7 @@
                         currentActiveDay = nextDay; amCompletedToday = false; localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); buildGrid(); 
                         alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
                         playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ জ্ঞාන්න."); }
+                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න."); }
                 } else {
                     alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
                     document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
