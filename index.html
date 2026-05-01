@@ -182,16 +182,12 @@
         .info-text { font-family: 'Cinzel'; font-size: 0.8rem; color: #aaa; text-align: center; margin-bottom: 15px;}
         .pulse-anim { animation: heartbeatPulse 0.5s infinite alternate; color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red);}
 
-        /* 🚀 EVO.i SCREEN SPECIFICS */
-        #evoi-screen { background: radial-gradient(circle at center, #001a22 0%, #000 100%); display: none; z-index: 20000; }
-        .hologram-circle { width: 200px; height: 200px; border-radius: 50%; border: 2px dashed var(--evoi-cyan); margin: 30px auto; display: flex; align-items: center; justify-content: center; position: relative; animation: spinSlow 10s linear infinite; box-shadow: 0 0 50px rgba(0, 229, 255, 0.2); }
+        /* 🚀 EVO.i SCREEN SPECIFICS (UPDATED WITH IMAGE & COMING SOON UI) */
+        #evoi-screen { background: url('1000573693.png') no-repeat center center; background-size: cover; display: none; z-index: 20000; position: relative; }
+        #evoi-screen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)); z-index: 0; }
+        .hologram-circle { width: 200px; height: 200px; border-radius: 50%; border: 2px dashed var(--evoi-cyan); margin: 30px auto; display: flex; align-items: center; justify-content: center; position: relative; animation: spinSlow 10s linear infinite; box-shadow: 0 0 50px rgba(0, 229, 255, 0.2); z-index: 2;}
         .hologram-circle::after { content: ''; position: absolute; width: 80%; height: 80%; border-radius: 50%; border: 4px solid rgba(0, 229, 255, 0.5); border-top-color: transparent; border-bottom-color: transparent; animation: spinFast 3s linear infinite reverse; }
         .evoi-icon { font-size: 4rem; filter: drop-shadow(0 0 20px var(--evoi-cyan)); position: absolute; animation: float 3s ease-in-out infinite; }
-        .evoi-text-box { background: rgba(0, 229, 255, 0.05); border-left: 4px solid var(--evoi-cyan); padding: 20px; text-align: left; border-radius: 0 10px 10px 0; margin-bottom: 20px; font-family: 'Orbitron'; color: #ccc; }
-        .evoi-input { background: rgba(0,0,0,0.8); border: 1px solid var(--evoi-cyan); color: var(--evoi-cyan); padding: 15px; width: 100%; border-radius: 5px; font-family: 'Orbitron'; margin-bottom: 20px; box-sizing: border-box;}
-        .evoi-input:focus { outline: none; box-shadow: 0 0 15px var(--evoi-cyan); }
-        #clone-status { font-family: 'Orbitron'; color: var(--evoi-cyan); text-align: center; font-size: 1.2rem; letter-spacing: 3px; margin: 20px 0; animation: blink 1s infinite; }
-
 
         /* 🎬 ANIMATIONS */
         @keyframes heartbeatPulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
@@ -398,12 +394,10 @@
                 <p class="info-text" style="color: #fff;">ඔබේ දුරකථනයේ <b>පසුපස කැමරාවට (Back Camera)</b> සම්පූර්ණයෙන්ම ආවරණය වන පරිදි ඇඟිල්ල තබා පහත බොත්තම ඔබන්න.</p>
                 
                 <div class="live-feed-box" id="cameraBox">
-                    <!-- 🔴 MOBILE CAMERA BUG FIXED: Added 'muted' below -->
                     <video id="videoElement" autoplay playsinline muted></video>
                     <canvas id="ppgCanvas"></canvas>
                     <div id="camStatus" style="font-family: 'Orbitron'; color: #666; z-index: 10;">WAITING FOR LENS...</div>
                 </div>
-                <!-- 🔴 LIVE BPM DISPLAY -->
                 <div class="data-readout" id="bpmDisplay">-- BPM</div>
                 <button id="camBtn" class="royal-btn" style="width: 100%; padding: 10px;" onclick="startCameraSensor()">START CAMERA SENSOR</button>
             </div>
@@ -532,9 +526,7 @@
         <div style="font-size: 0.75rem; letter-spacing: 6px; font-family: 'Orbitron'; color: #fff; text-shadow: 0 0 10px var(--gold-static); margin-bottom: 30px;">PROTOCOL: ACTIVE</div>
 
         <nav class="menu-grid">
-            <!-- 🚀 NEW EVO.i BUTTON INTEGRATED SEAMLESSLY -->
             <div class="royal-btn evoi-btn" onclick="openEvoiScreen()"><span class="btn-text">INITIATE EVO.i (FUTURE CLONE)</span></div>
-            
             <div class="royal-btn" onclick="switchScreen('main-hub', 'grid-screen')"><span class="btn-text">BEGIN QUEST</span></div>
             <div class="royal-btn"><span class="btn-text">BEEHIVE CONTROL</span></div>
             <div class="royal-btn"><span class="btn-text">ROYAL LEDGER</span></div>
@@ -544,35 +536,12 @@
         </nav>
     </div>
 
-    <!-- 🚀 EVO.i FUTURISTIC CLONE INTERFACE -->
+    <!-- 🚀 EVO.i FUTURISTIC CLONE INTERFACE (UPDATED WITH IMAGE) -->
     <div id="evoi-screen" class="screen-layer">
-        <div style="width: 100%; max-width: 800px; text-align: center; margin-top: 20px;">
-            <h1 style="font-family: 'Orbitron'; color: var(--evoi-cyan); font-size: 2.5rem; letter-spacing: 10px; margin: 0; text-shadow: 0 0 20px var(--evoi-cyan);">EVO.i</h1>
-            <div style="color: #fff; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 5px; opacity: 0.7;">NEURAL CLONE GENERATOR</div>
-
-            <div class="hologram-circle"><div class="evoi-icon">🧬</div></div>
-            <div id="clone-status">SYSTEM STANDBY</div>
-
-            <div id="evoi-step-1" style="text-align: left; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; border: 1px solid #333;">
-                <div class="evoi-text-box">අනාගතයේ (වසර 10කට පසු) ඔබේ සාර්ථකම, පරිණතම අනුවාදය නිර්මාණය කිරීම සඳහා මූලික දත්ත ඇතුළත් කරන්න.</div>
-                <label class="stat-label" style="color: var(--evoi-cyan);">WHAT IS YOUR ULTIMATE VISION?</label>
-                <input type="text" class="evoi-input" placeholder="උදා: ලෝකයේ ප්‍රධානතම සුවතා සන්නාමය ගොඩනැගීම">
-                
-                <label class="stat-label" style="color: var(--evoi-cyan); margin-top: 10px; display: block;">VOCAL CALIBRATION</label>
-                <p style="color: #aaa; font-size: 0.8rem; font-family: 'Cinzel'; margin: 5px 0 15px 0;">පහත බොත්තම ඔබා "මම මගේ අනාගතය අදම නිර්මාණය කරමි" යන්න පවසන්න.</p>
-                <button id="evoi-mic-btn" class="royal-btn" style="border-color: var(--evoi-cyan); color: var(--evoi-cyan);" onclick="recordEvoiVoice()">🎙️ START VOICE RECORD</button>
-            </div>
-
-            <div id="evoi-step-2" style="display: none; text-align: left; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--evoi-cyan);">
-                <div class="evoi-text-box" style="border-color: var(--neon-green); color: var(--neon-green);">✅ CLONE SUCCESSFUL.</div>
-                <div style="background: #000; padding: 20px; border-radius: 10px; border: 1px dashed var(--evoi-cyan); text-align: center; margin-top: 20px;">
-                    <div style="font-size: 3rem; margin-bottom: 10px;">🔊</div>
-                    <p style="color: #fff; font-family: 'Cinzel';">"You have already won. Now, just execute the plan."</p>
-                    <button class="royal-btn" style="background: var(--evoi-cyan); color: #000;" onclick="playEvoiSimulation()">PLAY FUTURE VOICE</button>
-                </div>
-            </div>
-
-            <button class="royal-btn" style="margin-top: 40px; border-color: #555; color: #aaa; width: 200px;" onclick="closeEvoiScreen()">RETURN TO HUB</button>
+        <div style="position: relative; z-index: 1; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1 style="font-family: 'Orbitron'; color: var(--evoi-cyan); font-size: 3rem; letter-spacing: 15px; text-shadow: 0 0 30px var(--evoi-cyan); animation: blink 1s infinite alternate; text-align: center;">EVO.i<br><span style="font-size: 1.2rem; letter-spacing: 5px; color: #fff; display: block; margin-top: 15px;">COMING SOON</span></h1>
+            <div class="hologram-circle" style="margin-top: 40px;"><div class="evoi-icon">🧬</div></div>
+            <button class="royal-btn" style="position: absolute; bottom: 40px; border-color: #555; color: #aaa; width: 200px;" onclick="closeEvoiScreen()">RETURN TO HUB</button>
         </div>
     </div>
 
@@ -830,8 +799,8 @@
             camBtn.innerText = "CALIBRATING LENS...";
             document.getElementById('camStatus').innerText = "INITIALIZING LENS...";
             try {
-                // strict constraint for back camera
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } }).catch(() => navigator.mediaDevices.getUserMedia({ video: true }));
+                // FIXED facingMode to just "environment" for maximum mobile compatibility
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).catch(() => navigator.mediaDevices.getUserMedia({ video: true }));
                 video.srcObject = stream; video.play(); isScanningHR = true;
                 document.getElementById('camStatus').style.display = "none";
                 
@@ -1146,18 +1115,7 @@
             document.getElementById('main-bg').style.filter = "none";
             document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--neon-blue) 0%, transparent 70%)";
             switchScreen('evoi-screen', 'main-hub');
-            document.getElementById('evoi-step-1').style.display = 'block'; document.getElementById('evoi-step-2').style.display = 'none';
         }
-        function recordEvoiVoice() {
-            let btn = document.getElementById('evoi-mic-btn'); btn.innerText = "🔴 RECORDING... (5s)";
-            document.getElementById('clone-status').innerText = "CAPTURING VOCAL BIOMETRICS...";
-            let tl = 5; let intv = setInterval(() => { tl--; btn.innerText = `🔴 RECORDING... (${tl}s)`; if(tl <= 0) { clearInterval(intv); processEvoiClone(); } }, 1000);
-        }
-        function processEvoiClone() {
-            document.getElementById('clone-status').innerText = "UPLOADING TO NEURAL NETWORK...";
-            setTimeout(() => { document.getElementById('clone-status').innerText = "CLONING VOICE & SHIFTING PITCH..."; setTimeout(() => { document.getElementById('clone-status').innerText = "EVO.i CLONE READY"; document.getElementById('evoi-step-1').style.display = 'none'; document.getElementById('evoi-step-2').style.display = 'block'; }, 2000); }, 2000);
-        }
-        function playEvoiSimulation() { alert("⚠️ සැබෑ ලෝකයේදී මෙතැනදී ElevenLabs API හරහා ජෙනරේට් කළ ඔබගේම වයසක කටහඬ ප්ලේ වේ."); }
 
         // 🧬 66-DAY GRID & VIDEO LOGIC
         function buildGrid() {
@@ -1223,7 +1181,7 @@
                         currentActiveDay = nextDay; amCompletedToday = false; localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); buildGrid(); 
                         alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
                         playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න."); }
+                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ জ্ঞාන්න."); }
                 } else {
                     alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
                     document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
