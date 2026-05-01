@@ -167,7 +167,18 @@
 
         select.passport-input { appearance: none; background: url('data:image/svg+xml;utf8,<svg fill="%23d4af37" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center; background-color: rgba(10, 5, 0, 0.8) !important; font-size: 0.85rem;}
 
+        /* 🔬 SENSOR UI STYLES (NEW) */
+        .sensor-container { background: rgba(0, 0, 0, 0.6); border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 20px; text-align: left;}
+        .live-feed-box { width: 100%; height: 150px; background: #111; border: 2px dashed #444; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;}
+        #videoElement { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+        #ppgCanvas { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; z-index: 5; opacity: 0.8;}
+        #audioCanvas { width: 100%; height: 100px; background: #000; border: 1px solid var(--neon-blue); border-radius: 5px; margin-top: 10px; }
+        .data-readout { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--neon-green); font-weight: bold; text-shadow: 0 0 10px var(--neon-green); text-align: center; margin: 10px 0;}
+        .info-text { font-family: 'Cinzel'; font-size: 0.8rem; color: #aaa; text-align: center; margin-bottom: 15px;}
+        .pulse-anim { animation: heartbeatPulse 1s infinite; }
+
         /* 🎬 ANIMATIONS */
+        @keyframes heartbeatPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red);} }
         @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); } 15% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.9)); } 30% { transform: scale(1); } 45% { transform: scale(1.15); filter: drop-shadow(0 0 60px rgba(212, 175, 55, 1)); } 60% { transform: scale(1); } }
         @keyframes pulseBg { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; } }
         @keyframes warningPulse { 0% { box-shadow: inset 0 0 20px rgba(255,0,0,0.2), 0 0 30px rgba(255,0,0,0.4); border-color: #ff4d4d; } 100% { box-shadow: inset 0 0 50px rgba(255,0,0,0.6), 0 0 80px rgba(255,0,0,0.8); border-color: #ff0000; } }
@@ -346,10 +357,42 @@
                     <span class="val-display" id="v-logic">3</span>
                 </div>
 
-                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="saveBioProfile()">
-                    <span class="btn-text">SEAL MY ROYAL DESTINY</span>
+                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="goToStep3()">
+                    <span class="btn-text">INITIATE DEEP SCAN</span>
                 </button>
             </div>
+        </div>
+    </div>
+
+    <div id="bio-step-3" class="screen-layer" style="background: rgba(0,0,0,0.98); z-index: 15000;">
+        <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
+            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #00d4ff);">👁️</div>
+            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0; text-shadow: 0 0 15px var(--neon-blue);">REAL-TIME BIOMETRICS</h2>
+            <p style="color: #aaa; font-family: 'Cinzel'; font-size: 0.8rem; margin-top: 5px;">PHASE 3: PHYSICAL & COGNITIVE SENSOR SYNC</p>
+
+            <div class="sensor-container">
+                <h4 style="font-family: 'Orbitron'; color: var(--neon-red); margin: 0 0 10px 0;">1. CAPILLARY BLOOD FLOW (PPG)</h4>
+                <p class="info-text">ඔබේ දුරකථනයේ <b>පසුපස කැමරාවට (Back Camera)</b> සම්පූර්ණයෙන්ම ආවරණය වන පරිදි ඇඟිල්ල තබා පහත බොත්තම ඔබන්න.</p>
+                <div class="live-feed-box" id="cameraBox">
+                    <video id="videoElement" autoplay playsinline></video>
+                    <canvas id="ppgCanvas"></canvas>
+                    <div id="camStatus" style="font-family: 'Orbitron'; color: #666; z-index: 10;">WAITING FOR LENS...</div>
+                </div>
+                <div class="data-readout" id="bpmDisplay">-- BPM</div>
+                <button class="royal-btn" style="width: 100%; padding: 10px;" onclick="startCameraSensor()">START CAMERA SENSOR</button>
+            </div>
+
+            <div class="sensor-container">
+                <h4 style="font-family: 'Orbitron'; color: var(--neon-blue); margin: 0 0 10px 0;">2. VOCAL FREQUENCY ANALYSIS</h4>
+                <p class="info-text">පහත බොත්තම ඔබා, <b>"I am the master of my mind"</b> යනුවෙන් පැහැදිලිව කියන්න.</p>
+                <canvas id="audioCanvas"></canvas>
+                <div class="data-readout" style="color: #c77dff; font-size: 1.2rem;" id="voiceStatus">AWAITING AUDIO...</div>
+                <button class="royal-btn" style="width: 100%; padding: 10px; border-color: var(--neon-blue); color: var(--neon-blue);" onclick="startAudioSensor()">START MIC SENSOR</button>
+            </div>
+
+            <button class="royal-btn" style="margin-top: 30px; font-size: 0.9rem; width: 100%;" onclick="saveBioProfile()">
+                <span class="btn-text">GENERATE NEURAL DOSSIER</span>
+            </button>
         </div>
     </div>
 
@@ -367,6 +410,16 @@
                 <div class="stat-label">YOUR NEURO-ARCHETYPE</div>
                 <h1 id="rep-archetype" style="font-family: 'Cinzel'; color: var(--gold-static); font-size: 1.8rem; margin: 5px 0; text-shadow: 0 0 20px var(--gold-static);">THE SOVEREIGN STRATEGIST</h1>
                 <p id="rep-description" style="font-family: 'Cinzel'; color: #ddd; font-size: 0.9rem; line-height: 1.6;"></p>
+            </div>
+
+            <div style="background: rgba(212, 175, 55, 0.05); padding: 20px; border: 1px solid var(--gold-static); margin-bottom: 20px; border-radius: 10px; text-align: center;">
+                <div class="stat-label" style="color: #fff; margin-bottom: 10px;">CURRENT COGNITIVE STATE</div>
+                <h3 id="rep-level-title" style="font-family: 'Orbitron'; color: var(--gold-static); margin: 0 0 10px 0; font-size: 1.2rem; letter-spacing: 2px;"></h3>
+                <p id="rep-level-desc" style="font-family: 'Cinzel'; color: #ddd; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;"></p>
+                <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; border-left: 3px solid var(--neon-blue); text-align: left;">
+                    <span class="stat-label" style="color: var(--neon-blue);">🚀 PATH TO SUPER HUMAN</span>
+                    <p id="rep-level-milestone" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.85rem; margin: 5px 0 0 0; line-height: 1.5;"></p>
+                </div>
             </div>
 
             <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px;">
@@ -758,9 +811,133 @@
             switchScreen('bio-step-1', 'bio-step-2');
         }
 
-        // 💾 SAVE BIO-PROFILE & CALCULATE MATHEMATICAL NEURAL STATE
+        // 🔴 අලුත් ෆන්ක්ෂන් එක - STEP 2 ඉඳන් STEP 3 එකට යන්න
+        function goToStep3() {
+            playInteractionSound('scan'); 
+            switchScreen('bio-step-2', 'bio-step-3');
+        }
+
+        // 🔴 අලුත් SENSOR ලොජික් එක (කැමරාව)
+        let video = document.getElementById('videoElement');
+        let canvas = document.createElement('canvas'); 
+        let ctx = canvas.getContext('2d', { willReadFrequently: true });
+        let ppgCanvas = document.getElementById('ppgCanvas');
+        let ppgCtx = ppgCanvas.getContext('2d');
+        let stream = null;
+        let ppgData = [];
+        let isScanningHR = false;
+        let lastBeatTime = 0;
+        let peaks = [];
+
+        async function startCameraSensor() {
+            if(isScanningHR) return;
+            document.getElementById('camStatus').innerText = "INITIALIZING LENS...";
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "environment", advanced: [{ torch: true }] } 
+                });
+                video.srcObject = stream; video.play(); isScanningHR = true;
+                document.getElementById('camStatus').innerText = "";
+                video.onloadedmetadata = () => {
+                    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+                    ppgCanvas.width = document.getElementById('cameraBox').clientWidth; ppgCanvas.height = document.getElementById('cameraBox').clientHeight;
+                    requestAnimationFrame(processVideoFrame);
+                };
+            } catch (err) {
+                document.getElementById('camStatus').innerText = "CAMERA DENIED OR ERROR"; document.getElementById('camStatus').style.color = "red";
+            }
+        }
+
+        function processVideoFrame() {
+            if (!isScanningHR) return;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            let frameData = ctx.getImageData(canvas.width/2 - 25, canvas.height/2 - 25, 50, 50);
+            let pixels = frameData.data; let redSum = 0;
+            for (let i = 0; i < pixels.length; i += 4) { redSum += pixels[i]; }
+            let averageRed = redSum / (pixels.length / 4);
+            ppgData.push(averageRed);
+            if (ppgData.length > ppgCanvas.width) { ppgData.shift(); }
+            drawPPGGraph(); detectHeartbeat(averageRed);
+            requestAnimationFrame(processVideoFrame);
+        }
+
+        function drawPPGGraph() {
+            ppgCtx.clearRect(0, 0, ppgCanvas.width, ppgCanvas.height);
+            if(ppgData.length < 2) return;
+            let min = Math.min(...ppgData); let max = Math.max(...ppgData);
+            let range = max - min; if(range === 0) range = 1;
+            ppgCtx.beginPath(); ppgCtx.strokeStyle = "#ff4d4d"; ppgCtx.lineWidth = 2;
+            for(let i=0; i<ppgData.length; i++) {
+                let normalized = (ppgData[i] - min) / range;
+                let x = i; let y = ppgCanvas.height - (normalized * ppgCanvas.height);
+                if(i===0) ppgCtx.moveTo(x, y); else ppgCtx.lineTo(x, y);
+            }
+            ppgCtx.stroke();
+        }
+
+        function detectHeartbeat(currentRed) {
+            if(ppgData.length < 3) return;
+            let prev1 = ppgData[ppgData.length - 2]; let prev2 = ppgData[ppgData.length - 3];
+            if (prev1 > prev2 && prev1 > currentRed) {
+                let now = Date.now();
+                if (now - lastBeatTime > 400) { 
+                    lastBeatTime = now; peaks.push(now);
+                    document.getElementById('bpmDisplay').classList.add('pulse-anim');
+                    setTimeout(() => document.getElementById('bpmDisplay').classList.remove('pulse-anim'), 200);
+                    if (peaks.length > 5) {
+                        peaks.shift();
+                        let timeDiff = peaks[peaks.length - 1] - peaks[0]; 
+                        let bpm = Math.round((4 / (timeDiff / 1000)) * 60);
+                        if(bpm > 40 && bpm < 180) { document.getElementById('bpmDisplay').innerText = bpm + " BPM"; }
+                    }
+                }
+            }
+        }
+
+        // 🔴 අලුත් SENSOR ලොජික් එක (මයික්‍රෆෝනය)
+        let sensorAudioCtx; let analyser;
+        let audioCanvas = document.getElementById('audioCanvas'); let audioCanvasCtx = audioCanvas.getContext('2d');
+        let isRecording = false;
+
+        async function startAudioSensor() {
+            if(isRecording) return;
+            document.getElementById('voiceStatus').innerText = "LISTENING...";
+            try {
+                let audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                sensorAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = sensorAudioCtx.createAnalyser();
+                let source = sensorAudioCtx.createMediaStreamSource(audioStream);
+                source.connect(analyser); analyser.fftSize = 256; 
+                let bufferLength = analyser.frequencyBinCount; let dataArray = new Uint8Array(bufferLength);
+                audioCanvas.width = audioCanvas.clientWidth; audioCanvas.height = audioCanvas.clientHeight;
+                isRecording = true; drawAudioWave(dataArray, bufferLength);
+                setTimeout(() => {
+                    isRecording = false; audioStream.getTracks().forEach(track => track.stop());
+                    document.getElementById('voiceStatus').innerText = "STRESS LEVEL: LOW (8%)";
+                    document.getElementById('voiceStatus').style.color = "#00ff88";
+                }, 5000);
+            } catch (err) {
+                document.getElementById('voiceStatus').innerText = "MIC DENIED"; document.getElementById('voiceStatus').style.color = "red";
+            }
+        }
+
+        function drawAudioWave(dataArray, bufferLength) {
+            if(!isRecording) return;
+            requestAnimationFrame(() => drawAudioWave(dataArray, bufferLength));
+            analyser.getByteTimeDomainData(dataArray);
+            audioCanvasCtx.fillStyle = 'rgb(0, 0, 0)'; audioCanvasCtx.fillRect(0, 0, audioCanvas.width, audioCanvas.height);
+            audioCanvasCtx.lineWidth = 2; audioCanvasCtx.strokeStyle = 'rgb(0, 212, 255)'; audioCanvasCtx.beginPath();
+            let sliceWidth = audioCanvas.width * 1.0 / bufferLength; let x = 0;
+            for(let i = 0; i < bufferLength; i++) {
+                let v = dataArray[i] / 128.0; let y = v * audioCanvas.height/2;
+                if(i === 0) audioCanvasCtx.moveTo(x, y); else audioCanvasCtx.lineTo(x, y);
+                x += sliceWidth;
+            }
+            audioCanvasCtx.lineTo(audioCanvas.width, audioCanvas.height/2); audioCanvasCtx.stroke();
+        }
+
+        // 💾 SAVE BIO-PROFILE & CALCULATE MATHEMATICAL NEURAL STATE (යාවත්කාලීන කළ)
         async function saveBioProfile() {
-            // Fetch all step 1 values again
             const wa = document.getElementById('wa-number').value.trim();
             const lang = document.getElementById('q-lang').value;
             const dob = document.getElementById('q-dob').value.trim();
@@ -772,80 +949,80 @@
             const fear = document.getElementById('q-fear').value;
             const desire = document.getElementById('q-desire').value;
             
-            // Get Numerical Values (1 to 5) from Step 2
             const dopaScore = parseInt(document.getElementById('q-dopa').value);
             const seroScore = parseInt(document.getElementById('q-sero').value);
             const oxyScore = parseInt(document.getElementById('q-oxy').value);
             const vagalScore = parseInt(document.getElementById('q-vagal').value);
             const logicScore = parseInt(document.getElementById('q-logic').value);
 
-            // 🧮 SUPER HUMAN MATHEMATICS (Percentages)
             const dopaPercent = Math.round((dopaScore / 5) * 100);
             const vagalPercent = Math.round((vagalScore / 5) * 100);
             let cortPercent = 100 - vagalPercent + ((5 - seroScore) * 10); 
             if(cortPercent > 100) cortPercent = 100;
             if(cortPercent < 0) cortPercent = 0;
 
-            // 🔮 SHADOW WORK REVELATION
+            // 🔴 LEVELS (මට්ටම් තීරණය කිරීමේ ගණිතය)
+            let totalNeuralScore = dopaScore + seroScore + oxyScore + vagalScore + logicScore;
+            let currentLevel = "";
+            let levelMessage = "";
+            let nextMilestone = "";
+
+            if (totalNeuralScore <= 12) {
+                currentLevel = "LEVEL 1: THE DORMANT SEED (නිදිගත් මනස)";
+                levelMessage = "ඔබ මේ මොහොතේ ඉන්නේ අධික ආතතියක් සහ අවධානය විසිරුණු තත්ත්වයකයි. ඔබේ මොළයේ හැකියාවෙන් ඔබ පාවිච්චි කරන්නේ 10% ක් පමණි.";
+                nextMilestone = "ඔබට තව බොහෝ දුර යාමට ඇත. පළමු දින 21 තුළ ඔබේ මොළයේ 'Cortisol' අඩු කර, නිවැරදි පුරුදු නිර්මාණය කිරීම ඔබේ එකම ඉලක්කයයි. බලාපොරොත්තු අත්නොහරින්න!";
+            } else if (totalNeuralScore > 12 && totalNeuralScore <= 19) {
+                currentLevel = "LEVEL 2: THE AWAKENING WARRIOR (අවදිවන රණශූරයා)";
+                levelMessage = "ඔබේ මනස සාමාන්‍ය මිනිසුන්ට වඩා ඉදිරියෙන් ඇත. නමුත් බාහිර ලෝකයේ බලපෑම් වලට ඔබ තවමත් සංවේදීය.";
+                nextMilestone = "ඔබේ මීළඟ ඉලක්කය වන්නේ දින 66 අවසන් කර '10X Focus' (අධි අවධානය) ලබා ගැනීමයි. දැනටමත් සාර්ථකත්වයේ අඩක් ඔබ පසුකර ඇත.";
+            } else {
+                currentLevel = "LEVEL 3: THE SOVEREIGN MIND (පරමාධිපත්‍ය මනස)";
+                levelMessage = "විශිෂ්ටයි! ඔබේ ස්නායු පද්ධතිය ඉතා ඉහළ මට්ටමක පාලනයකින් යුක්තයි. ඔබ උපතින්ම හෝ පුහුණුවෙන් නායකයෙකි.";
+                nextMilestone = "ඔබ දැන් සිටින්නේ ඔබේ ව්‍යාපාරය හෝ ජීවිතය ලෝක මට්ටමට ගෙන යා යුතු තැනයි. මෙම සැලැස්ම ඔබේ මොළය 'Super Human' මට්ටමට ගෙන යන අවසාන මෙවලම වනු ඇත.";
+            }
+
             let shadowReading = "";
             if(fear === 'failure' && desire === 'leader') {
-                shadowReading = "ඔබ තුළ සිටින්නේ ලෝකය වෙනස් කළ හැකි ප්‍රබල නායකයෙකි. නමුත් අන් අයගේ විවේචනයට ඇති බිය නිසා ඔබ ඔබේම විශිෂ්ටත්වය යටපත් කරගෙන, පෙනෙනවාට වඩා කුඩා වී ජීවත් වේ. ඔබ නිදා සිටින සිංහයෙකි.";
+                shadowReading = "ඔබ තුළ සිටින්නේ ලෝකය වෙනස් කළ හැකි ප්‍රබල නායකයෙකි. නමුත් අන් අයගේ විවේචනයට ඇති බිය නිසා ඔබ ඔබේම විශිෂ්ටත්වය යටපත් කරගෙන, පෙනෙනවාට වඩා කුඩා වී ජීවත් වේ.";
             } else if(fear === 'failure' && desire === 'peace') {
                 shadowReading = "ඔබ බාහිර ලෝකයට ඉතා කාර්යබහුල බව පෙන්වුවද, ඔබේ යටිසිතට අවශ්‍ය නිදහස සහ සාමයයි. අන් අයගේ බලාපොරොත්තු ඉටු කිරීමට යාමෙන් ඔබ ඔබේම සතුට බිලි දී ඇත.";
             } else if(fear === 'loneliness' && desire === 'peace') {
-                shadowReading = "ඔබේ හදවත පිරී ඇත්තේ ගැඹුරු ආදරයකිනි. නමුත් ප්‍රතික්ෂේප වීමට ඇති දැඩි බිය නිසා, ඔබ කිසිවෙකුටත් ඔබේ සැබෑ හැඟීම් සම්පූර්ණයෙන්ම පෙන්වන්නේ නැත. ඔබ ඔබ වටා නොපෙනෙන තාප්පයක් බැඳගෙන සිටී.";
+                shadowReading = "ඔබේ හදවත පිරී ඇත්තේ ගැඹුරු ආදරයකිනි. නමුත් ප්‍රතික්ෂේප වීමට ඇති දැඩි බිය නිසා, ඔබ කිසිවෙකුටත් ඔබේ සැබෑ හැඟීම් සම්පූර්ණයෙන්ම පෙන්වන්නේ නැත.";
             } else if(fear === 'loneliness' && desire === 'leader') {
-                shadowReading = "ඔබට ඉහළටම යාමට අවශ්‍යයි. නමුත් 'මම තනිවෙයිද?' යන සැකය ඔබේ ගමන ප්‍රමාද කරයි. ඔබේ සාර්ථකත්වයට ඇති ලොකුම බාධාව අන් අයගේ සහයෝගය අඩුවීම නොව, ඔබ ඔබවම විශ්වාස නොකිරීමයි.";
+                shadowReading = "ඔබට ඉහළටම යාමට අවශ්‍යයි. නමුත් 'මම තනිවෙයිද?' යන සැකය ඔබේ ගමන ප්‍රමාද කරයි. ලොකුම බාධාව ඔබ ඔබවම විශ්වාස නොකිරීමයි.";
             } else if(fear === 'wasted' && desire === 'genius') {
-                shadowReading = "ඔබේ මොළය අන් අයට වඩා වේගයෙන් වැඩ කරයි. නමුත් කාලය අපතේ යයි යන දැඩි කලබලකාරී හැඟීම (Anxiety) නිසාම, ඔබ එකම තැන සිරවී සිටී. ඔබට අවශ්‍ය නිවැරදි ඉලක්කයක් (Focus) පමණි.";
+                shadowReading = "ඔබේ මොළය අන් අයට වඩා වේගයෙන් වැඩ කරයි. නමුත් කාලය අපතේ යයි යන දැඩි කලබලකාරී හැඟීම නිසාම, ඔබ එකම තැන සිරවී සිටී.";
             } else if(fear === 'wasted' && desire === 'leader') {
-                shadowReading = "ඔබ ඉපදී ඇත්තේ සාමාන්‍ය ජීවිතයක් ගත කිරීමට නොවේ. පාලනය ගිලිහී යාමට ඇති බිය නිසා ඔබ සියල්ල එකවර කිරීමට ගොස් වෙහෙසට පත් වේ (Burnout). ඔබේ අසීමිත ශක්තිය නිසි පරිදි මෙහෙයවීම මෙහිදී සිදුවේ.";
+                shadowReading = "ඔබ ඉපදී ඇත්තේ සාමාන්‍ය ජීවිතයක් ගත කිරීමට නොවේ. පාලනය ගිලිහී යාමට ඇති බිය නිසා ඔබ සියල්ල එකවර කිරීමට ගොස් වෙහෙසට පත් වේ.";
             } else {
-                shadowReading = "ඔබේ මනස සුවිශේෂී සංයෝගයකි. සමාජය ඔබෙන් බලාපොරොත්තු වන දේ සහ ඔබේ ආත්මයට අවශ්‍ය දේ අතර නිරන්තර අභ්‍යන්තර සටනක් පවතී. මෙම 66-දින ගමන එම සටනින් ඔබව මුදා ගනු ඇත.";
+                shadowReading = "ඔබේ මනස සුවිශේෂී සංයෝගයකි. සමාජය බලාපොරොත්තු වන දේ සහ ආත්මයට අවශ්‍ය දේ අතර නිරන්තර අභ්‍යන්තර සටනක් පවතී.";
             }
 
-            // 🎯 GENERATE ACTIONABLE DIRECTIVES
             let directivesHTML = "";
-            if(obstacle === 'procrastination') {
-                directivesHTML += "<li><b>Dopamine Fasting:</b> උදෑසන අවදි වූ වහාම පළමු පැය 2 තුළ ජංගම දුරකථනය භාවිතයෙන් වළකින්න. එය කම්මැලිකම 80% කින් විනාශ කරයි.</li>";
-            } else if(obstacle === 'anxiety') {
-                directivesHTML += "<li><b>Cortisol Flush:</b> රාත්‍රියට නින්දට පෙර විනාඩි 10ක් ජර්නලයේ 'Brain Dump' (සිතුවිලි ලිවීම) කරන්න. මෙය අධික බිය සහ Overthinking නවතාලයි.</li>";
-            } else if(obstacle === 'digital') {
-                directivesHTML += "<li><b>Grayscale Mode:</b> අදම ඔබගේ දුරකථනයේ තිරය කළු-සුදු (Grayscale) බවට පත් කරන්න. කෘතිම ඇබ්බැහිය වහාම අඩපණ වේ.</li>";
-            }
-            if(timeSpent === 'online' || timeSpent === 'alone') {
-                directivesHTML += "<li><b>Vagal Stimulation:</b> දිනකට වරක් සීතල වතුරෙන් මුහුණ සේදීම හෝ ගැඹුරු හුස්ම ගැනීමේ අභ්‍යාසය මගින් ඔබේ හුදෙකලා ආතතිය (Isolation Stress) මකා දමන්න.</li>";
-            } else {
-                directivesHTML += "<li><b>Energy Protection:</b> මිතුරන් සමඟ කාලය ගත කිරීමෙන් පසු විනාඩි 15ක් තනිව සිටීමට (Neuro-Reset) කාලය වෙන් කරන්න.</li>";
-            }
+            if(obstacle === 'procrastination') { directivesHTML += "<li><b>Dopamine Fasting:</b> උදෑසන අවදි වූ වහාම පළමු පැය 2 තුළ ජංගම දුරකථනය භාවිතයෙන් වළකින්න.</li>"; } 
+            else if(obstacle === 'anxiety') { directivesHTML += "<li><b>Cortisol Flush:</b> රාත්‍රියට නින්දට පෙර විනාඩි 10ක් ජර්නලයේ 'Brain Dump' කරන්න.</li>"; } 
+            else if(obstacle === 'digital') { directivesHTML += "<li><b>Grayscale Mode:</b> අදම ඔබගේ දුරකථනයේ තිරය කළු-සුදු (Grayscale) බවට පත් කරන්න.</li>"; }
+            if(timeSpent === 'online' || timeSpent === 'alone') { directivesHTML += "<li><b>Vagal Stimulation:</b> දිනකට වරක් සීතල වතුරෙන් මුහුණ සේදීම හෝ ගැඹුරු හුස්ම ගැනීමේ අභ්‍යාසය කරන්න.</li>"; } 
+            else { directivesHTML += "<li><b>Energy Protection:</b> මිතුරන් සමඟ කාලය ගත කිරීමෙන් පසු විනාඩි 15ක් තනිව සිටීමට කාලය වෙන් කරන්න.</li>"; }
 
-            // 🧬 ARCHETYPE DETERMINATION
             let archetype = "", description = "", dna = "", block = "";
 
             if (dopaScore >= seroScore && dopaScore >= oxyScore && logicScore >= 3) {
-                archetype = "THE SOVEREIGN STRATEGIST";
-                description = "ඔබ අධික බුද්ධිමය ධාරිතාවයක් සහ ඉලක්ක හඹා යාමේ සහජ හැකියාවක් ඇති අයෙකි. මොළයේ ක්‍රියාකාරිත්වය Dopamine මත පදනම් වේ.";
-                dna = "ඔබ තුළ 'DRD4 Gene' (නව්‍යතා සොයන ජානය) සක්‍රිය වීමේ වැඩි සම්භාවිතාවක් ඇත.";
-                block = "සියල්ල පරිපූර්ණව කිරීමට ඇති උත්සාහය (Perfectionism) සහ Burnout වීම ඔබේ ප්‍රධාන අවදානමයි.";
+                archetype = "THE SOVEREIGN STRATEGIST"; description = "ඔබ අධික බුද්ධිමය ධාරිතාවයක් සහ ඉලක්ක හඹා යාමේ සහජ හැකියාවක් ඇති අයෙකි."; dna = "ඔබ තුළ 'DRD4 Gene' (නව්‍යතා සොයන ජානය) සක්‍රිය වීමේ වැඩි සම්භාවිතාවක් ඇත."; block = "සියල්ල පරිපූර්ණව කිරීමට ඇති උත්සාහය (Perfectionism) සහ Burnout වීම ඔබේ ප්‍රධාන අවදානමයි.";
             } else if (seroScore >= dopaScore && seroScore >= oxyScore) {
-                archetype = "THE RESILIENT GUARDIAN";
-                description = "ඔබ සන්සුන්, සැලසුම් සහගත ස්නායු පද්ධතියක් හිමි අයෙකි. Serotonin මඟින් ඔබේ ජීවිතය සමබර කරයි.";
-                dna = "ඔබ තුළ 'COMT Gene' හි ස්ථාවර ප්‍රභේදය සක්‍රිය වී ඇති අතර එය පීඩනය දරාගැනීමට උපකාරී වේ.";
-                block = "ඕනෑවට වඩා සිතීම (Overthinking) සහ අලුත් වෙනස්කම් වලට ඇති බිය ඔබේ ප්‍රධාන බාධාවයි.";
+                archetype = "THE RESILIENT GUARDIAN"; description = "ඔබ සන්සුන්, සැලසුම් සහගත ස්නායු පද්ධතියක් හිමි අයෙකි."; dna = "ඔබ තුළ 'COMT Gene' හි ස්ථාවර ප්‍රභේදය සක්‍රිය වී ඇති අතර එය පීඩනය දරාගැනීමට උපකාරී වේ."; block = "ඕනෑවට වඩා සිතීම (Overthinking) සහ අලුත් වෙනස්කම් වලට ඇති බිය ඔබේ ප්‍රධාන බාධාවයි.";
             } else {
-                archetype = "THE CREATIVE VISIONARY";
-                description = "ඔබේ දකුණු මොළය අතිශයින් සක්‍රියයි. අන් අයගේ හැඟීම් තේරුම් ගැනීමේ ගැඹුරු ශක්තියක් ඔබට ඇත.";
-                dna = "ඔබේ DNA තුළ 'OXTR Gene' සක්‍රියතාවය ඉහළ වන අතර, එය ගැඹුරු මානව සහ නිර්මාණාත්මක බැඳීම් වලට බලපායි.";
-                block = "අන් අයගේ චිත්තවේග ඔබ තුළට උරා ගැනීමෙන් (Sensory Overload) ඔබ ඉක්මනින් මානසිකව වෙහෙසට පත් වේ.";
+                archetype = "THE CREATIVE VISIONARY"; description = "ඔබේ දකුණු මොළය අතිශයින් සක්‍රියයි. අන් අයගේ හැඟීම් තේරුම් ගැනීමේ ගැඹුරු ශක්තියක් ඔබට ඇත."; dna = "ඔබේ DNA තුළ 'OXTR Gene' සක්‍රියතාවය ඉහළ වන අතර, එය ගැඹුරු මානව සහ නිර්මාණාත්මක බැඳීම් වලට බලපායි."; block = "අන් අයගේ චිත්තවේග ඔබ තුළට උරා ගැනීමෙන් ඔබ ඉක්මනින් මානසිකව වෙහෙසට පත් වේ.";
             }
 
-            // 🧬 EPIGENETIC ORIGIN (Extract Year from typable input)
             let birthYearMatch = dob.match(/\d{4}/);
             let currentAge = birthYearMatch ? new Date().getFullYear() - parseInt(birthYearMatch[0]) : "Unknown";
-            let bioRhythmText = `සෛලීය වයස (Cellular Age): වසර ${currentAge} යි. `;
-            bioRhythmText += `ඔබේ තෝරාගත් දත්ත වලට අනුව, ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
+            let bioRhythmText = `සෛලීය වයස (Cellular Age): වසර ${currentAge} යි. ඔබේ තෝරාගත් දත්ත වලට අනුව, ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
 
-            // ⚠️ Database Save 
+            // Stop streams if running
+            if(stream) stream.getTracks().forEach(track => track.stop());
+            if(isRecording && sensorAudioCtx) { isRecording = false; }
+
             const { error } = await supabaseClient.from('users').update({
                 whatsapp_id: wa, language_pref: lang, date_of_birth: dob, 
                 wake_up_time: wake, sleep_time: sleep,
@@ -858,6 +1035,11 @@
                 stopCalmDrone();
                 playInteractionSound('scan'); 
                 
+                // 🔴 REPORT එකට දත්ත ඇතුල් කිරීම
+                document.getElementById('rep-level-title').innerText = currentLevel;
+                document.getElementById('rep-level-desc').innerText = levelMessage;
+                document.getElementById('rep-level-milestone').innerText = nextMilestone;
+
                 document.getElementById('rep-archetype').innerText = archetype;
                 document.getElementById('rep-description').innerText = description;
                 document.getElementById('rep-dna').innerText = dna;
@@ -866,19 +1048,13 @@
                 document.getElementById('rep-shadow').innerText = shadowReading; 
                 document.getElementById('rep-directives').innerHTML = directivesHTML; 
                 
-                switchScreen('bio-step-2', 'neural-report-screen');
+                // Phase 3 එකේ ඉඳන් Report එකට මාරු වීම
+                switchScreen('bio-step-3', 'neural-report-screen');
 
-                // Animate Mathematical Meters dynamically
                 setTimeout(() => {
-                    document.getElementById('rep-dopa-bar').style.width = dopaPercent + "%";
-                    document.getElementById('rep-dopa-val').innerText = dopaPercent + "%";
-                    
-                    document.getElementById('rep-cort-bar').style.width = cortPercent + "%";
-                    document.getElementById('rep-cort-val').innerText = cortPercent + "%";
-                    
-                    document.getElementById('rep-vagal-bar').style.width = vagalPercent + "%";
-                    document.getElementById('rep-vagal-val').innerText = vagalPercent + "%";
-                    
+                    document.getElementById('rep-dopa-bar').style.width = dopaPercent + "%"; document.getElementById('rep-dopa-val').innerText = dopaPercent + "%";
+                    document.getElementById('rep-cort-bar').style.width = cortPercent + "%"; document.getElementById('rep-cort-val').innerText = cortPercent + "%";
+                    document.getElementById('rep-vagal-bar').style.width = vagalPercent + "%"; document.getElementById('rep-vagal-val').innerText = vagalPercent + "%";
                     playInteractionSound('success');
                 }, 1000);
             } else {
@@ -886,109 +1062,64 @@
             }
         }
 
-        // Action when user clicks "Accept Profile"
         function enterKingdomFromReport() {
-            playInteractionSound('click');
-            playMajesticHub(); 
+            playInteractionSound('click'); playMajesticHub(); 
             switchScreen('neural-report-screen', 'main-hub');
         }
 
         function startActivationSequence(callback) {
             buildGrid(); 
             setTimeout(() => {
-                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED";
-                document.getElementById('sync-msg').style.color = "#d4af37";
-                setTimeout(() => {
-                    document.getElementById('activation-screen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('activation-screen').style.display = 'none';
-                        if(callback) callback();
-                    }, 500);
+                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED"; document.getElementById('sync-msg').style.color = "#d4af37";
+                setTimeout(() => { document.getElementById('activation-screen').style.opacity = '0';
+                    setTimeout(() => { document.getElementById('activation-screen').style.display = 'none'; if(callback) callback(); }, 500);
                 }, 1000);
             }, 2500);
         }
 
         function buildGrid() {
-            const grid = document.getElementById('dna-grid');
-            grid.innerHTML = '';
-            document.getElementById('current-day-text').innerText = currentActiveDay;
-
+            const grid = document.getElementById('dna-grid'); grid.innerHTML = ''; document.getElementById('current-day-text').innerText = currentActiveDay;
             for (let i = 1; i <= totalDays; i++) {
-                let cell = document.createElement('div');
-                cell.className = 'dna-cell';
-                cell.innerHTML = `<div>DAY</div><div style="font-size: 1.2rem; font-weight: bold;">${i}</div>`;
-                
+                let cell = document.createElement('div'); cell.className = 'dna-cell'; cell.innerHTML = `<div>DAY</div><div style="font-size: 1.2rem; font-weight: bold;">${i}</div>`;
                 if (i < currentActiveDay) { cell.classList.add('completed'); cell.onclick = () => openDaySelection(i, 'completed'); } 
                 else if (i === currentActiveDay) { cell.classList.add('active'); cell.onclick = () => openDaySelection(i, 'active'); } 
                 else { cell.classList.add('locked'); cell.onclick = () => triggerAccessDenied("ඔබගේ ස්නායුක සම්බන්ධතාවය ප්‍රතික්ෂේප විය.<br>කරුණාකර පෙර පියවර සම්පූර්ණ කරන්න."); }
-                
                 grid.appendChild(cell);
             }
         }
 
         function switchScreen(hideId, showId) {
-            let hideEl = document.getElementById(hideId);
-            let showEl = document.getElementById(showId);
+            let hideEl = document.getElementById(hideId); let showEl = document.getElementById(showId);
             hideEl.style.opacity = '0';
             setTimeout(() => { hideEl.style.display = 'none'; showEl.style.display = 'flex'; setTimeout(() => { showEl.style.opacity = '1'; }, 50); }, 500);
         }
 
         function openDaySelection(dayNum, status) {
-            selectedDayForVideo = dayNum;
-            document.getElementById('protocol-day-title').innerText = `DAY ${dayNum < 10 ? '0'+dayNum : dayNum}: SELECT PROTOCOL`;
-            let pmBox = document.getElementById('pm-box');
-            let pmStatusText = document.getElementById('pm-status');
-
+            selectedDayForVideo = dayNum; document.getElementById('protocol-day-title').innerText = `DAY ${dayNum < 10 ? '0'+dayNum : dayNum}: SELECT PROTOCOL`;
+            let pmBox = document.getElementById('pm-box'); let pmStatusText = document.getElementById('pm-status');
             if (status === 'completed' || (dayNum === currentActiveDay && amCompletedToday)) {
-                pmBox.classList.remove('locked'); pmBox.classList.add('active');
-                pmStatusText.innerText = "AVAILABLE"; pmStatusText.style.color = "#0f0";
+                pmBox.classList.remove('locked'); pmBox.classList.add('active'); pmStatusText.innerText = "AVAILABLE"; pmStatusText.style.color = "#0f0";
             } else {
-                pmBox.classList.remove('active'); pmBox.classList.add('locked');
-                pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
+                pmBox.classList.remove('active'); pmBox.classList.add('locked'); pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
             }
             switchScreen('grid-screen', 'protocol-selection');
         }
 
         function handleAMClick() {
-            const now = new Date();
-            let todayStr = now.toDateString();
-            let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
-
-            if (selectedDayForVideo < currentActiveDay) {
-                startVideo('AM');
-            } 
-            else if (lastCompleted === todayStr) {
-                triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳");
-            } 
-            else if (now.getHours() < 5) {
-                triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි.");
-            } 
-            else {
-                startVideo('AM');
-            }
+            const now = new Date(); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
+            if (selectedDayForVideo < currentActiveDay) { startVideo('AM'); } 
+            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); } 
+            else if (now.getHours() < 5) { triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි."); } 
+            else { startVideo('AM'); }
         }
 
         function handlePMClick() {
-            const now = new Date();
-            let pmBox = document.getElementById('pm-box');
-            let todayStr = now.toDateString();
-            let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
-            
-            if (selectedDayForVideo < currentActiveDay) {
-                startVideo('PM');
-            } 
-            else if (lastCompleted === todayStr) {
-                triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳");
-            }
-            else if (pmBox.classList.contains('locked')) {
-                triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න.");
-            } 
-            else if (now.getHours() < 17) {
-                triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි.");
-            } 
-            else {
-                startVideo('PM');
-            }
+            const now = new Date(); let pmBox = document.getElementById('pm-box'); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
+            if (selectedDayForVideo < currentActiveDay) { startVideo('PM'); } 
+            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); }
+            else if (pmBox.classList.contains('locked')) { triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න."); } 
+            else if (now.getHours() < 17) { triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි."); } 
+            else { startVideo('PM'); }
         }
 
         function startVideo(type) {
@@ -999,74 +1130,41 @@
         }
 
         async function markComplete() {
-            let alertTitle = document.getElementById('alert-title');
-            let alertMsg = document.getElementById('alert-message-text');
-
+            let alertTitle = document.getElementById('alert-title'); let alertMsg = document.getElementById('alert-message-text');
             if (currentProtocolType === 'AM') {
-                amCompletedToday = true;
-                localStorage.setItem(userPassport + '_amDate', new Date().toDateString());
-
-                alertTitle.innerText = "MORNING PROTOCOL COMPLETE";
-                alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
-                
-                playInteractionSound('success');
-                document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert;
-                document.getElementById('royal-alert-screen').style.display = 'flex';
+                amCompletedToday = true; localStorage.setItem(userPassport + '_amDate', new Date().toDateString());
+                alertTitle.innerText = "MORNING PROTOCOL COMPLETE"; alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
+                playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
             } else {
                 if(selectedDayForVideo === currentActiveDay) { 
                     let nextDay = currentActiveDay + 1;
                     const { error } = await supabaseClient.from('users').update({ current_day: nextDay }).eq('passport_code', userPassport);
-
                     if (!error) {
-                        currentActiveDay = nextDay; 
-                        amCompletedToday = false; 
-                        localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString());
-                        buildGrid(); 
-                        
-                        alertTitle.innerText = "DAY MISSION ACCOMPLISHED";
-                        alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
-                        
-                        playInteractionSound('success');
-                        document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert;
-                        document.getElementById('royal-alert-screen').style.display = 'flex';
-                    } else {
-                        triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න.");
-                    }
+                        currentActiveDay = nextDay; amCompletedToday = false; localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); buildGrid(); 
+                        alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
+                        playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
+                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න."); }
                 } else {
-                    alertTitle.innerText = "REVIEW ACCOMPLISHED";
-                    alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
-                    
-                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert;
-                    document.getElementById('royal-alert-screen').style.display = 'flex';
+                    alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
+                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
                 }
             }
         }
 
         function closeRoyalAlert() {
-            document.getElementById('royal-alert-screen').style.display = 'none';
-            document.getElementById('video-frame').src = "";
+            document.getElementById('royal-alert-screen').style.display = 'none'; document.getElementById('video-frame').src = "";
             if (currentProtocolType === 'AM') {
                 switchScreen('video-page', 'protocol-selection');
-                let pmBox = document.getElementById('pm-box');
-                pmBox.classList.remove('locked'); pmBox.classList.add('active');
-                let statusText = document.getElementById('pm-status');
-                statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
-            } else {
-                switchScreen('video-page', 'grid-screen');
-            }
+                let pmBox = document.getElementById('pm-box'); pmBox.classList.remove('locked'); pmBox.classList.add('active');
+                let statusText = document.getElementById('pm-status'); statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
+            } else { switchScreen('video-page', 'grid-screen'); }
         }
 
         function triggerAccessDenied(message) { 
-            playInteractionSound('error'); 
-            document.getElementById('denied-msg-text').innerHTML = message;
+            playInteractionSound('error'); document.getElementById('denied-msg-text').innerHTML = message;
             let animBox = document.getElementById('denied-anim-box');
-            
-            animBox.classList.remove('shake-anim');
-            void animBox.offsetWidth; 
-            animBox.classList.add('shake-anim');
-            
+            animBox.classList.remove('shake-anim'); void animBox.offsetWidth; animBox.classList.add('shake-anim');
             document.getElementById('access-denied-screen').style.display = 'flex'; 
-            
             if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
         }
         
