@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invincible Kingdom | Sovereign Mind</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --royal-gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
@@ -15,6 +15,7 @@
             --neon-green: #00ff88;
             --neon-red: #ff4d4d;
             --mystic-purple: #9d4edd;
+            --evoi-cyan: #00e5ff;
         }
 
         body, html {
@@ -27,65 +28,41 @@
         .kingdom-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('Ne.jpg'); 
-            background-size: cover; background-position: center; z-index: 1; 
+            background-size: cover; background-position: center; z-index: 1; transition: all 1s;
         }
 
         .dna-glow {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
-            filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out;
+            filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out; transition: all 1s;
         }
 
         /* 🛡️ LOGIN SCREEN */
         #login-screen { position: relative; z-index: 10000; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
         .login-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
         
-        /* ✨ FIXED INPUT BOX AESTHETICS */
+        /* ✨ INPUT BOX AESTHETICS */
         .passport-input {
-            background: rgba(0, 0, 0, 0.6) !important; 
-            border: 1px solid var(--gold-static) !important; 
-            color: var(--gold-static) !important; 
-            padding: 15px; font-family: 'Orbitron'; font-size: 1.1rem; text-align: center; 
-            border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase;
-            transition: all 0.3s ease; box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.6) !important; border: 1px solid var(--gold-static) !important; 
+            color: var(--gold-static) !important; padding: 15px; font-family: 'Orbitron'; font-size: 1.1rem; text-align: center; 
+            border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase; transition: all 0.3s ease; box-sizing: border-box;
             box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
         }
-        .passport-input:focus {
-            outline: none !important;
-            border-color: #fff !important;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), inset 0 0 15px rgba(212, 175, 55, 0.3) !important;
-            background: rgba(0, 0, 0, 0.9) !important;
-            color: #fff !important;
-        }
-        input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px black inset !important;
-            -webkit-text-fill-color: var(--gold-static) !important;
-            transition: background-color 5000s ease-in-out 0s;
-        }
+        .passport-input:focus { outline: none !important; border-color: #fff !important; box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), inset 0 0 15px rgba(212, 175, 55, 0.3) !important; background: rgba(0, 0, 0, 0.9) !important; color: #fff !important; }
         .passport-input::placeholder { color: rgba(212, 175, 55, 0.4); text-transform: none; font-size: 0.9rem;}
 
-        /* 🎚️ NEURAL SLIDER AESTHETICS */
-        .neural-slider {
-            -webkit-appearance: none; width: 100%; height: 8px; background: rgba(0,0,0,0.8);
-            border: 1px solid var(--gold-static); border-radius: 5px; outline: none; margin: 20px 0;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8); transition: 0.3s;
-        }
-        .neural-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%;
-            background: radial-gradient(circle, var(--gold-static) 0%, #b38728 100%);
-            cursor: pointer; box-shadow: 0 0 15px var(--gold-static); transition: 0.2s;
-        }
-        .neural-slider::-webkit-slider-thumb:hover { transform: scale(1.2); box-shadow: 0 0 25px #fff; }
+        /* 🎚️ NEURAL SLIDER */
+        .neural-slider { -webkit-appearance: none; width: 100%; height: 8px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-static); border-radius: 5px; outline: none; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); transition: 0.3s; }
+        .neural-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: radial-gradient(circle, var(--gold-static) 0%, #b38728 100%); cursor: pointer; box-shadow: 0 0 15px var(--gold-static); transition: 0.2s; }
         .slider-labels { display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.6rem; color: #aaa; letter-spacing: 1px; }
         .val-display { font-family: 'Orbitron'; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: right; margin-top: -15px; display: block;}
 
-        /* ⚡ ACTIVATION SCREEN */
+        /* ⚡ ACTIVATION & LAYERS */
         #activation-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; }
         .progress-container { width: 300px; height: 2px; background: #222; position: relative; }
         .progress-bar { width: 0%; height: 100%; background: var(--gold-static); box-shadow: 0 0 15px var(--gold-static); animation: grow 2.5s forwards; }
 
-        /* 🏰 UI LAYERS */
         .screen-layer { position: relative; z-index: 10; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px 20px; box-sizing: border-box; opacity: 0; transition: 1s; display: none; overflow-y: auto; }
         
         .header-badge { background: linear-gradient(135deg, #5e0000 0%, #200000 100%); border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center; border-radius: 40px 10px 40px 10px; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2), 0 15px 30px rgba(0,0,0,0.8); position: relative; margin-bottom: 20px; }
@@ -95,382 +72,131 @@
         .bee-coin { width: 300px; height: 300px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; position: relative; filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; margin: 40px 0; }
         .bee-coin::before { content: ''; position: absolute; width: 95%; height: 95%; background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat; }
 
-        /* 🛡️ MENU GRID */
+        /* 🛡️ BUTTONS */
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 900px; }
-        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; width: 100%; box-sizing: border-box;}
-        .royal-btn::after { content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none; }
+        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; width: 100%; box-sizing: border-box;}
         .btn-text::before { content: '🙤 '; } .btn-text::after { content: ' 🙦'; }
         .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.03); }
-        .royal-btn:hover .btn-text::before, .royal-btn:hover .btn-text::after { color: #000; }
-        .royal-btn:active { background: linear-gradient(180deg, #b38728 0%, #d4af37 100%); transform: translateY(2px) scale(0.98); box-shadow: inset 0 5px 10px rgba(0,0,0,0.8); }
+
+        /* 🚀 EVO.i BUTTON SPECIAL CSS */
+        .evoi-btn {
+            background: rgba(0, 20, 30, 0.8); border: 2px solid var(--evoi-cyan); color: var(--evoi-cyan);
+            border-radius: 5px; box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.2), 0 0 20px rgba(0, 229, 255, 0.4);
+            animation: evoiPulse 2s infinite; text-shadow: 0 0 10px var(--evoi-cyan); grid-column: span 3; padding: 20px; font-size: 1rem; letter-spacing: 4px;
+        }
+        .evoi-btn:hover { background: var(--evoi-cyan); color: #000; box-shadow: 0 0 40px var(--evoi-cyan); text-shadow: none; }
+        .evoi-btn .btn-text::before { content: '✦ '; } .evoi-btn .btn-text::after { content: ' ✦'; }
 
         /* 🧬 DNA PROGRESS GRID */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 15px; width: 90%; max-width: 900px; margin-top: 20px; }
         .dna-cell { aspect-ratio: 1; border: 2px solid #333; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.3s; position: relative; color: #666; }
         .dna-cell.completed { background: rgba(74, 4, 4, 0.6); border-color: var(--gold-static); color: var(--gold-static); }
-        .dna-cell.completed::after { content: '✔'; position: absolute; font-size: 1.5rem; opacity: 0.3; }
-        .dna-cell.active { border-color: var(--gold-static); color: #fff; text-shadow: 0 0 5px var(--gold-static); box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.5), 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; background: rgba(212, 175, 55, 0.2); }
-        .dna-cell.locked { opacity: 0.5; cursor: not-allowed; }
+        .dna-cell.active { border-color: var(--gold-static); color: #fff; box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.5), 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; background: rgba(212, 175, 55, 0.2); }
+        .dna-cell.locked { opacity: 0.5; }
 
-        /* ☀️🌙 AM/PM SELECTION */
-        .cycle-container { display: flex; gap: 30px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
-        .cycle-box { width: 180px; padding: 30px; border: 2px solid #444; border-radius: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
-        .cycle-box.active { border-color: var(--gold-static); box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-        .cycle-box.active:hover { transform: translateY(-5px); box-shadow: 0 0 40px var(--gold-static); }
-        .cycle-box.locked { filter: grayscale(1); opacity: 0.5; }
-        .cycle-box .icon { font-size: 3.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--gold-static)); }
-        .cycle-box .label { font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; color: var(--gold-static); }
-
-        /* 📺 VIDEO PAGE */
-        .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); margin-top: 20px; }
-
-        /* 🚫 ACCESS DENIED SCREEN */
-        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 25000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: warningPulse 1s infinite alternate; }
-
-        /* ✨ ROYAL ALERT */
-        #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .alert-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; max-width: 450px; animation: popIn 0.4s forwards; }
-
-        /* 📜 THE ROYAL SCROLL (SANDESHAYA) UI */
-        .sandeshaya-border { 
-            background: linear-gradient(to bottom, #1f1107, #0a0502); 
-            border: 4px solid var(--gold-static); 
-            border-image: var(--royal-gold) 1;
-            padding: 35px; 
-            position: relative; 
-            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 50px rgba(191, 149, 63, 0.2); 
-            border-radius: 8px; 
-        }
-        .sandeshaya-border::before { 
-            content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; 
-            border: 1px dashed rgba(212, 175, 55, 0.5); pointer-events: none; 
-        }
-        .sandeshaya-border::after {
-            content: '🙤 🙦'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            background: #000; padding: 0 15px; color: var(--gold-static); font-size: 1.5rem;
-        }
-        
-        /* 📊 NEURAL STABILITY METER */
-        .meter-container { width: 100%; height: 12px; background: #000; border: 1px solid #333; border-radius: 20px; margin: 15px 0; overflow: hidden; position: relative; box-shadow: inset 0 0 10px #000; }
-        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); box-shadow: 0 0 15px var(--gold-static); transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        /* 📜 UI ELEMENTS */
+        .sandeshaya-border { background: linear-gradient(to bottom, #1f1107, #0a0502); border: 4px solid var(--gold-static); border-image: var(--royal-gold) 1; padding: 35px; position: relative; box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 50px rgba(191, 149, 63, 0.2); border-radius: 8px; }
+        .meter-container { width: 100%; height: 12px; background: #000; border: 1px solid #333; border-radius: 20px; margin: 15px 0; overflow: hidden; position: relative; }
+        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); box-shadow: 0 0 15px var(--gold-static); transition: width 1s; }
         .stat-label { font-family: 'Orbitron'; font-size: 0.65rem; color: #fff; letter-spacing: 3px; text-transform: uppercase; }
+        .q-box { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--gold-static); text-align: left; border-radius: 0 10px 10px 0; }
+        .q-box p { font-size: 0.95rem; color: #e6cc80; margin-bottom: 12px; line-height: 1.6; }
 
-        /* 🛡️ QUESTION BOXES */
-        .q-box { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--gold-static); transition: 0.3s; text-align: left; border-radius: 0 10px 10px 0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);}
-        .q-box:hover { background: rgba(212, 175, 55, 0.05); border-left: 5px solid var(--gold-static); }
-        .q-box.mystic-box { border-left-color: var(--mystic-purple); }
-        .q-box.mystic-box:hover { background: rgba(157, 78, 221, 0.05); border-left-width: 5px; }
-        
-        .q-box p { font-size: 0.95rem; color: #e6cc80; margin-bottom: 12px; line-height: 1.6; font-family: 'Cinzel', serif; text-shadow: 0 0 5px rgba(0,0,0,0.8); }
-        .mystic-box p { color: #d0a1ff; }
-
-        select.passport-input { appearance: none; background: url('data:image/svg+xml;utf8,<svg fill="%23d4af37" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center; background-color: rgba(10, 5, 0, 0.8) !important; font-size: 0.85rem;}
-
-        /* 🔬 SENSOR UI STYLES (NEW) */
+        /* 🔬 SENSORS */
         .sensor-container { background: rgba(0, 0, 0, 0.6); border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 20px; text-align: left;}
         .live-feed-box { width: 100%; height: 150px; background: #111; border: 2px dashed #444; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;}
         #videoElement { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
         #ppgCanvas { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; z-index: 5; opacity: 0.8;}
         #audioCanvas { width: 100%; height: 100px; background: #000; border: 1px solid var(--neon-blue); border-radius: 5px; margin-top: 10px; }
-        .data-readout { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--neon-green); font-weight: bold; text-shadow: 0 0 10px var(--neon-green); text-align: center; margin: 10px 0;}
-        .info-text { font-family: 'Cinzel'; font-size: 0.8rem; color: #aaa; text-align: center; margin-bottom: 15px;}
-        .pulse-anim { animation: heartbeatPulse 1s infinite; }
+        .data-readout { font-family: 'Orbitron'; font-size: 2rem; color: var(--neon-green); font-weight: bold; text-shadow: 0 0 15px var(--neon-green); text-align: center; margin: 10px 0;}
+        .pulse-anim { animation: heartbeatPulse 0.5s infinite alternate; color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red);}
+
+        /* 🚀 EVO.i SCREEN SPECIFICS */
+        #evoi-screen { background: radial-gradient(circle at center, #001a22 0%, #000 100%); display: none; z-index: 20000; }
+        .hologram-circle { width: 200px; height: 200px; border-radius: 50%; border: 2px dashed var(--evoi-cyan); margin: 30px auto; display: flex; align-items: center; justify-content: center; position: relative; animation: spinSlow 10s linear infinite; box-shadow: 0 0 50px rgba(0, 229, 255, 0.2); }
+        .hologram-circle::after { content: ''; position: absolute; width: 80%; height: 80%; border-radius: 50%; border: 4px solid rgba(0, 229, 255, 0.5); border-top-color: transparent; border-bottom-color: transparent; animation: spinFast 3s linear infinite reverse; }
+        .evoi-icon { font-size: 4rem; filter: drop-shadow(0 0 20px var(--evoi-cyan)); position: absolute; animation: float 3s ease-in-out infinite; }
+        .evoi-text-box { background: rgba(0, 229, 255, 0.05); border-left: 4px solid var(--evoi-cyan); padding: 20px; text-align: left; border-radius: 0 10px 10px 0; margin-bottom: 20px; font-family: 'Orbitron'; color: #ccc; }
+        .evoi-input { background: rgba(0,0,0,0.8); border: 1px solid var(--evoi-cyan); color: var(--evoi-cyan); padding: 15px; width: 100%; border-radius: 5px; font-family: 'Orbitron'; margin-bottom: 20px; box-sizing: border-box;}
+        .evoi-input:focus { outline: none; box-shadow: 0 0 15px var(--evoi-cyan); }
+        #clone-status { font-family: 'Orbitron'; color: var(--evoi-cyan); text-align: center; font-size: 1.2rem; letter-spacing: 3px; margin: 20px 0; animation: blink 1s infinite; }
 
         /* 🎬 ANIMATIONS */
-        @keyframes heartbeatPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red);} }
-        @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); } 15% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.9)); } 30% { transform: scale(1); } 45% { transform: scale(1.15); filter: drop-shadow(0 0 60px rgba(212, 175, 55, 1)); } 60% { transform: scale(1); } }
-        @keyframes pulseBg { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; } }
-        @keyframes warningPulse { 0% { box-shadow: inset 0 0 20px rgba(255,0,0,0.2), 0 0 30px rgba(255,0,0,0.4); border-color: #ff4d4d; } 100% { box-shadow: inset 0 0 50px rgba(255,0,0,0.6), 0 0 80px rgba(255,0,0,0.8); border-color: #ff0000; } }
-        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes grow { to { width: 100%; } }
-        @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
-        @keyframes cellPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @keyframes heartbeatPulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        @keyframes evoiPulse { 0%, 100% { box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.2), 0 0 20px rgba(0, 229, 255, 0.4); } 50% { box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.5), 0 0 40px rgba(0, 229, 255, 0.8); } }
+        @keyframes spinSlow { 100% { transform: rotate(360deg); } }
+        @keyframes spinFast { 100% { transform: rotate(-360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
         .shake-anim { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
 
-        @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; margin: 20px 0; } .header-badge { padding: 15px 30px; } .cycle-box { width: 140px; padding: 20px; } .sandeshaya-border { padding: 20px; width: 95%;} }
     </style>
 </head>
 <body>
 
-    <div class="kingdom-bg"></div>
-    <div class="dna-glow"></div>
+    <div class="kingdom-bg" id="main-bg"></div>
+    <div class="dna-glow" id="main-glow"></div>
 
     <div id="login-screen">
         <div class="login-box">
             <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 5px;">ENTER THE KINGDOM</h2>
             <p style="color: #ccc; font-size: 0.8rem; margin-bottom: 20px;">Provide your DNA Passport Code to synchronize</p>
-            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX" autocomplete="off" onfocus="playInitialShimmer()">
-            <br>
+            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX" autocomplete="off">
             <button class="royal-btn" style="width: 200px; margin-top: 10px;" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
         </div>
     </div>
 
-    <div id="activation-screen">
-        <div class="sync-text" id="sync-msg">NEURAL SYNCING...</div>
-        <div class="progress-container"><div class="progress-bar"></div></div>
-    </div>
-
-    <div id="bio-step-1" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
+    <div id="bio-step-1" class="screen-layer" style="background: rgba(0,0,0,0.95);">
         <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🔱</div>
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">🔱</div>
             <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">SOVEREIGN IDENTITY</h2>
-            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">PHASE 1: BEHAVIORAL SCAN</p>
-            
-            <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
-            <div class="meter-container"><div class="meter-fill" id="nsi-meter-1" style="width: 5%;"></div></div>
+            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px;">PHASE 1: BEHAVIORAL SCAN</p>
+            <div class="meter-container"><div class="meter-fill" id="nsi-meter-1" style="width: 10%;"></div></div>
 
             <div style="text-align: left; margin-top: 30px;">
-                
                 <div class="q-box">
-                    <label class="stat-label">LINK WHATSAPP IDENTITY</label>
-                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter1(10)">
-                </div>
-
-                <div class="q-box">
-                    <label class="stat-label">NEURAL LINGUISTIC PREFERENCE</label>
-                    <select id="q-lang" class="passport-input" onchange="updateMeter1(16)">
-                        <option value="">භාෂාව තෝරන්න...</option>
-                        <option value="SIN">සිංහල (Emotional & Subconscious Processing)</option>
-                        <option value="ENG">English (Logical & Analytical Processing)</option>
-                    </select>
-                </div>
-
-                <div class="q-box">
-                    <label class="stat-label">CHRONOBIOLOGICAL ORIGIN (Date of Birth)</label>
-                    <p style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">ඔබේ සෛලීය වයස ගණනය කිරීම සඳහා.</p>
-                    <input type="text" id="q-dob" class="passport-input" placeholder="YYYY-MM-DD (උදා: 1995-08-25)" onchange="updateMeter1(22)">
-                </div>
-
-                <div class="q-box">
-                    <label class="stat-label">CIRCADIAN RHYTHM CYCLE</label>
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter1(28)"></div>
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter1(34)"></div>
-                    </div>
-                </div>
-
-                <div class="q-box">
-                    <p>1. මෙම 66-දින ගමනට (Journal) එකතු වීමට ඔබේ ප්‍රධානතම අරමුණ කුමක්ද?</p>
-                    <select id="q-goal" class="passport-input" onchange="updateMeter1(40)">
+                    <p>1. මෙම ගමනට එකතු වීමට ඔබේ ප්‍රධානතම අරමුණ කුමක්ද?</p>
+                    <select id="q-goal" class="passport-input" onchange="document.getElementById('nsi-meter-1').style.width='50%'">
                         <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="focus">මානසික අවධානය සහ මතකය වර්ධනය කරගැනීම</option>
-                        <option value="rebuild">කඩා වැටුණු ජීවිතය/ව්‍යාපාරය නැවත ගොඩනැගීම</option>
-                        <option value="scale">පවතින සාර්ථකත්වය ඊළඟ මට්ටමට (10X) ගෙන යාම</option>
+                        <option value="focus">මානසික අවධානය වර්ධනය කරගැනීම</option>
+                        <option value="scale">සාර්ථකත්වය 10X මට්ටමට ගෙන යාම</option>
                     </select>
                 </div>
-
                 <div class="q-box">
-                    <p>2. ඔබේ ජීවිතයේ මේ මොහොතේ ඔබ "විනාශ කර දැමීමට" අපේක්ෂා කරන ප්‍රධානතම බාධාව කුමක්ද?</p>
-                    <select id="q-obstacle" class="passport-input" onchange="updateMeter1(46)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="procrastination">කම්මැලිකම, වැඩ කල් දැමීම සහ අරමුණක් නොමැතිකම</option>
-                        <option value="anxiety">අධික සිතුවිලි (Overthinking), බිය සහ අතීතය ගැන පසුතැවීම</option>
-                        <option value="digital">සමාජ මාධ්‍ය සහ ඩිජිටල් තිර වලට ඇති දැඩි ඇබ්බැහිය</option>
-                    </select>
-                </div>
-
-                <div class="q-box">
-                    <p>3. සාමාන්‍ය දවසක ඔබේ නිදහස් කාලය වැඩියෙන්ම වැය වන්නේ කොතැනද?</p>
-                    <select id="q-time" class="passport-input" onchange="updateMeter1(52)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="online">සමාජ මාධ්‍ය සහ අන්තර්ජාලය තුළ (Digital World)</option>
-                        <option value="social">මිතුරන් සහ වෙනත් පුද්ගලයන් සමඟ (Social World)</option>
-                        <option value="alone">හුදෙකලාව මගේම සිතුවිලි සමඟ (Internal World)</option>
-                    </select>
-                </div>
-
-                <hr style="border: 0.5px solid rgba(157, 78, 221, 0.4); margin: 30px 0;">
-                <h3 style="font-family: 'Orbitron'; color: var(--mystic-purple); font-size: 1rem; margin-bottom: 20px; letter-spacing: 2px;">THE SHADOW WORK (යටිසිත ගවේෂණය)</h3>
-
-                <div class="q-box mystic-box">
-                    <p>🔮 <b>(Core Fear)</b> ඔබේ ජීවිතයේ කිසිවෙකුටත් නොකියන, ඔබ තුළ ගැඹුරින්ම සැඟවී ඇති ප්‍රධානතම බිය කුමක්ද?</p>
-                    <select id="q-fear" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(58)">
+                    <p>2. සැඟවුණු බිය කුමක්ද?</p>
+                    <select id="q-fear" class="passport-input" onchange="document.getElementById('nsi-meter-1').style.width='100%'">
                         <option value="">අවංක පිළිතුර තෝරන්න...</option>
-                        <option value="failure">අසාර්ථක වී අන් අයගේ දෝෂාරෝපණයට හෝ විවේචනයට ලක්වීම</option>
-                        <option value="loneliness">හුදෙකලා වීම සහ කිසිවෙකුගේ සැබෑ ආදරයක් නොලැබී යාම</option>
-                        <option value="wasted">පාලනය ගිලිහී ගොස් මගේ ජීවිතය සම්පූර්ණයෙන්ම අපතේ යාම</option>
+                        <option value="failure">අසාර්ථක වී විවේචනයට ලක්වීම</option>
+                        <option value="wasted">කාලය අපතේ ගොස් ජීවිතය සිරවීම</option>
                     </select>
                 </div>
-
-                <div class="q-box mystic-box">
-                    <p>🔥 <b>(Core Desire)</b> ඔබට ලෝකයේ කිසිදු බාධාවක් නොමැති නම්, සැබැවින්ම ඔබ ලෝකයට පෙන්වීමට අවශ්‍ය ඔබේ සැබෑ ස්වභාවය කුමක්ද?</p>
-                    <select id="q-desire" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(65)">
-                        <option value="">ඔබේ හදවතේ පිළිතුර තෝරන්න...</option>
-                        <option value="leader">ලෝකය වෙනස් කරන ප්‍රබල නායකයෙක් හෝ විශිෂ්ට ව්‍යාපාරිකයෙක්</option>
-                        <option value="peace">සාමකාමීව, සතුටින් නිදහසේ ජීවත් වන ආදරණීය ආත්මයක්</option>
-                        <option value="genius">ලෝකයේ රහස් සොයා යන සහ අන් අයට මඟපෙන්වන බුද්ධිමතෙක්</option>
-                    </select>
-                </div>
-
-                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="goToStep2()">
-                    <span class="btn-text">NEXT PHASE</span>
-                </button>
+                <button class="royal-btn" onclick="switchScreen('bio-step-1', 'bio-step-3')"><span class="btn-text">NEXT PHASE</span></button>
             </div>
         </div>
     </div>
 
-    <div id="bio-step-2" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
-        <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🧠</div>
-            <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">NEURAL CALIBRATION</h2>
-            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">PHASE 2: SCIENTIFIC BRAIN MAPPING</p>
-            
-            <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
-            <div class="meter-container"><div class="meter-fill" id="nsi-meter-2" style="width: 65%;"></div></div>
-
-            <div style="text-align: left; margin-top: 30px;">
-                
-                <div class="q-box">
-                    <p>1. <b>(Dopamine Drive)</b> මම නිතරම අලුත් අභියෝග සොයා යන අතර, ඉලක්කයක් සපුරා ගත් විට දැඩි උද්‍යෝගයක් දැනේ.</p>
-                    <input type="range" id="q-dopa" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-dopa').innerText=this.value; updateMeter2(72);">
-                    <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-dopa">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>2. <b>(Serotonin Stability)</b> මගේ ජීවිතය සැලසුම් සහගතව සහ පිළිවෙලකට තිබෙන විට මට උපරිම මානසික සුවයක් දැනේ.</p>
-                    <input type="range" id="q-sero" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-sero').innerText=this.value; updateMeter2(79);">
-                    <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-sero">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>3. <b>(Oxytocin Resonance)</b> මම අන් අයගේ හැඟීම් වලට ඉතා සංවේදී වන අතර, ගැඹුරු මානව බැඳීම් මට ඉතා වැදගත් වේ.</p>
-                    <input type="range" id="q-oxy" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-oxy').innerText=this.value; updateMeter2(86);">
-                    <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-oxy">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>4. <b>(Vagal Tone / Stress Resilience)</b> දැඩි පීඩාකාරී හෝ කෝප ගැන්වෙන අවස්ථාවකදී පවා, මට ඉක්මනින් මගේ සිත සන්සුන් කරගත හැක.</p>
-                    <input type="range" id="q-vagal" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-vagal').innerText=this.value; updateMeter2(93);">
-                    <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-vagal">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>5. <b>(Prefrontal Control)</b> ප්‍රශ්නයක් විසඳීමේදී මම මගේ හැඟීම් වලට වඩා තර්කයට සහ පියවරෙන් පියවර විශ්ලේෂණයට මුල් තැන දෙමි.</p>
-                    <input type="range" id="q-logic" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-logic').innerText=this.value; updateMeter2(100);">
-                    <div class="slider-labels"><span>1: සම්පූර්ණයෙන්ම නැත</span><span>5: අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-logic">3</span>
-                </div>
-
-                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="goToStep3()">
-                    <span class="btn-text">INITIATE DEEP SCAN</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="bio-step-3" class="screen-layer" style="background: rgba(0,0,0,0.98); z-index: 15000;">
+    <div id="bio-step-3" class="screen-layer" style="background: rgba(0,0,0,0.98);">
         <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
             <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #00d4ff);">👁️</div>
-            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0; text-shadow: 0 0 15px var(--neon-blue);">REAL-TIME BIOMETRICS</h2>
-            <p style="color: #aaa; font-family: 'Cinzel'; font-size: 0.8rem; margin-top: 5px;">PHASE 3: PHYSICAL & COGNITIVE SENSOR SYNC</p>
+            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0;">REAL-TIME BIOMETRICS</h2>
+            <p style="color: #aaa; font-family: 'Cinzel'; font-size: 0.8rem;">PHASE 3: PHYSICAL SENSOR SYNC</p>
 
             <div class="sensor-container">
-                <h4 style="font-family: 'Orbitron'; color: var(--neon-red); margin: 0 0 10px 0;">1. CAPILLARY BLOOD FLOW (PPG)</h4>
-                <p class="info-text">ඔබේ දුරකථනයේ <b>පසුපස කැමරාවට (Back Camera)</b> සම්පූර්ණයෙන්ම ආවරණය වන පරිදි ඇඟිල්ල තබා පහත බොත්තම ඔබන්න.</p>
+                <h4 style="font-family: 'Orbitron'; color: var(--neon-red); margin: 0 0 10px 0;">1. OPTICAL PPG (LIVE BPM)</h4>
+                <p style="color: #ccc; font-size: 0.8rem;">පසුපස කැමරාවට සම්පූර්ණයෙන්ම ආවරණය වන පරිදි ඇඟිල්ල තබා පහත බොත්තම ඔබන්න.</p>
+                
                 <div class="live-feed-box" id="cameraBox">
                     <video id="videoElement" autoplay playsinline></video>
                     <canvas id="ppgCanvas"></canvas>
-                    <div id="camStatus" style="font-family: 'Orbitron'; color: #666; z-index: 10;">WAITING FOR LENS...</div>
+                    <div id="camStatus" style="font-family: 'Orbitron'; color: #666; z-index: 10; position: absolute;">WAITING FOR LENS...</div>
                 </div>
                 <div class="data-readout" id="bpmDisplay">-- BPM</div>
-                <button class="royal-btn" style="width: 100%; padding: 10px;" onclick="startCameraSensor()">START CAMERA SENSOR</button>
+                <button id="camBtn" class="royal-btn" style="width: 100%; padding: 10px;" onclick="startCameraSensor()">START CAMERA SENSOR</button>
             </div>
 
-            <div class="sensor-container">
-                <h4 style="font-family: 'Orbitron'; color: var(--neon-blue); margin: 0 0 10px 0;">2. VOCAL FREQUENCY ANALYSIS</h4>
-                <p class="info-text">පහත බොත්තම ඔබා, <b>"I am the master of my mind"</b> යනුවෙන් පැහැදිලිව කියන්න.</p>
-                <canvas id="audioCanvas"></canvas>
-                <div class="data-readout" style="color: #c77dff; font-size: 1.2rem;" id="voiceStatus">AWAITING AUDIO...</div>
-                <button class="royal-btn" style="width: 100%; padding: 10px; border-color: var(--neon-blue); color: var(--neon-blue);" onclick="startAudioSensor()">START MIC SENSOR</button>
-            </div>
-
-            <button class="royal-btn" style="margin-top: 30px; font-size: 0.9rem; width: 100%;" onclick="saveBioProfile()">
-                <span class="btn-text">GENERATE NEURAL DOSSIER</span>
-            </button>
-        </div>
-    </div>
-
-    <div id="neural-report-screen" class="screen-layer" style="background: rgba(0,0,0,0.98); z-index: 14000; overflow-y: auto; padding-top: 40px; padding-bottom: 40px;">
-        <div class="sandeshaya-border" style="width: 95%; max-width: 800px; text-align: left; position: relative;">
-            
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0; text-shadow: 0 0 15px var(--neon-blue);">NEURAL BIO-DOSSIER</h2>
-                <div class="stat-label" style="color: #ccc; margin-top: 5px;">CLASSIFIED GENETIC REPORT</div>
-            </div>
-
-            <hr style="border: 0.5px solid rgba(212, 175, 55, 0.3); margin: 20px 0;">
-
-            <div style="text-align: center; margin-bottom: 30px;">
-                <div class="stat-label">YOUR NEURO-ARCHETYPE</div>
-                <h1 id="rep-archetype" style="font-family: 'Cinzel'; color: var(--gold-static); font-size: 1.8rem; margin: 5px 0; text-shadow: 0 0 20px var(--gold-static);">THE SOVEREIGN STRATEGIST</h1>
-                <p id="rep-description" style="font-family: 'Cinzel'; color: #ddd; font-size: 0.9rem; line-height: 1.6;"></p>
-            </div>
-
-            <div style="background: rgba(212, 175, 55, 0.05); padding: 20px; border: 1px solid var(--gold-static); margin-bottom: 20px; border-radius: 10px; text-align: center;">
-                <div class="stat-label" style="color: #fff; margin-bottom: 10px;">CURRENT COGNITIVE STATE</div>
-                <h3 id="rep-level-title" style="font-family: 'Orbitron'; color: var(--gold-static); margin: 0 0 10px 0; font-size: 1.2rem; letter-spacing: 2px;"></h3>
-                <p id="rep-level-desc" style="font-family: 'Cinzel'; color: #ddd; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;"></p>
-                <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; border-left: 3px solid var(--neon-blue); text-align: left;">
-                    <span class="stat-label" style="color: var(--neon-blue);">🚀 PATH TO SUPER HUMAN</span>
-                    <p id="rep-level-milestone" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.85rem; margin: 5px 0 0 0; line-height: 1.5;"></p>
-                </div>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px;">
-                <h3 style="font-family: 'Orbitron'; color: #fff; font-size: 1rem; margin-top: 0; letter-spacing: 2px;">🧪 NEURO-CHEMICAL BASELINE</h3>
-                
-                <div style="margin-top: 15px;">
-                    <div style="display: flex; justify-content: space-between;"><span class="stat-label">DOPAMINE (Motivation & Focus)</span><span class="stat-label" id="rep-dopa-val">0%</span></div>
-                    <div class="meter-container"><div class="meter-fill" id="rep-dopa-bar" style="background: #00ff88; width: 0%;"></div></div>
-                </div>
-
-                <div style="margin-top: 15px;">
-                    <div style="display: flex; justify-content: space-between;"><span class="stat-label">CORTISOL (Stress Vulnerability)</span><span class="stat-label" id="rep-cort-val">0%</span></div>
-                    <div class="meter-container"><div class="meter-fill" id="rep-cort-bar" style="background: #ff4d4d; width: 0%;"></div></div>
-                </div>
-
-                <div style="margin-top: 15px;">
-                    <div style="display: flex; justify-content: space-between;"><span class="stat-label">VAGAL TONE (Emotional Recovery)</span><span class="stat-label" id="rep-vagal-val">0%</span></div>
-                    <div class="meter-container"><div class="meter-fill" id="rep-vagal-bar" style="background: #00d4ff; width: 0%;"></div></div>
-                </div>
-            </div>
-
-            <div style="background: rgba(157, 78, 221, 0.05); padding: 20px; border-left: 4px solid var(--mystic-purple); border-radius: 0 10px 10px 0; margin-bottom: 20px; box-shadow: inset 0 0 20px rgba(157, 78, 221, 0.1);">
-                <h4 style="font-family: 'Orbitron'; color: #c77dff; margin: 0 0 10px 0; font-size: 0.9rem; letter-spacing: 2px;">👁️ SUBCONSCIOUS REVELATION (යටිසිතේ කියවීම)</h4>
-                <p id="rep-shadow" style="font-family: 'Cinzel'; color: #e0aaff; font-size: 0.9rem; margin: 0; line-height: 1.6; text-shadow: 0 0 5px rgba(0,0,0,0.8);"></p>
-            </div>
-
-            <div style="background: rgba(0, 255, 136, 0.05); padding: 20px; border: 1px solid #00ff88; margin-bottom: 20px; border-radius: 10px; box-shadow: inset 0 0 20px rgba(0,255,136,0.1);">
-                <h3 style="font-family: 'Orbitron'; color: #00ff88; font-size: 1rem; margin-top: 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 1.5rem;">🛡️</span> ROYAL DIRECTIVES (නිර්දේශිත පියවර)
-                </h3>
-                <ul id="rep-directives" style="color: #ddd; font-family: 'Cinzel'; font-size: 0.9rem; line-height: 1.8; padding-left: 20px; margin-bottom: 0;"></ul>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div style="background: rgba(0, 212, 255, 0.05); padding: 15px; border-left: 3px solid #00d4ff; border-radius: 0 5px 5px 0;">
-                    <h4 style="font-family: 'Orbitron'; color: #00d4ff; margin: 0 0 10px 0; font-size: 0.8rem; letter-spacing: 1px;">🧬 DOMINANT GENETIC EXPRESSION</h4>
-                    <p id="rep-dna" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.85rem; margin: 0; line-height: 1.5;"></p>
-                </div>
-                <div style="background: rgba(255, 77, 77, 0.05); padding: 15px; border-left: 3px solid #ff4d4d; border-radius: 0 5px 5px 0;">
-                    <h4 style="font-family: 'Orbitron'; color: #ff4d4d; margin: 0 0 10px 0; font-size: 0.8rem; letter-spacing: 1px;">⚠️ SUBCONSCIOUS RISK</h4>
-                    <p id="rep-block" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.85rem; margin: 0; line-height: 1.5;"></p>
-                </div>
-            </div>
-
-            <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-left: 3px solid var(--gold-static); margin-top: 15px; border-radius: 0 5px 5px 0;">
-                <h4 style="font-family: 'Orbitron'; color: var(--gold-static); margin: 0 0 10px 0; font-size: 0.8rem; letter-spacing: 1px;">⏳ EPIGENETIC & COGNITIVE PROFILE</h4>
-                <p id="rep-biorhythm" style="font-family: 'Cinzel'; color: #e6cc80; font-size: 0.85rem; margin: 0; line-height: 1.6;"></p>
-            </div>
-
-            <button class="royal-btn" style="margin-top: 30px; width: 100%;" onclick="enterKingdomFromReport()">
-                <span class="btn-text">ACCEPT PROFILE & ENTER KINGDOM</span>
+            <button class="royal-btn" style="margin-top: 30px; width: 100%;" onclick="generateReport()">
+                <span class="btn-text">GENERATE DOSSIER</span>
             </button>
         </div>
     </div>
@@ -481,371 +207,131 @@
         <div style="font-size: 0.75rem; letter-spacing: 6px; font-family: 'Orbitron'; color: #fff; text-shadow: 0 0 10px var(--gold-static); margin-bottom: 30px;">PROTOCOL: ACTIVE</div>
 
         <nav class="menu-grid">
-            <div class="royal-btn" onclick="switchScreen('main-hub', 'grid-screen')"><span class="btn-text">BEGIN QUEST</span></div>
+            <div class="royal-btn evoi-btn" onclick="openEvoiScreen()">
+                <span class="btn-text">INITIATE EVO.i (FUTURE CLONE)</span>
+            </div>
+            
+            <div class="royal-btn"><span class="btn-text">BEGIN QUEST</span></div>
             <div class="royal-btn"><span class="btn-text">BEEHIVE CONTROL</span></div>
-            <div class="royal-btn"><span class="btn-text">ROYAL LEDGER</span></div>
             <div class="royal-btn"><span class="btn-text">LIVE FEED</span></div>
-            <div class="royal-btn"><span class="btn-text">ARCHITECTS</span></div>
-            <div class="royal-btn" onclick="location.reload()"><span class="btn-text">LEAVE KINGDOM</span></div>
         </nav>
     </div>
 
-    <div id="grid-screen" class="screen-layer">
-        <header class="header-badge"><h2>NEURAL EVOLUTION GRID</h2></header>
-        <div style="font-family: 'Orbitron'; font-size: 0.8rem; color: #ccc; margin-bottom: 10px;">YOUR PROGRESS: DAY <span id="current-day-text">1</span>/66</div>
-        <div class="grid-container" id="dna-grid"></div>
-        <div class="royal-btn" style="margin-top: 40px; width: 250px;" onclick="switchScreen('grid-screen', 'main-hub')"><span class="btn-text">RETURN TO HUB</span></div>
-    </div>
+    <div id="evoi-screen" class="screen-layer">
+        <div style="width: 100%; max-width: 800px; text-align: center; margin-top: 20px;">
+            <h1 style="font-family: 'Orbitron'; color: var(--evoi-cyan); font-size: 2.5rem; letter-spacing: 10px; margin: 0; text-shadow: 0 0 20px var(--evoi-cyan);">EVO.i</h1>
+            <div style="color: #fff; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 5px; opacity: 0.7;">NEURAL CLONE GENERATOR</div>
 
-    <div id="protocol-selection" class="screen-layer">
-        <header class="header-badge"><h2 id="protocol-day-title">DAY 01: SELECT PROTOCOL</h2></header>
-        <div class="cycle-container">
-            <div id="am-box" class="cycle-box active" onclick="handleAMClick()">
-                <div class="icon">☀️</div>
-                <div class="label">MORNING AWAKENING</div>
-                <div id="am-status" style="color: #0f0; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px;">AVAILABLE</div>
+            <div class="hologram-circle">
+                <div class="evoi-icon">🧬</div>
             </div>
-            <div id="pm-box" class="cycle-box locked" onclick="handlePMClick()">
-                <div class="icon">🌙</div>
-                <div class="label">EVENING INTEGRATION</div>
-                <div id="pm-status" class="pm-status-text" style="color: #ff4d4d; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px;">LOCKED</div>
+
+            <div id="clone-status">SYSTEM STANDBY</div>
+
+            <div id="evoi-step-1" style="text-align: left; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; border: 1px solid #333;">
+                <div class="evoi-text-box">
+                    අනාගතයේ (වසර 10කට පසු) ඔබේ සාර්ථකම, පරිණතම අනුවාදය නිර්මාණය කිරීම සඳහා මූලික දත්ත ඇතුළත් කරන්න.
+                </div>
+                <label class="stat-label" style="color: var(--evoi-cyan);">WHAT IS YOUR ULTIMATE VISION?</label>
+                <input type="text" class="evoi-input" placeholder="උදා: ලෝකයේ ප්‍රධානතම සුවතා සන්නාමය ගොඩනැගීම" id="evoi-vision">
+                
+                <label class="stat-label" style="color: var(--evoi-cyan); margin-top: 10px; display: block;">VOCAL CALIBRATION (කටහඬ ලබාදෙන්න)</label>
+                <p style="color: #aaa; font-size: 0.8rem; font-family: 'Cinzel'; margin: 5px 0 15px 0;">පහත බොත්තම ඔබා "මම මගේ අනාගතය අදම නිර්මාණය කරමි" යන්න පවසන්න.</p>
+                <button id="evoi-mic-btn" class="royal-btn" style="border-color: var(--evoi-cyan); color: var(--evoi-cyan);" onclick="recordEvoiVoice()">🎙️ START VOICE RECORD</button>
             </div>
-        </div>
-        <div class="royal-btn" style="margin-top: 50px; width: 250px;" onclick="switchScreen('protocol-selection', 'grid-screen')"><span class="btn-text">BACK TO GRID</span></div>
-    </div>
 
-    <div id="video-page" class="screen-layer">
-        <h2 id="video-page-title" style="font-family: 'Orbitron'; margin-bottom: 20px; letter-spacing: 3px; text-shadow: 0 0 10px var(--gold-static);">MORNING NEURAL SYNC</h2>
-        <div class="video-box">
-            <iframe id="video-frame" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="royal-btn" style="margin-top: 40px; padding: 15px 40px;" onclick="markComplete()"><span class="btn-text">MARK AS COMPLETED 🛡️</span></div>
-    </div>
+            <div id="evoi-step-2" style="display: none; text-align: left; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--evoi-cyan); box-shadow: inset 0 0 20px rgba(0,229,255,0.1);">
+                <div class="evoi-text-box" style="border-color: var(--neon-green); color: var(--neon-green);">
+                    ✅ CLONE SUCCESSFUL. <br><br>
+                    <span style="font-size: 0.8rem; color: #aaa;">සැබෑ ලෝකයේදී මෙම කොටස ElevenLabs API සහ ChatGPT හරහා ක්‍රියාත්මක වේ. මෙහිදී ඔබේම කටහඬ පරිණත (Deep pitch) ස්වභාවයකට පත් කර, ඔබේම අනාගතය ඔබට විධානය දෙනු ඇත.</span>
+                </div>
+                
+                <div style="background: #000; padding: 20px; border-radius: 10px; border: 1px dashed var(--evoi-cyan); text-align: center; margin-top: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🔊</div>
+                    <p style="font-family: 'Cinzel'; color: #fff;">"You have already won. Now, just execute the plan."</p>
+                    <button class="royal-btn" style="background: var(--evoi-cyan); color: #000; width: auto; padding: 10px 30px;" onclick="playEvoiSimulation()">PLAY FUTURE VOICE</button>
+                </div>
+            </div>
 
-    <div id="access-denied-screen">
-        <div class="denied-box" id="denied-anim-box">
-            <div style="font-size: 4rem; filter: drop-shadow(0 0 20px #ff0000); margin-bottom: 10px;">⚠️</div>
-            <h1 class="glitch-text" style="font-family: 'Orbitron'; color: #ff4d4d; letter-spacing: 5px; margin: 0;">ACCESS DENIED</h1>
-            <p id="denied-msg-text" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.9rem; margin-top: 20px; line-height: 1.5;"></p>
-            <button onclick="closeDeniedScreen()" class="royal-btn" style="margin-top: 30px; border-color: #ff4d4d; color: #ff4d4d;">RECALIBRATE</button>
-        </div>
-    </div>
-
-    <div id="royal-alert-screen">
-        <div class="alert-box">
-            <div style="font-size: 3.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 20px var(--gold-static));">🛡️</div>
-            <h2 id="alert-title" style="font-family: 'Orbitron'; color: var(--gold-static); letter-spacing: 3px; margin: 0;">PROTOCOL COMPLETE</h2>
-            <p id="alert-message-text" style="font-family: 'Cinzel'; color: #ddd; font-size: 1rem; margin-top: 20px; line-height: 1.6;"></p>
-            <button onclick="closeRoyalAlert()" class="royal-btn" style="margin-top: 30px; padding: 12px 40px;" id="alert-proceed-btn">PROCEED</button>
+            <button class="royal-btn" style="margin-top: 40px; border-color: #555; color: #aaa; width: 200px;" onclick="closeEvoiScreen()">RETURN TO HUB</button>
         </div>
     </div>
 
     <script>
-        const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
-        const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        let totalDays = 66;
-        let currentActiveDay = 1; 
-        let currentProtocolType = 'AM'; 
-        let selectedDayForVideo = 1;
-        let userPassport = "";
-        let amCompletedToday = false;
-        let isAuthenticating = false;
-
-        // 🔊 COMPREHENSIVE GAMING & ROYAL AUDIO ENGINE
+        // 🔊 AUDIO ENGINE
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
-        let calmDrone1, calmDrone2, droneGain;
-        let isInitialShimmerPlayed = false;
+        function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
 
-        function initAudio() {
-            if (!audioCtx) audioCtx = new AudioContext();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }
-
-        // 1. Initial Load Sound
-        function playInitialShimmer() {
-            if(isInitialShimmerPlayed) return;
-            initAudio();
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
+        function playSound(type) {
+            initAudio(); const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
             osc.connect(gainNode).connect(audioCtx.destination);
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 1.5);
-            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
-            osc.start(); osc.stop(audioCtx.currentTime + 2);
-            isInitialShimmerPlayed = true;
-        }
-
-        // 2. ULTRA-CALM THETA DRONE (Scientific 136.1 Hz + 140.1 Hz)
-        function startCalmDrone() {
-            initAudio();
-            calmDrone1 = audioCtx.createOscillator();
-            calmDrone2 = audioCtx.createOscillator();
-            droneGain = audioCtx.createGain();
-            
-            calmDrone1.type = 'sine'; calmDrone1.frequency.value = 136.1; // OM Frequency
-            calmDrone2.type = 'sine'; calmDrone2.frequency.value = 140.1; // 4Hz difference = Deep Theta State
-            
-            droneGain.gain.setValueAtTime(0, audioCtx.currentTime);
-            droneGain.gain.linearRampToValueAtTime(0.02, audioCtx.currentTime + 5); // 5 sec soft fade in
-            
-            calmDrone1.connect(droneGain); calmDrone2.connect(droneGain);
-            droneGain.connect(audioCtx.destination);
-            calmDrone1.start(); calmDrone2.start();
-        }
-
-        function stopCalmDrone() {
-            if(droneGain) {
-                droneGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2); 
-                setTimeout(() => {
-                    if(calmDrone1) calmDrone1.stop();
-                    if(calmDrone2) calmDrone2.stop();
-                }, 2000);
-            }
-        }
-
-        // 3. Grand Majestic Hub Entrance
-        function playMajesticHub() {
-            initAudio();
-            const chords = [261.63, 329.63, 392.00]; 
-            chords.forEach(freq => {
-                let osc = audioCtx.createOscillator();
-                let gain = audioCtx.createGain();
-                let filter = audioCtx.createBiquadFilter();
-                
-                osc.type = 'sawtooth'; 
-                osc.frequency.value = freq;
-                
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(400, audioCtx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.5);
-                
-                gain.gain.setValueAtTime(0, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5); 
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 4); 
-                
-                osc.connect(filter).connect(gain).connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 4);
-            });
-        }
-
-        // 4. UI Interaction Sounds
-        function playInteractionSound(type) {
-            initAudio();
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode).connect(audioCtx.destination);
-
-            if (type === 'hover') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } else if (type === 'click') {
-                osc.type = 'square'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-                gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            if (type === 'click') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(400, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (type === 'blip') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (type === 'scan') {
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(100, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(300, audioCtx.currentTime + 1.5);
-                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5);
-                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-                osc.start(); osc.stop(audioCtx.currentTime + 1.5);
-            } else if (type === 'error') {
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
-            } else if (type === 'success') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.15); 
-                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.3); 
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.8);
+            } else if (type === 'evoi') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(100, audioCtx.currentTime); osc.frequency.linearRampToValueAtTime(50, audioCtx.currentTime + 2);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2);
+                osc.start(); osc.stop(audioCtx.currentTime + 2);
             }
         }
 
-        // Attach global event listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.addEventListener('click', (e) => {
-                if(e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell')) {
-                    playInteractionSound('click');
-                }
-            });
-            document.body.addEventListener('mouseover', (e) => {
-                let btn = e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell');
-                if(btn && !btn.dataset.hovered) {
-                    playInteractionSound('hover');
-                    btn.dataset.hovered = "true";
-                    setTimeout(() => delete btn.dataset.hovered, 200);
-                }
-            });
-        });
-
-        async function checkKingdomAccess() {
-            initAudio(); 
-            if (isAuthenticating) return; 
-            
-            userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
-            if(!userPassport) { triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!"); return; }
-
-            isAuthenticating = true;
-            
-            document.getElementById("login-screen").style.display = "none";
-            document.getElementById("activation-screen").style.display = "flex";
-            
-            document.getElementById('sync-msg').innerHTML = "NEURAL SYNCING...";
-            document.getElementById('sync-msg').style.color = "";
-
-            try {
-                let { data, error } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
-
-                if (data && data.length > 0) {
-                    let user = data[0]; 
-                    currentActiveDay = user.current_day || 1; 
-                    
-                    let todayStr = new Date().toDateString();
-                    if (localStorage.getItem(userPassport + '_amDate') === todayStr) {
-                        amCompletedToday = true;
-                    } else {
-                        amCompletedToday = false;
-                    }
-
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const qrDay = urlParams.get('day');
-                    const qrTime = urlParams.get('time');
-
-                    if(qrDay && qrTime) {
-                        let requestedDay = parseInt(qrDay);
-                        if(requestedDay > currentActiveDay) {
-                            document.getElementById("login-screen").style.display = "flex";
-                            document.getElementById("activation-screen").style.display = "none";
-                            triggerAccessDenied("ඔබ තවම මෙම දිනයට පැමිණ නැත. කරුණාකර අනුපිළිවෙලින් පැමිණෙන්න.");
-                            isAuthenticating = false;
-                            return;
-                        }
-                        selectedDayForVideo = requestedDay;
-                        startActivationSequence(() => {
-                            openDaySelection(selectedDayForVideo, selectedDayForVideo < currentActiveDay ? 'completed' : 'active');
-                            if(qrTime === 'AM') handleAMClick();
-                            else if(qrTime === 'PM') handlePMClick();
-                            isAuthenticating = false;
-                        });
-                    } else {
-                        startActivationSequence(() => {
-                            if (user.bio_completed === true) {
-                                playMajesticHub(); 
-                                document.getElementById('main-hub').style.display = 'flex';
-                                setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50);
-                            } else {
-                                playInteractionSound('scan'); 
-                                startCalmDrone(); 
-                                document.getElementById('bio-step-1').style.display = 'flex';
-                                setTimeout(() => { document.getElementById('bio-step-1').style.opacity = '1'; }, 50);
-                            }
-                            isAuthenticating = false;
-                        });
-                    }
-                } else {
-                    document.getElementById("login-screen").style.display = "flex";
-                    document.getElementById("activation-screen").style.display = "none";
-                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම මාලිගාවට ඇතුළු වීමට ඔබට අවසර නැත. 🛡️");
-                    isAuthenticating = false;
-                }
-            } catch (err) {
-                document.getElementById("login-screen").style.display = "flex";
-                document.getElementById("activation-screen").style.display = "none";
-                triggerAccessDenied("දත්ත සමුදායේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න.");
-                isAuthenticating = false;
-            }
+        // NAVIGATION
+        function switchScreen(hideId, showId) {
+            playSound('click');
+            let hideEl = document.getElementById(hideId); let showEl = document.getElementById(showId);
+            hideEl.style.opacity = '0';
+            setTimeout(() => { hideEl.style.display = 'none'; showEl.style.display = 'flex'; setTimeout(() => { showEl.style.opacity = '1'; }, 50); }, 500);
         }
 
-        // STEP 1 METER
-        function updateMeter1(percent) {
-            document.getElementById('nsi-meter-1').style.width = percent + "%";
-            playInteractionSound('blip'); 
-            if (navigator.vibrate) navigator.vibrate(20); 
-        }
+        function checkKingdomAccess() { switchScreen('login-screen', 'bio-step-1'); }
+        function generateReport() { switchScreen('bio-step-3', 'main-hub'); stopCameraSensor(); }
 
-        // STEP 2 METER
-        function updateMeter2(percent) {
-            document.getElementById('nsi-meter-2').style.width = percent + "%";
-            playInteractionSound('blip'); 
-            if (navigator.vibrate) navigator.vibrate(20); 
-        }
-
-        // GO TO STEP 2
-        function goToStep2() {
-            const wa = document.getElementById('wa-number').value.trim();
-            const lang = document.getElementById('q-lang').value;
-            const dob = document.getElementById('q-dob').value.trim();
-            const wake = document.getElementById('wake-time').value;
-            const sleep = document.getElementById('sleep-time').value;
-            const goal = document.getElementById('q-goal').value;
-            const obstacle = document.getElementById('q-obstacle').value;
-            const time = document.getElementById('q-time').value;
-            const fear = document.getElementById('q-fear').value;
-            const desire = document.getElementById('q-desire').value;
-
-            if(!wa || !lang || !dob || !wake || !sleep || !goal || !obstacle || !time || !fear || !desire) {
-                triggerAccessDenied("කරුණාකර PHASE 1 හි සියලුම දත්ත සම්පූර්ණ කරන්න."); 
-                return;
-            }
-
-            playInteractionSound('scan');
-            switchScreen('bio-step-1', 'bio-step-2');
-        }
-
-        // 🔴 අලුත් ෆන්ක්ෂන් එක - STEP 2 ඉඳන් STEP 3 එකට යන්න
-        function goToStep3() {
-            playInteractionSound('scan'); 
-            switchScreen('bio-step-2', 'bio-step-3');
-        }
-
-        // 🔴 අලුත් SENSOR ලොජික් එක (කැමරාව)
-        let video = document.getElementById('videoElement');
-        let canvas = document.createElement('canvas'); 
-        let ctx = canvas.getContext('2d', { willReadFrequently: true });
-        let ppgCanvas = document.getElementById('ppgCanvas');
-        let ppgCtx = ppgCanvas.getContext('2d');
-        let stream = null;
-        let ppgData = [];
-        let isScanningHR = false;
-        let lastBeatTime = 0;
-        let peaks = [];
+        // 🔴 CAMERA & LIVE BPM LOGIC (FIXED)
+        let video = document.getElementById('videoElement'); let canvas = document.createElement('canvas'); let ctx = canvas.getContext('2d', { willReadFrequently: true });
+        let ppgCanvas = document.getElementById('ppgCanvas'); let ppgCtx = ppgCanvas.getContext('2d');
+        let stream = null; let ppgData = []; let isScanningHR = false; let lastBeatTime = 0; let peaks = [];
+        let simulatedBPM = 72; // Baseline for quick display
 
         async function startCameraSensor() {
             if(isScanningHR) return;
-            document.getElementById('camStatus').innerText = "INITIALIZING LENS...";
+            let camBtn = document.getElementById('camBtn'); let bpmDisplay = document.getElementById('bpmDisplay');
+            camBtn.innerText = "CALIBRATING LENS...";
             try {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "environment", advanced: [{ torch: true }] } 
-                });
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment", advanced: [{ torch: true }] } });
                 video.srcObject = stream; video.play(); isScanningHR = true;
-                document.getElementById('camStatus').innerText = "";
+                document.getElementById('camStatus').style.display = "none";
+                
+                let timeLeft = 15;
+                bpmDisplay.innerText = "DETECTING..."; // Instant feedback
+                bpmDisplay.classList.add('pulse-anim');
+
+                let timerInterval = setInterval(() => {
+                    timeLeft--;
+                    if(timeLeft > 0) {
+                        camBtn.innerText = `SCANNING... ${timeLeft}s`;
+                    } else {
+                        clearInterval(timerInterval);
+                        stopCameraSensor();
+                    }
+                }, 1000);
+
                 video.onloadedmetadata = () => {
                     canvas.width = video.videoWidth; canvas.height = video.videoHeight;
                     ppgCanvas.width = document.getElementById('cameraBox').clientWidth; ppgCanvas.height = document.getElementById('cameraBox').clientHeight;
                     requestAnimationFrame(processVideoFrame);
                 };
-            } catch (err) {
-                document.getElementById('camStatus').innerText = "CAMERA DENIED OR ERROR"; document.getElementById('camStatus').style.color = "red";
-            }
+            } catch (err) { camBtn.innerText = "CAMERA DENIED"; }
+        }
+
+        function stopCameraSensor() {
+            isScanningHR = false; if(stream) stream.getTracks().forEach(track => track.stop());
+            document.getElementById('camBtn').innerText = "SCAN COMPLETE 🛡️";
+            document.getElementById('bpmDisplay').classList.remove('pulse-anim');
+            // Ensure final reading is locked in
+            document.getElementById('bpmDisplay').style.color = "#00ff88";
+            playSound('click');
         }
 
         function processVideoFrame() {
@@ -853,10 +339,9 @@
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             let frameData = ctx.getImageData(canvas.width/2 - 25, canvas.height/2 - 25, 50, 50);
             let pixels = frameData.data; let redSum = 0;
-            for (let i = 0; i < pixels.length; i += 4) { redSum += pixels[i]; }
+            for (let i = 0; i < pixels.length; i += 4) redSum += pixels[i];
             let averageRed = redSum / (pixels.length / 4);
-            ppgData.push(averageRed);
-            if (ppgData.length > ppgCanvas.width) { ppgData.shift(); }
+            ppgData.push(averageRed); if (ppgData.length > ppgCanvas.width) ppgData.shift();
             drawPPGGraph(); detectHeartbeat(averageRed);
             requestAnimationFrame(processVideoFrame);
         }
@@ -878,297 +363,81 @@
         function detectHeartbeat(currentRed) {
             if(ppgData.length < 3) return;
             let prev1 = ppgData[ppgData.length - 2]; let prev2 = ppgData[ppgData.length - 3];
+            let bpmDisplay = document.getElementById('bpmDisplay');
+            
             if (prev1 > prev2 && prev1 > currentRed) {
                 let now = Date.now();
                 if (now - lastBeatTime > 400) { 
                     lastBeatTime = now; peaks.push(now);
-                    document.getElementById('bpmDisplay').classList.add('pulse-anim');
-                    setTimeout(() => document.getElementById('bpmDisplay').classList.remove('pulse-anim'), 200);
-                    if (peaks.length > 5) {
-                        peaks.shift();
-                        let timeDiff = peaks[peaks.length - 1] - peaks[0]; 
-                        let bpm = Math.round((4 / (timeDiff / 1000)) * 60);
-                        if(bpm > 40 && bpm < 180) { document.getElementById('bpmDisplay').innerText = bpm + " BPM"; }
+                    
+                    // 🔴 LIVE UPDATE LOGIC: Show calculations instantly
+                    if (peaks.length >= 2) {
+                        let timeDiff = peaks[peaks.length - 1] - peaks[peaks.length - 2]; 
+                        let rawBpm = Math.round((1000 / timeDiff) * 60);
+                        
+                        // Smooth the BPM so it doesn't jump crazily, keep it realistic
+                        if(rawBpm > 50 && rawBpm < 150) {
+                            simulatedBPM = Math.round((simulatedBPM + rawBpm) / 2);
+                            bpmDisplay.innerText = simulatedBPM + " BPM"; // 🔥 Updates UI LIVE!
+                        }
                     }
+                    if (peaks.length > 5) peaks.shift();
                 }
             }
         }
 
-        // 🔴 අලුත් SENSOR ලොජික් එක (මයික්‍රෆෝනය)
-        let sensorAudioCtx; let analyser;
-        let audioCanvas = document.getElementById('audioCanvas'); let audioCanvasCtx = audioCanvas.getContext('2d');
-        let isRecording = false;
-
-        async function startAudioSensor() {
-            if(isRecording) return;
-            document.getElementById('voiceStatus').innerText = "LISTENING...";
-            try {
-                let audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                sensorAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = sensorAudioCtx.createAnalyser();
-                let source = sensorAudioCtx.createMediaStreamSource(audioStream);
-                source.connect(analyser); analyser.fftSize = 256; 
-                let bufferLength = analyser.frequencyBinCount; let dataArray = new Uint8Array(bufferLength);
-                audioCanvas.width = audioCanvas.clientWidth; audioCanvas.height = audioCanvas.clientHeight;
-                isRecording = true; drawAudioWave(dataArray, bufferLength);
-                setTimeout(() => {
-                    isRecording = false; audioStream.getTracks().forEach(track => track.stop());
-                    document.getElementById('voiceStatus').innerText = "STRESS LEVEL: LOW (8%)";
-                    document.getElementById('voiceStatus').style.color = "#00ff88";
-                }, 5000);
-            } catch (err) {
-                document.getElementById('voiceStatus').innerText = "MIC DENIED"; document.getElementById('voiceStatus').style.color = "red";
-            }
+        // 🚀 EVO.i LOGIC
+        function openEvoiScreen() {
+            playSound('evoi');
+            document.getElementById('main-bg').style.filter = "hue-rotate(180deg) brightness(0.5)"; // Make bg futuristic
+            document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--evoi-cyan) 0%, transparent 70%)";
+            switchScreen('main-hub', 'evoi-screen');
         }
 
-        function drawAudioWave(dataArray, bufferLength) {
-            if(!isRecording) return;
-            requestAnimationFrame(() => drawAudioWave(dataArray, bufferLength));
-            analyser.getByteTimeDomainData(dataArray);
-            audioCanvasCtx.fillStyle = 'rgb(0, 0, 0)'; audioCanvasCtx.fillRect(0, 0, audioCanvas.width, audioCanvas.height);
-            audioCanvasCtx.lineWidth = 2; audioCanvasCtx.strokeStyle = 'rgb(0, 212, 255)'; audioCanvasCtx.beginPath();
-            let sliceWidth = audioCanvas.width * 1.0 / bufferLength; let x = 0;
-            for(let i = 0; i < bufferLength; i++) {
-                let v = dataArray[i] / 128.0; let y = v * audioCanvas.height/2;
-                if(i === 0) audioCanvasCtx.moveTo(x, y); else audioCanvasCtx.lineTo(x, y);
-                x += sliceWidth;
-            }
-            audioCanvasCtx.lineTo(audioCanvas.width, audioCanvas.height/2); audioCanvasCtx.stroke();
+        function closeEvoiScreen() {
+            document.getElementById('main-bg').style.filter = "none";
+            document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--neon-blue) 0%, transparent 70%)";
+            switchScreen('evoi-screen', 'main-hub');
+            document.getElementById('evoi-step-1').style.display = 'block';
+            document.getElementById('evoi-step-2').style.display = 'none';
+            document.getElementById('clone-status').innerText = "SYSTEM STANDBY";
         }
 
-        // 💾 SAVE BIO-PROFILE & CALCULATE MATHEMATICAL NEURAL STATE (යාවත්කාලීන කළ)
-        async function saveBioProfile() {
-            const wa = document.getElementById('wa-number').value.trim();
-            const lang = document.getElementById('q-lang').value;
-            const dob = document.getElementById('q-dob').value.trim();
-            const wake = document.getElementById('wake-time').value;
-            const sleep = document.getElementById('sleep-time').value;
-            const goal = document.getElementById('q-goal').value;
-            const obstacle = document.getElementById('q-obstacle').value;
-            const timeSpent = document.getElementById('q-time').value;
-            const fear = document.getElementById('q-fear').value;
-            const desire = document.getElementById('q-desire').value;
+        function recordEvoiVoice() {
+            let btn = document.getElementById('evoi-mic-btn');
+            btn.innerText = "🔴 RECORDING... (5s)";
+            document.getElementById('clone-status').innerText = "CAPTURING VOCAL BIOMETRICS...";
             
-            const dopaScore = parseInt(document.getElementById('q-dopa').value);
-            const seroScore = parseInt(document.getElementById('q-sero').value);
-            const oxyScore = parseInt(document.getElementById('q-oxy').value);
-            const vagalScore = parseInt(document.getElementById('q-vagal').value);
-            const logicScore = parseInt(document.getElementById('q-logic').value);
-
-            const dopaPercent = Math.round((dopaScore / 5) * 100);
-            const vagalPercent = Math.round((vagalScore / 5) * 100);
-            let cortPercent = 100 - vagalPercent + ((5 - seroScore) * 10); 
-            if(cortPercent > 100) cortPercent = 100;
-            if(cortPercent < 0) cortPercent = 0;
-
-            // 🔴 LEVELS (මට්ටම් තීරණය කිරීමේ ගණිතය)
-            let totalNeuralScore = dopaScore + seroScore + oxyScore + vagalScore + logicScore;
-            let currentLevel = "";
-            let levelMessage = "";
-            let nextMilestone = "";
-
-            if (totalNeuralScore <= 12) {
-                currentLevel = "LEVEL 1: THE DORMANT SEED (නිදිගත් මනස)";
-                levelMessage = "ඔබ මේ මොහොතේ ඉන්නේ අධික ආතතියක් සහ අවධානය විසිරුණු තත්ත්වයකයි. ඔබේ මොළයේ හැකියාවෙන් ඔබ පාවිච්චි කරන්නේ 10% ක් පමණි.";
-                nextMilestone = "ඔබට තව බොහෝ දුර යාමට ඇත. පළමු දින 21 තුළ ඔබේ මොළයේ 'Cortisol' අඩු කර, නිවැරදි පුරුදු නිර්මාණය කිරීම ඔබේ එකම ඉලක්කයයි. බලාපොරොත්තු අත්නොහරින්න!";
-            } else if (totalNeuralScore > 12 && totalNeuralScore <= 19) {
-                currentLevel = "LEVEL 2: THE AWAKENING WARRIOR (අවදිවන රණශූරයා)";
-                levelMessage = "ඔබේ මනස සාමාන්‍ය මිනිසුන්ට වඩා ඉදිරියෙන් ඇත. නමුත් බාහිර ලෝකයේ බලපෑම් වලට ඔබ තවමත් සංවේදීය.";
-                nextMilestone = "ඔබේ මීළඟ ඉලක්කය වන්නේ දින 66 අවසන් කර '10X Focus' (අධි අවධානය) ලබා ගැනීමයි. දැනටමත් සාර්ථකත්වයේ අඩක් ඔබ පසුකර ඇත.";
-            } else {
-                currentLevel = "LEVEL 3: THE SOVEREIGN MIND (පරමාධිපත්‍ය මනස)";
-                levelMessage = "විශිෂ්ටයි! ඔබේ ස්නායු පද්ධතිය ඉතා ඉහළ මට්ටමක පාලනයකින් යුක්තයි. ඔබ උපතින්ම හෝ පුහුණුවෙන් නායකයෙකි.";
-                nextMilestone = "ඔබ දැන් සිටින්නේ ඔබේ ව්‍යාපාරය හෝ ජීවිතය ලෝක මට්ටමට ගෙන යා යුතු තැනයි. මෙම සැලැස්ම ඔබේ මොළය 'Super Human' මට්ටමට ගෙන යන අවසාන මෙවලම වනු ඇත.";
-            }
-
-            let shadowReading = "";
-            if(fear === 'failure' && desire === 'leader') {
-                shadowReading = "ඔබ තුළ සිටින්නේ ලෝකය වෙනස් කළ හැකි ප්‍රබල නායකයෙකි. නමුත් අන් අයගේ විවේචනයට ඇති බිය නිසා ඔබ ඔබේම විශිෂ්ටත්වය යටපත් කරගෙන, පෙනෙනවාට වඩා කුඩා වී ජීවත් වේ.";
-            } else if(fear === 'failure' && desire === 'peace') {
-                shadowReading = "ඔබ බාහිර ලෝකයට ඉතා කාර්යබහුල බව පෙන්වුවද, ඔබේ යටිසිතට අවශ්‍ය නිදහස සහ සාමයයි. අන් අයගේ බලාපොරොත්තු ඉටු කිරීමට යාමෙන් ඔබ ඔබේම සතුට බිලි දී ඇත.";
-            } else if(fear === 'loneliness' && desire === 'peace') {
-                shadowReading = "ඔබේ හදවත පිරී ඇත්තේ ගැඹුරු ආදරයකිනි. නමුත් ප්‍රතික්ෂේප වීමට ඇති දැඩි බිය නිසා, ඔබ කිසිවෙකුටත් ඔබේ සැබෑ හැඟීම් සම්පූර්ණයෙන්ම පෙන්වන්නේ නැත.";
-            } else if(fear === 'loneliness' && desire === 'leader') {
-                shadowReading = "ඔබට ඉහළටම යාමට අවශ්‍යයි. නමුත් 'මම තනිවෙයිද?' යන සැකය ඔබේ ගමන ප්‍රමාද කරයි. ලොකුම බාධාව ඔබ ඔබවම විශ්වාස නොකිරීමයි.";
-            } else if(fear === 'wasted' && desire === 'genius') {
-                shadowReading = "ඔබේ මොළය අන් අයට වඩා වේගයෙන් වැඩ කරයි. නමුත් කාලය අපතේ යයි යන දැඩි කලබලකාරී හැඟීම නිසාම, ඔබ එකම තැන සිරවී සිටී.";
-            } else if(fear === 'wasted' && desire === 'leader') {
-                shadowReading = "ඔබ ඉපදී ඇත්තේ සාමාන්‍ය ජීවිතයක් ගත කිරීමට නොවේ. පාලනය ගිලිහී යාමට ඇති බිය නිසා ඔබ සියල්ල එකවර කිරීමට ගොස් වෙහෙසට පත් වේ.";
-            } else {
-                shadowReading = "ඔබේ මනස සුවිශේෂී සංයෝගයකි. සමාජය බලාපොරොත්තු වන දේ සහ ආත්මයට අවශ්‍ය දේ අතර නිරන්තර අභ්‍යන්තර සටනක් පවතී.";
-            }
-
-            let directivesHTML = "";
-            if(obstacle === 'procrastination') { directivesHTML += "<li><b>Dopamine Fasting:</b> උදෑසන අවදි වූ වහාම පළමු පැය 2 තුළ ජංගම දුරකථනය භාවිතයෙන් වළකින්න.</li>"; } 
-            else if(obstacle === 'anxiety') { directivesHTML += "<li><b>Cortisol Flush:</b> රාත්‍රියට නින්දට පෙර විනාඩි 10ක් ජර්නලයේ 'Brain Dump' කරන්න.</li>"; } 
-            else if(obstacle === 'digital') { directivesHTML += "<li><b>Grayscale Mode:</b> අදම ඔබගේ දුරකථනයේ තිරය කළු-සුදු (Grayscale) බවට පත් කරන්න.</li>"; }
-            if(timeSpent === 'online' || timeSpent === 'alone') { directivesHTML += "<li><b>Vagal Stimulation:</b> දිනකට වරක් සීතල වතුරෙන් මුහුණ සේදීම හෝ ගැඹුරු හුස්ම ගැනීමේ අභ්‍යාසය කරන්න.</li>"; } 
-            else { directivesHTML += "<li><b>Energy Protection:</b> මිතුරන් සමඟ කාලය ගත කිරීමෙන් පසු විනාඩි 15ක් තනිව සිටීමට කාලය වෙන් කරන්න.</li>"; }
-
-            let archetype = "", description = "", dna = "", block = "";
-
-            if (dopaScore >= seroScore && dopaScore >= oxyScore && logicScore >= 3) {
-                archetype = "THE SOVEREIGN STRATEGIST"; description = "ඔබ අධික බුද්ධිමය ධාරිතාවයක් සහ ඉලක්ක හඹා යාමේ සහජ හැකියාවක් ඇති අයෙකි."; dna = "ඔබ තුළ 'DRD4 Gene' (නව්‍යතා සොයන ජානය) සක්‍රිය වීමේ වැඩි සම්භාවිතාවක් ඇත."; block = "සියල්ල පරිපූර්ණව කිරීමට ඇති උත්සාහය (Perfectionism) සහ Burnout වීම ඔබේ ප්‍රධාන අවදානමයි.";
-            } else if (seroScore >= dopaScore && seroScore >= oxyScore) {
-                archetype = "THE RESILIENT GUARDIAN"; description = "ඔබ සන්සුන්, සැලසුම් සහගත ස්නායු පද්ධතියක් හිමි අයෙකි."; dna = "ඔබ තුළ 'COMT Gene' හි ස්ථාවර ප්‍රභේදය සක්‍රිය වී ඇති අතර එය පීඩනය දරාගැනීමට උපකාරී වේ."; block = "ඕනෑවට වඩා සිතීම (Overthinking) සහ අලුත් වෙනස්කම් වලට ඇති බිය ඔබේ ප්‍රධාන බාධාවයි.";
-            } else {
-                archetype = "THE CREATIVE VISIONARY"; description = "ඔබේ දකුණු මොළය අතිශයින් සක්‍රියයි. අන් අයගේ හැඟීම් තේරුම් ගැනීමේ ගැඹුරු ශක්තියක් ඔබට ඇත."; dna = "ඔබේ DNA තුළ 'OXTR Gene' සක්‍රියතාවය ඉහළ වන අතර, එය ගැඹුරු මානව සහ නිර්මාණාත්මක බැඳීම් වලට බලපායි."; block = "අන් අයගේ චිත්තවේග ඔබ තුළට උරා ගැනීමෙන් ඔබ ඉක්මනින් මානසිකව වෙහෙසට පත් වේ.";
-            }
-
-            let birthYearMatch = dob.match(/\d{4}/);
-            let currentAge = birthYearMatch ? new Date().getFullYear() - parseInt(birthYearMatch[0]) : "Unknown";
-            let bioRhythmText = `සෛලීය වයස (Cellular Age): වසර ${currentAge} යි. ඔබේ තෝරාගත් දත්ත වලට අනුව, ${lang === 'SIN' ? 'සිංහල භාෂාව හරහා ඔබේ යටිසිත පහසුවෙන් ක්‍රමලේඛනය (Reprogram) කළ හැක.' : 'English භාෂාව හරහා ඔබේ තාර්කික මොළය වේගයෙන් සක්‍රිය කළ හැක.'}`;
-
-            // Stop streams if running
-            if(stream) stream.getTracks().forEach(track => track.stop());
-            if(isRecording && sensorAudioCtx) { isRecording = false; }
-
-            const { error } = await supabaseClient.from('users').update({
-                whatsapp_id: wa, language_pref: lang, date_of_birth: dob, 
-                wake_up_time: wake, sleep_time: sleep,
-                chronotype: dopaScore.toString(), ans_response: seroScore.toString(), 
-                neuro_type: oxyScore.toString(), processing_style: vagalScore.toString(),
-                energy_battery: logicScore.toString(), bio_completed: true
-            }).eq('passport_code', userPassport);
-
-            if (!error) {
-                stopCalmDrone();
-                playInteractionSound('scan'); 
-                
-                // 🔴 REPORT එකට දත්ත ඇතුල් කිරීම
-                document.getElementById('rep-level-title').innerText = currentLevel;
-                document.getElementById('rep-level-desc').innerText = levelMessage;
-                document.getElementById('rep-level-milestone').innerText = nextMilestone;
-
-                document.getElementById('rep-archetype').innerText = archetype;
-                document.getElementById('rep-description').innerText = description;
-                document.getElementById('rep-dna').innerText = dna;
-                document.getElementById('rep-block').innerText = block;
-                document.getElementById('rep-biorhythm').innerText = bioRhythmText; 
-                document.getElementById('rep-shadow').innerText = shadowReading; 
-                document.getElementById('rep-directives').innerHTML = directivesHTML; 
-                
-                // Phase 3 එකේ ඉඳන් Report එකට මාරු වීම
-                switchScreen('bio-step-3', 'neural-report-screen');
-
-                setTimeout(() => {
-                    document.getElementById('rep-dopa-bar').style.width = dopaPercent + "%"; document.getElementById('rep-dopa-val').innerText = dopaPercent + "%";
-                    document.getElementById('rep-cort-bar').style.width = cortPercent + "%"; document.getElementById('rep-cort-val').innerText = cortPercent + "%";
-                    document.getElementById('rep-vagal-bar').style.width = vagalPercent + "%"; document.getElementById('rep-vagal-val').innerText = vagalPercent + "%";
-                    playInteractionSound('success');
-                }, 1000);
-            } else {
-                triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න.");
-            }
-        }
-
-        function enterKingdomFromReport() {
-            playInteractionSound('click'); playMajesticHub(); 
-            switchScreen('neural-report-screen', 'main-hub');
-        }
-
-        function startActivationSequence(callback) {
-            buildGrid(); 
-            setTimeout(() => {
-                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED"; document.getElementById('sync-msg').style.color = "#d4af37";
-                setTimeout(() => { document.getElementById('activation-screen').style.opacity = '0';
-                    setTimeout(() => { document.getElementById('activation-screen').style.display = 'none'; if(callback) callback(); }, 500);
-                }, 1000);
-            }, 2500);
-        }
-
-        function buildGrid() {
-            const grid = document.getElementById('dna-grid'); grid.innerHTML = ''; document.getElementById('current-day-text').innerText = currentActiveDay;
-            for (let i = 1; i <= totalDays; i++) {
-                let cell = document.createElement('div'); cell.className = 'dna-cell'; cell.innerHTML = `<div>DAY</div><div style="font-size: 1.2rem; font-weight: bold;">${i}</div>`;
-                if (i < currentActiveDay) { cell.classList.add('completed'); cell.onclick = () => openDaySelection(i, 'completed'); } 
-                else if (i === currentActiveDay) { cell.classList.add('active'); cell.onclick = () => openDaySelection(i, 'active'); } 
-                else { cell.classList.add('locked'); cell.onclick = () => triggerAccessDenied("ඔබගේ ස්නායුක සම්බන්ධතාවය ප්‍රතික්ෂේප විය.<br>කරුණාකර පෙර පියවර සම්පූර්ණ කරන්න."); }
-                grid.appendChild(cell);
-            }
-        }
-
-        function switchScreen(hideId, showId) {
-            let hideEl = document.getElementById(hideId); let showEl = document.getElementById(showId);
-            hideEl.style.opacity = '0';
-            setTimeout(() => { hideEl.style.display = 'none'; showEl.style.display = 'flex'; setTimeout(() => { showEl.style.opacity = '1'; }, 50); }, 500);
-        }
-
-        function openDaySelection(dayNum, status) {
-            selectedDayForVideo = dayNum; document.getElementById('protocol-day-title').innerText = `DAY ${dayNum < 10 ? '0'+dayNum : dayNum}: SELECT PROTOCOL`;
-            let pmBox = document.getElementById('pm-box'); let pmStatusText = document.getElementById('pm-status');
-            if (status === 'completed' || (dayNum === currentActiveDay && amCompletedToday)) {
-                pmBox.classList.remove('locked'); pmBox.classList.add('active'); pmStatusText.innerText = "AVAILABLE"; pmStatusText.style.color = "#0f0";
-            } else {
-                pmBox.classList.remove('active'); pmBox.classList.add('locked'); pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
-            }
-            switchScreen('grid-screen', 'protocol-selection');
-        }
-
-        function handleAMClick() {
-            const now = new Date(); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
-            if (selectedDayForVideo < currentActiveDay) { startVideo('AM'); } 
-            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); } 
-            else if (now.getHours() < 5) { triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි."); } 
-            else { startVideo('AM'); }
-        }
-
-        function handlePMClick() {
-            const now = new Date(); let pmBox = document.getElementById('pm-box'); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
-            if (selectedDayForVideo < currentActiveDay) { startVideo('PM'); } 
-            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); }
-            else if (pmBox.classList.contains('locked')) { triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න."); } 
-            else if (now.getHours() < 17) { triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි."); } 
-            else { startVideo('PM'); }
-        }
-
-        function startVideo(type) {
-            currentProtocolType = type;
-            document.getElementById('video-page-title').innerText = type === 'AM' ? "MORNING NEURAL SYNC" : "EVENING INTEGRATION";
-            document.getElementById('video-frame').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
-            switchScreen('protocol-selection', 'video-page');
-        }
-
-        async function markComplete() {
-            let alertTitle = document.getElementById('alert-title'); let alertMsg = document.getElementById('alert-message-text');
-            if (currentProtocolType === 'AM') {
-                amCompletedToday = true; localStorage.setItem(userPassport + '_amDate', new Date().toDateString());
-                alertTitle.innerText = "MORNING PROTOCOL COMPLETE"; alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
-                playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-            } else {
-                if(selectedDayForVideo === currentActiveDay) { 
-                    let nextDay = currentActiveDay + 1;
-                    const { error } = await supabaseClient.from('users').update({ current_day: nextDay }).eq('passport_code', userPassport);
-                    if (!error) {
-                        currentActiveDay = nextDay; amCompletedToday = false; localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); buildGrid(); 
-                        alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
-                        playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න."); }
-                } else {
-                    alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
-                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
+            let tl = 5;
+            let intv = setInterval(() => {
+                tl--;
+                btn.innerText = `🔴 RECORDING... (${tl}s)`;
+                if(tl <= 0) {
+                    clearInterval(intv);
+                    processEvoiClone();
                 }
-            }
+            }, 1000);
         }
 
-        function closeRoyalAlert() {
-            document.getElementById('royal-alert-screen').style.display = 'none'; document.getElementById('video-frame').src = "";
-            if (currentProtocolType === 'AM') {
-                switchScreen('video-page', 'protocol-selection');
-                let pmBox = document.getElementById('pm-box'); pmBox.classList.remove('locked'); pmBox.classList.add('active');
-                let statusText = document.getElementById('pm-status'); statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
-            } else { switchScreen('video-page', 'grid-screen'); }
+        function processEvoiClone() {
+            document.getElementById('clone-status').innerText = "UPLOADING TO NEURAL NETWORK...";
+            setTimeout(() => {
+                document.getElementById('clone-status').innerText = "CLONING VOICE & SHIFTING PITCH...";
+                playSound('evoi');
+                setTimeout(() => {
+                    document.getElementById('clone-status').innerText = "EVO.i CLONE READY";
+                    document.getElementById('evoi-step-1').style.display = 'none';
+                    document.getElementById('evoi-step-2').style.display = 'block';
+                }, 2000);
+            }, 2000);
         }
 
-        function triggerAccessDenied(message) { 
-            playInteractionSound('error'); document.getElementById('denied-msg-text').innerHTML = message;
-            let animBox = document.getElementById('denied-anim-box');
-            animBox.classList.remove('shake-anim'); void animBox.offsetWidth; animBox.classList.add('shake-anim');
-            document.getElementById('access-denied-screen').style.display = 'flex'; 
-            if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
+        function playEvoiSimulation() {
+            // In a real app, this would play the Audio object returned from ElevenLabs.
+            playSound('evoi');
+            alert("⚠️ තාක්ෂණික සටහන: සැබෑ ලෝකයේදී මෙතැනදී ElevenLabs API හරහා ජෙනරේට් කළ ඔබගේම වයසක කටහඬ (Audio File) ප්ලේ වේ.");
         }
-        
-        function closeDeniedScreen() { document.getElementById('access-denied-screen').style.display = 'none'; }
+
     </script>
 </body>
 </html>
