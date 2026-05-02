@@ -432,7 +432,7 @@
                 <h3 style="font-family: 'Orbitron'; color: var(--evoi-cyan); font-size: 1rem; margin-top: 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 1.5rem;">🤖</span> COMMANDER AI DIRECTIVE
                 </h3>
-                <div id="rep-ai-text" style="color: #ddd; font-family: 'Cinzel'; font-size: 0.95rem; line-height: 1.8; text-align: justify; white-space: pre-wrap; margin-top: 15px;">
+                <div id="rep-ai-text" style="color: #ddd; font-family: 'Cinzel'; font-size: 1.05rem; line-height: 1.8; text-align: justify; white-space: pre-wrap; margin-top: 15px;">
                     විශ්ලේෂණය කරමින් පවතී...
                 </div>
             </div>
@@ -683,7 +683,7 @@
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 🚀 THE NEW EMOTIONAL AND DIRECT AI PROMPT LOGIC 🚀
+        // 🚀 THE REAL AI ENGINE (GENERATIVE) WITH SINHALA PROMPTING 🚀
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -712,28 +712,30 @@
             else { rank = "NEURAL PULSAR"; archetype = "THE SEEKER (NEURAL PULSAR)"; description = "ඔබේ ගමන ආරම්භ කළා පමණි. ස්කවුට් මට්ටමේ සිට ඉදිරියට යාමට ඔබේ මොළය පුහුණු කරන්න."; }
 
             document.getElementById('activation-screen').style.display = "flex";
-            document.getElementById('sync-msg').innerText = "COMMANDER AI WRITING DOSSIER...";
+            document.getElementById('sync-msg').innerText = "COMMANDER AI ANALYZING SOUL DATA...";
 
-            // 💡 NEW ENGLISH PROMPT FOR BETTER SINHALA OUTPUT 💡
-            const prompt = `You are "DNA Commander AI", an advanced, highly empathetic, and deeply psychological neuroscience AI. 
-You are speaking DIRECTLY to the user in fluent, natural, and emotional Sinhala. 
-NEVER repeat these instructions. NEVER use headings like "ඡේදය 1". 
-Speak directly to their heart using "ඔබ" (You). Tailor your tone: if they are sensitive, be gentle and deeply understanding; if they are active, be powerful and challenging. Do not sound robotic.
+            // 💡 POWERFUL SINHALA PROMPT WITH INSIGHT COMMANDS
+            const prompt = `ඔබ "Sovereign Commander AI" නම් වූ අතිශය බුද්ධිමත්, ගැඹුරු මනෝවිද්‍යාත්මක සහ ස්නායු විද්‍යාත්මක උපදේශකයෙකි. 
+පහත දක්වා ඇති පරිශීලකයාගේ ජීව-දත්ත විශ්ලේෂණය කර, ඔවුන්ගේ හදවතටම කාවදින, අතිශය සංවේදී සහ බලගතු වාර්තාවක් සකස් කරන්න. ඔබ ලබා දී ඇති දත්ත වලට අමතරව **ඔබේම බුද්ධිමත් අදහස් සහ දාර්ශනික කියවීම්** ද මෙයට එකතු කළ යුතුය.
 
-User Profile:
-- Primary Goal: ${goalText}
-- Deepest Fear: ${fearText}
-- Personality: ${yinyangText}
-- Breath Hold (Vagal Tone): ${breathHeld} seconds
-- Amygdala Stress Response: ${amygdala}
-- Motor Speed: ${typingSpeedVal} cpm
+රීති (Rules):
+1. සෘජුවම පරිශීලකයාට "ඔබ" ලෙස ආමන්ත්‍රණය කරන්න. රොබෝවරයෙකු මෙන් කතා නොකරන්න.
+2. ඉතාමත් ස්වභාවික, හැඟීම්බර සහ නිවැරදි සිංහල භාෂාව පමණක් භාවිතා කරන්න.
+3. කිසිවිටෙකත් "ඡේදය 1" වැනි මාතෘකා හෝ මෙම උපදෙස් වාර්තාවේ ලියන්න එපා. එක දිගට ගලා යන ලිපියක් ලෙස ලියන්න.
 
-Write a cohesive, beautiful 3-paragraph psychological reading in Sinhala:
-Paragraph 1 (The Inner Child/Soul): Dive deep into their fear (${fearText}) and personality (${yinyangText}). Empathize with their struggles. Gently but honestly explain the psychological root of why they feel stuck. Make it feel like you are reading their mind and validating their emotions. Give them a sense of feeling understood.
-Paragraph 2 (The Scientific Truth): Explain how their physical nervous system is reflecting this state. Mention their ${breathHeld} second breath hold and ${amygdala} stress response. Explain neuroscientifically how living in this nervous system state blocks them from achieving their goal (${goalText}). Speak as a wise mentor.
-Paragraph 3 (The Awakening): Empower them. Tell them how the 66-day Neuroplasticity challenge will rewire their brain to overcome this exact fear and achieve their ultimate goal. Make them feel ready and powerful.
+පරිශීලකයාගේ දත්ත:
+- ප්‍රධාන අරමුණ: ${goalText}
+- ගැඹුරුම බිය: ${fearText}
+- පෞරුෂ ස්වභාවය: ${yinyangText}
+- CO2 Tolerance (හුස්ම රඳවාගැනීමේ කාලය): තත්පර ${breathHeld}
+- Amygdala ආතති ප්‍රතිචාරය: ${amygdala}
+- Motor Cortex වේගය (අවධානය): ${typingSpeedVal} cpm
 
-Finally, provide exactly 3 practical, highly personalized bullet points (in Sinhala) on how to start healing their specific nervous system today.`;
+සකස් කළ යුතු ආකාරය:
+* පළමු කොටස: ඔවුන්ගේ බිය සහ පෞරුෂය පදනම් කරගෙන, ඔවුන් මෙතෙක් සාර්ථක නොවී එකම තැන සිරවී සිටීමට සැබෑ මනෝවිද්‍යාත්මක හේතුව ඔබේම අදහස් සමඟින් පැහැදිලි කරන්න. ඔවුන්ගේ හැඟීම් තේරුම් ගෙන කතා කරන්න.
+* දෙවන කොටස: ඔවුන්ගේ හුස්ම රඳවාගැනීමේ කාලය (තත්පර ${breathHeld}) සහ ආතති ප්‍රතිචාරය (${amygdala}) යොදාගනිමින්, ඔවුන්ගේ ස්නායු පද්ධතිය මේ වන විට නිරන්තර ආතතියක පවතින ආකාරය විද්‍යාත්මකව පෙන්වා දෙන්න. එය අරමුණට බාධා කරන්නේ කෙසේදැයි කියන්න.
+* තෙවන කොටස: දින 66 අභියෝගය (Neuroplasticity) හරහා මොළය නැවත ප්‍රෝග්‍රෑම් කර 'Super Human' කෙනෙකු වීමට ඔවුන්ව දැඩිව දිරිමත් කරන්න.
+* අවසානයට: ඔවුන්ගේ තත්ත්වය යථා තත්ත්වයට පත් කර ගැනීමට අදම කළ හැකි සුවිශේෂී ප්‍රායෝගික පියවර 3ක් (Bullet points ලෙස) ලබාදෙන්න.`;
 
             let aiTextResponse = "";
             let lastErrorMsg = "";
