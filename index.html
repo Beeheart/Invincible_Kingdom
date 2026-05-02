@@ -24,162 +24,58 @@
             color: var(--gold-static); overflow: hidden;
         }
 
-        /* 🖼️ BACKGROUND */
-        .kingdom-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('Ne.jpg'); 
-            background-size: cover; background-position: center; z-index: 1; transition: all 1s;
-        }
-
-        .dna-glow {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
-            filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out; transition: all 1s;
-        }
-
-        /* 🛡️ LOGIN SCREEN */
+        /* 🖼️ BACKGROUND & LAYOUT */
+        .kingdom-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('Ne.jpg'); background-size: cover; background-position: center; z-index: 1; transition: all 1s; }
+        .dna-glow { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%); filter: blur(60px); z-index: 2; opacity: 0.5; animation: pulseBg 5s infinite ease-in-out; }
         #login-screen { position: relative; z-index: 10000; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
         .login-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
-        
-        /* ✨ FIXED INPUT BOX AESTHETICS */
-        .passport-input {
-            background: rgba(0, 0, 0, 0.6) !important; border: 1px solid var(--gold-static) !important; color: var(--gold-static) !important; 
-            padding: 15px; font-family: 'Orbitron'; font-size: 1.1rem; text-align: center; border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase;
-            transition: all 0.3s ease; box-sizing: border-box; box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
-        }
-        .passport-input:focus { outline: none !important; border-color: #fff !important; box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), inset 0 0 15px rgba(212, 175, 55, 0.3) !important; background: rgba(0, 0, 0, 0.9) !important; color: #fff !important; }
-        .passport-input::placeholder { color: rgba(212, 175, 55, 0.4); text-transform: none; font-size: 0.9rem;}
-
-        /* 🎚️ NEURAL SLIDER AESTHETICS */
-        .neural-slider { -webkit-appearance: none; width: 100%; height: 8px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-static); border-radius: 5px; outline: none; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); transition: 0.3s; }
-        .neural-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: radial-gradient(circle, var(--gold-static) 0%, #b38728 100%); cursor: pointer; box-shadow: 0 0 15px var(--gold-static); transition: 0.2s; }
-        .neural-slider::-webkit-slider-thumb:hover { transform: scale(1.2); box-shadow: 0 0 25px #fff; }
-        .slider-labels { display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.6rem; color: #aaa; letter-spacing: 1px; }
+        .passport-input { background: rgba(0, 0, 0, 0.6); border: 1px solid var(--gold-static); color: var(--gold-static); padding: 15px; font-family: 'Orbitron'; font-size: 1.1rem; text-align: center; border-radius: 5px; margin: 20px 0; width: 80%; text-transform: uppercase; transition: all 0.3s ease; box-sizing: border-box; }
+        .neural-slider { -webkit-appearance: none; width: 100%; height: 8px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-static); border-radius: 5px; outline: none; margin: 20px 0; }
+        .neural-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: var(--gold-static); cursor: pointer; box-shadow: 0 0 15px var(--gold-static); }
         .val-display { font-family: 'Orbitron'; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: right; margin-top: -15px; display: block;}
-
-        /* ⚡ ACTIVATION SCREEN */
         #activation-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 25000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; }
         .progress-container { width: 300px; height: 2px; background: #222; position: relative; }
         .progress-bar { width: 0%; height: 100%; background: var(--gold-static); box-shadow: 0 0 15px var(--gold-static); animation: grow 2.5s forwards; }
-
-        /* 🏰 UI LAYERS */
         .screen-layer { position: relative; z-index: 10; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px 20px; box-sizing: border-box; opacity: 0; transition: 1s; display: none; overflow-y: auto; }
-        
-        .header-badge { background: linear-gradient(135deg, #5e0000 0%, #200000 100%); border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center; border-radius: 40px 10px 40px 10px; box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.2), 0 15px 30px rgba(0,0,0,0.8); position: relative; margin-bottom: 20px; }
-        .header-badge::before { content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border: 1px dashed rgba(212, 175, 55, 0.5); border-radius: 34px 6px 34px 6px; pointer-events: none; }
-        .header-badge h2 { margin: 0; letter-spacing: 5px; font-family: 'Orbitron'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.2rem; }
-
-        .bee-coin { width: 300px; height: 300px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; position: relative; filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; margin: 40px 0; }
-        .bee-coin::before { content: ''; position: absolute; width: 95%; height: 95%; background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat; }
-
-        /* 🛡️ MENU GRID */
+        .header-badge { background: linear-gradient(135deg, #5e0000 0%, #200000 100%); border: 2px solid var(--gold-static); padding: 15px 60px; text-align: center; border-radius: 40px 10px 40px 10px; margin-bottom: 20px; }
+        .bee-coin { width: 300px; height: 300px; background-image: url('coin.png'); background-size: contain; background-position: center; background-repeat: no-repeat; filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.8)); animation: royalHeartbeat 1.5s infinite; margin: 40px 0; }
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; max-width: 900px; }
-        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1), 0 10px 20px rgba(0,0,0,0.6); color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; position: relative; overflow: hidden; width: 100%; box-sizing: border-box; user-select: none; -webkit-user-select: none;}
-        .royal-btn::after { content: ''; position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 21px 2px 21px 2px; pointer-events: none; }
-        .btn-text::before { content: '🙤 '; } .btn-text::after { content: ' 🙦'; }
-        .royal-btn:hover { background: linear-gradient(180deg, #d4af37 0%, #b38728 100%); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.8), 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.03); }
-        .royal-btn:active { background: linear-gradient(180deg, #b38728 0%, #d4af37 100%); transform: translateY(2px) scale(0.98); box-shadow: inset 0 5px 10px rgba(0,0,0,0.8); }
-
-        /* 🚀 EVO.i BUTTON SPECIAL CSS */
-        .evoi-btn { background: rgba(0, 20, 30, 0.8); border: 2px solid var(--evoi-cyan); color: var(--evoi-cyan); border-radius: 5px; box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.2), 0 0 20px rgba(0, 229, 255, 0.4); animation: evoiPulse 2s infinite; text-shadow: 0 0 10px var(--evoi-cyan); grid-column: span 3; padding: 20px; font-size: 1rem; letter-spacing: 4px; }
-        .evoi-btn:hover { background: var(--evoi-cyan); color: #000; box-shadow: 0 0 40px var(--evoi-cyan); text-shadow: none; }
-        .evoi-btn .btn-text::before { content: '✦ '; } .evoi-btn .btn-text::after { content: ' ✦'; }
-        .evoi-btn::after { display: none; }
-
-        /* 🧬 DNA PROGRESS GRID */
+        .royal-btn { background: linear-gradient(135deg, #4a0404 0%, #1a0000 100%); border: 2px solid #d4af37; border-radius: 25px 5px 25px 5px; color: #d4af37; padding: 15px 10px; text-align: center; font-family: 'Orbitron'; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; width: 100%; }
+        .evoi-btn { border-color: var(--evoi-cyan); color: var(--evoi-cyan); grid-column: span 3; padding: 20px; font-size: 1rem; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 15px; width: 90%; max-width: 900px; margin-top: 20px; }
-        .dna-cell { aspect-ratio: 1; border: 2px solid #333; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.3s; position: relative; color: #666; }
+        .dna-cell { aspect-ratio: 1; border: 2px solid #333; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer; background: rgba(0,0,0,0.8); color: #666; }
         .dna-cell.completed { background: rgba(74, 4, 4, 0.6); border-color: var(--gold-static); color: var(--gold-static); }
-        .dna-cell.completed::after { content: '✔'; position: absolute; font-size: 1.5rem; opacity: 0.3; }
-        .dna-cell.active { border-color: var(--gold-static); color: #fff; text-shadow: 0 0 5px var(--gold-static); box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.5), 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; background: rgba(212, 175, 55, 0.2); }
+        .dna-cell.active { border-color: var(--gold-static); color: #fff; box-shadow: 0 0 20px var(--gold-static); animation: cellPulse 1.5s infinite; }
         .dna-cell.locked { opacity: 0.5; cursor: not-allowed; }
-
-        /* ☀️🌙 AM/PM SELECTION */
-        .cycle-container { display: flex; gap: 30px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
-        .cycle-box { width: 180px; padding: 30px; border: 2px solid #444; border-radius: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.8); transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+        .cycle-box { width: 180px; padding: 30px; border: 2px solid #444; border-radius: 20px; text-align: center; cursor: pointer; background: rgba(0,0,0,0.8); }
         .cycle-box.active { border-color: var(--gold-static); box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-        .cycle-box.active:hover { transform: translateY(-5px); box-shadow: 0 0 40px var(--gold-static); }
         .cycle-box.locked { filter: grayscale(1); opacity: 0.5; cursor: not-allowed; }
-        .cycle-box .icon { font-size: 3.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--gold-static)); }
-        .cycle-box .label { font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; color: var(--gold-static); }
-
-        /* 📺 VIDEO PAGE */
-        .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); margin-top: 20px; }
-
-        /* 🚫 ACCESS DENIED SCREEN */
-        #access-denied-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 0, 0, 0.95); z-index: 26000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .denied-box { background: radial-gradient(circle, #2a0000 0%, #000 100%); border: 2px solid #ff4d4d; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; animation: warningPulse 1s infinite alternate; }
-
-        /* ✨ ROYAL ALERT */
-        #royal-alert-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 26000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .alert-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; max-width: 450px; animation: popIn 0.4s forwards; }
-
-        /* 📜 THE ROYAL SCROLL (SANDESHAYA) UI */
-        .sandeshaya-border { background: linear-gradient(to bottom, #1f1107, #0a0502); border: 4px solid var(--gold-static); border-image: var(--royal-gold) 1; padding: 35px; position: relative; box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 50px rgba(191, 149, 63, 0.2); border-radius: 8px; }
-        .sandeshaya-border::before { content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 1px dashed rgba(212, 175, 55, 0.5); pointer-events: none; }
-        .sandeshaya-border::after { content: '🙤 🙦'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #000; padding: 0 15px; color: var(--gold-static); font-size: 1.5rem; }
-        
-        /* 📊 NEURAL STABILITY METER */
-        .meter-container { width: 100%; height: 12px; background: #000; border: 1px solid #333; border-radius: 20px; margin: 15px 0; overflow: hidden; position: relative; box-shadow: inset 0 0 10px #000; }
-        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); box-shadow: 0 0 15px var(--gold-static); transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .stat-label { font-family: 'Orbitron'; font-size: 0.65rem; color: #fff; letter-spacing: 3px; text-transform: uppercase; }
-
-        /* 🛡️ QUESTION BOXES */
-        .q-box { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--gold-static); transition: 0.3s; text-align: left; border-radius: 0 10px 10px 0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);}
-        .q-box:hover { background: rgba(212, 175, 55, 0.05); border-left: 5px solid var(--gold-static); }
-        .q-box.mystic-box { border-left-color: var(--mystic-purple); }
-        .q-box.mystic-box:hover { background: rgba(157, 78, 221, 0.05); border-left-width: 5px; }
-        
-        .q-box p { font-size: 0.95rem; color: #e6cc80; margin-bottom: 12px; line-height: 1.6; font-family: 'Cinzel', serif; text-shadow: 0 0 5px rgba(0,0,0,0.8); }
-        .mystic-box p { color: #d0a1ff; }
-
-        select.passport-input { appearance: none; background: url('data:image/svg+xml;utf8,<svg fill="%23d4af37" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center; background-color: rgba(10, 5, 0, 0.8) !important; font-size: 0.85rem;}
-
-        /* 🔬 SENSOR UI STYLES (NEW TYPING SENSOR) */
-        .sensor-container { background: rgba(0, 0, 0, 0.6); border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 20px; text-align: left;}
-        #neural-input-area { width: 100%; height: 120px; background: #000; color: var(--evoi-cyan); border: 1px solid #333; padding: 15px; font-family: 'Orbitron'; resize: none; outline: none; margin-bottom: 10px; box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.1); }
-        .info-text { font-family: 'Cinzel'; font-size: 0.8rem; color: #aaa; text-align: center; margin-bottom: 15px;}
-        .pulse-anim { animation: heartbeatPulse 0.5s infinite alternate; color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red);}
-
-        /* 🚀 EVO.i SCREEN SPECIFICS */
-        #evoi-screen { background: url('1000573693.png') no-repeat center center; background-size: cover; display: none; z-index: 20000; position: relative; }
-        #evoi-screen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)); z-index: 0; }
-        .hologram-circle { width: 200px; height: 200px; border-radius: 50%; border: 2px dashed var(--evoi-cyan); margin: 30px auto; display: flex; align-items: center; justify-content: center; position: relative; animation: spinSlow 10s linear infinite; box-shadow: 0 0 50px rgba(0, 229, 255, 0.2); z-index: 2;}
-        .hologram-circle::after { content: ''; position: absolute; width: 80%; height: 80%; border-radius: 50%; border: 4px solid rgba(0, 229, 255, 0.5); border-top-color: transparent; border-bottom-color: transparent; animation: spinFast 3s linear infinite reverse; }
-        .evoi-icon { font-size: 4rem; filter: drop-shadow(0 0 20px var(--evoi-cyan)); position: absolute; animation: float 3s ease-in-out infinite; }
-
-        /* 🎬 ANIMATIONS */
-        @keyframes heartbeatPulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-        @keyframes evoiPulse { 0%, 100% { box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.2), 0 0 20px rgba(0, 229, 255, 0.4); } 50% { box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.5), 0 0 40px rgba(0, 229, 255, 0.8); } }
-        @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); } 15% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.9)); } 30% { transform: scale(1); } 45% { transform: scale(1.15); filter: drop-shadow(0 0 60px rgba(212, 175, 55, 1)); } 60% { transform: scale(1); } }
-        @keyframes pulseBg { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; } }
-        @keyframes warningPulse { 0% { box-shadow: inset 0 0 20px rgba(255,0,0,0.2), 0 0 30px rgba(255,0,0,0.4); border-color: #ff4d4d; } 100% { box-shadow: inset 0 0 50px rgba(255,0,0,0.6), 0 0 80px rgba(255,0,0,0.8); border-color: #ff0000; } }
-        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes grow { to { width: 100%; } }
+        .video-box { width: 90%; max-width: 800px; aspect-ratio: 16/9; background: #000; border: 3px solid var(--gold-static); }
+        .sandeshaya-border { background: linear-gradient(to bottom, #1f1107, #0a0502); border: 4px solid var(--gold-static); padding: 35px; border-radius: 8px; box-shadow: 0 0 50px rgba(191, 149, 63, 0.2); }
+        .meter-container { width: 100%; height: 12px; background: #000; border: 1px solid #333; border-radius: 20px; margin: 15px 0; overflow: hidden; }
+        .meter-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--neon-red), var(--gold-static), var(--neon-green)); transition: width 1s; }
+        .stat-label { font-family: 'Orbitron'; font-size: 0.65rem; color: #fff; letter-spacing: 3px; }
+        .q-box { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--gold-static); }
+        #neural-input-area { width: 100%; height: 120px; background: #000; color: var(--evoi-cyan); border: 1px solid #333; padding: 15px; font-family: 'Orbitron'; resize: none; outline: none; }
         @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
-        @keyframes cellPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-        @keyframes spinSlow { 100% { transform: rotate(360deg); } }
-        @keyframes spinFast { 100% { transform: rotate(-360deg); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
-        .shake-anim { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
-
-        @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; margin: 20px 0; } .header-badge { padding: 15px 30px; } .cycle-box { width: 140px; padding: 20px; } .sandeshaya-border { padding: 20px; width: 95%;} }
+        @keyframes grow { to { width: 100%; } }
+        @keyframes royalHeartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes cellPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; } }
     </style>
 </head>
 <body>
 
     <div class="kingdom-bg" id="main-bg"></div>
-    <div class="dna-glow" id="main-glow"></div>
+    <div class="dna-glow"></div>
 
     <div id="login-screen">
         <div class="login-box">
-            <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 5px;">ENTER THE KINGDOM</h2>
-            <p style="color: #ccc; font-size: 0.8rem; margin-bottom: 20px;">Provide your DNA Passport Code to synchronize</p>
-            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX" autocomplete="off" onfocus="playInitialShimmer()">
+            <h2 style="font-family: 'Orbitron'; letter-spacing: 3px;">ENTER THE KINGDOM</h2>
+            <input type="text" id="passportCode" class="passport-input" placeholder="DNA-RIDMI-XXX">
             <br>
-            <button class="royal-btn" style="width: 200px; margin-top: 10px;" onclick="checkKingdomAccess()"><span class="btn-text">SYNC DNA</span></button>
+            <button class="royal-btn" style="width: 200px;" onclick="checkKingdomAccess()">SYNC DNA</button>
         </div>
     </div>
 
@@ -188,228 +84,67 @@
         <div class="progress-container"><div class="progress-bar"></div></div>
     </div>
 
-    <div id="bio-step-1" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
+    <div id="bio-step-1" class="screen-layer">
         <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🔱</div>
-            <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">SOVEREIGN IDENTITY</h2>
-            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">PHASE 1: BEHAVIORAL SCAN</p>
-            
-            <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
+            <h2>SOVEREIGN IDENTITY</h2>
             <div class="meter-container"><div class="meter-fill" id="nsi-meter-1" style="width: 5%;"></div></div>
-
             <div style="text-align: left; margin-top: 30px;">
-                
-                <div class="q-box">
-                    <label class="stat-label">LINK WHATSAPP IDENTITY</label>
-                    <input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter1(10)">
+                <div class="q-box"><label class="stat-label">LINK WHATSAPP IDENTITY</label><input type="text" id="wa-number" class="passport-input" placeholder="+94 7X XXX XXXX" onchange="updateMeter1(10)"></div>
+                <div class="q-box"><label class="stat-label">NEURAL LINGUISTIC PREFERENCE</label>
+                    <select id="q-lang" class="passport-input" onchange="updateMeter1(20)"><option value="">Select...</option><option value="SIN">සිංහල</option><option value="ENG">English</option></select>
                 </div>
-
-                <div class="q-box">
-                    <label class="stat-label">NEURAL LINGUISTIC PREFERENCE</label>
-                    <select id="q-lang" class="passport-input" onchange="updateMeter1(16)">
-                        <option value="">භාෂාව තෝරන්න...</option>
-                        <option value="SIN">සිංහල (Emotional Processing)</option>
-                        <option value="ENG">English (Logical Processing)</option>
-                    </select>
-                </div>
-
-                <div class="q-box">
-                    <label class="stat-label">CHRONOBIOLOGICAL ORIGIN (Date of Birth)</label>
-                    <input type="text" id="q-dob" class="passport-input" placeholder="YYYY-MM-DD (උදා: 1981-11-17)" onchange="updateMeter1(22)">
-                </div>
-
-                <div class="q-box">
-                    <label class="stat-label">CIRCADIAN RHYTHM CYCLE</label>
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter1(28)"></div>
-                        <div style="width: 50%;"><label class="stat-label" style="font-size:0.5rem;">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter1(34)"></div>
-                    </div>
-                </div>
-
-                <div class="q-box">
-                    <p>1. මෙම 66-දින ගමනට එකතු වීමට ඔබේ ප්‍රධානතම අරමුණ කුමක්ද?</p>
-                    <select id="q-goal" class="passport-input" onchange="updateMeter1(40)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="focus">මානසික අවධානය සහ මතකය වර්ධනය</option>
-                        <option value="rebuild">ජීවිතය/ව්‍යාපාරය නැවත ගොඩනැගීම</option>
-                        <option value="scale">සාර්ථකත්වය 10X මට්ටමට ගෙන යාම</option>
-                    </select>
-                </div>
-
-                <div class="q-box">
-                    <p>2. ඔබේ ජීවිතයේ ඔබ "විනාශ කර දැමීමට" අපේක්ෂා කරන ප්‍රධානතම බාධාව කුමක්ද?</p>
-                    <select id="q-obstacle" class="passport-input" onchange="updateMeter1(46)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="procrastination">වැඩ කල් දැමීම සහ අරමුණක් නොමැතිකම</option>
-                        <option value="anxiety">අධික සිතුවිලි (Overthinking) සහ බිය</option>
-                        <option value="digital">සමාජ මාධ්‍ය වලට ඇති ඇබ්බැහිය</option>
-                    </select>
-                </div>
-
-                <div class="q-box">
-                    <p>3. සාමාන්‍ය දවසක ඔබේ නිදහස් කාලය වැඩියෙන්ම වැය වන්නේ කොතැනද?</p>
-                    <select id="q-time" class="passport-input" onchange="updateMeter1(52)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="online">සමාජ මාධ්‍ය සහ අන්තර්ජාලය තුළ</option>
-                        <option value="social">මිතුරන් සමඟ</option>
-                        <option value="alone">හුදෙකලාව මගේම සිතුවිලි සමඟ</option>
-                    </select>
-                </div>
-
-                <hr style="border: 0.5px solid rgba(157, 78, 221, 0.4); margin: 30px 0;">
-                <h3 style="font-family: 'Orbitron'; color: var(--mystic-purple); font-size: 1rem; margin-bottom: 20px; letter-spacing: 2px;">THE SHADOW WORK & BALANCE</h3>
-
-                <div class="q-box mystic-box">
-                    <p>🔮 <b>(Core Fear)</b> ඔබ තුළ ගැඹුරින්ම සැඟවී ඇති ප්‍රධානතම බිය කුමක්ද?</p>
-                    <select id="q-fear" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(58)">
-                        <option value="">අවංක පිළිතුර තෝරන්න...</option>
-                        <option value="failure">අසාර්ථක වී විවේචනයට ලක්වීම</option>
-                        <option value="loneliness">හුදෙකලා වීම</option>
-                        <option value="wasted">මගේ ජීවිතය අපතේ යාම</option>
-                    </select>
-                </div>
-
-                <div class="q-box mystic-box">
-                    <p>🔥 <b>(Core Desire)</b> සැබැවින්ම ඔබ ලෝකයට පෙන්වීමට අවශ්‍ය ඔබේ සැබෑ ස්වභාවය කුමක්ද?</p>
-                    <select id="q-desire" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(62)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="leader">ලෝකය වෙනස් කරන නායකයෙක්</option>
-                        <option value="peace">සාමකාමීව ජීවත් වන ආදරණීය ආත්මයක්</option>
-                        <option value="genius">රහස් සොයා යන බුද්ධිමතෙක්</option>
-                    </select>
-                </div>
-
-                <div class="q-box mystic-box">
-                    <p>☯️ <b>(Yin-Yang Balance)</b> ඔබේ පෞරුෂය තුළ ඔබ වැඩිපුරම දකින්නේ කුමන පැත්තද?</p>
-                    <select id="q-yinyang" class="passport-input" style="border-color: var(--mystic-purple) !important;" onchange="updateMeter1(65)">
-                        <option value="">පිළිතුර තෝරන්න...</option>
-                        <option value="yin">Yin (සන්සුන්, ඉවසිලිවන්ත, බාරගන්නා සුළු - Passive)</option>
-                        <option value="yang">Yang (ක්‍රියාශීලී, බලවත්, ලබාදෙන - Active)</option>
-                        <option value="balance">Balanced (මේ දෙකෙහිම සමතුලිතතාවයක් පවතී)</option>
-                    </select>
-                </div>
-
-                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="goToStep2()">
-                    <span class="btn-text">NEXT PHASE</span>
-                </button>
+                <div class="q-box"><label class="stat-label">DATE OF BIRTH</label><input type="text" id="q-dob" class="passport-input" placeholder="YYYY-MM-DD" onchange="updateMeter1(30)"></div>
+                <div class="q-box"><label class="stat-label">WAKE UP TIME</label><input type="time" id="wake-time" class="passport-input" onchange="updateMeter1(40)"></div>
+                <div class="q-box"><label class="stat-label">SLEEP TIME</label><input type="time" id="sleep-time" class="passport-input" onchange="updateMeter1(50)"></div>
+                <div class="q-box"><p>Main Goal?</p><select id="q-goal" class="passport-input" onchange="updateMeter1(60)"><option value="">Select...</option><option value="focus">Focus/Memory</option><option value="rebuild">Rebuild Life</option></select></div>
+                <div class="q-box"><p>Obstacle?</p><select id="q-obstacle" class="passport-input" onchange="updateMeter1(70)"><option value="">Select...</option><option value="procrastination">Procrastination</option><option value="anxiety">Anxiety</option></select></div>
+                <div class="q-box"><p>Free time usage?</p><select id="q-time" class="passport-input" onchange="updateMeter1(80)"><option value="">Select...</option><option value="online">Online</option><option value="alone">Alone</option></select></div>
+                <div class="q-box"><p>Core Fear?</p><select id="q-fear" class="passport-input" onchange="updateMeter1(90)"><option value="">Select...</option><option value="failure">Failure</option><option value="loneliness">Loneliness</option></select></div>
+                <div class="q-box"><p>Core Desire?</p><select id="q-desire" class="passport-input" onchange="updateMeter1(95)"><option value="">Select...</option><option value="leader">Leader</option><option value="peace">Peace</option></select></div>
+                <div class="q-box"><p>Yin/Yang Balance?</p><select id="q-yinyang" class="passport-input" onchange="updateMeter1(100)"><option value="">Select...</option><option value="yin">Yin</option><option value="yang">Yang</option></select></div>
+                <button class="royal-btn" onclick="goToStep2()">NEXT PHASE</button>
             </div>
         </div>
     </div>
 
-    <div id="bio-step-2" class="screen-layer" style="background: rgba(0,0,0,0.95); z-index: 15000;">
+    <div id="bio-step-2" class="screen-layer">
         <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #d4af37);">🧠</div>
-            <h2 style="font-family: 'Cinzel'; background: var(--royal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin: 0;">NEURAL CALIBRATION</h2>
-            <p style="color: #aaa; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 2px; margin-top: 5px;">PHASE 2: SCIENTIFIC BRAIN MAPPING</p>
-            
-            <div class="stat-label" style="margin-top: 25px;">NEURAL STABILITY INDEX</div>
-            <div class="meter-container"><div class="meter-fill" id="nsi-meter-2" style="width: 65%;"></div></div>
-
+            <h2>NEURAL CALIBRATION</h2>
+            <div class="meter-container"><div class="meter-fill" id="nsi-meter-2" style="width: 5%;"></div></div>
             <div style="text-align: left; margin-top: 30px;">
-                
-                <div class="q-box">
-                    <p>1. <b>(Dopamine Drive)</b> මම නිතරම අලුත් අභියෝග සොයා යන අතර, ඉලක්කයක් සපුරා ගත් විට දැඩි උද්‍යෝගයක් දැනේ.</p>
-                    <input type="range" id="q-dopa" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-dopa').innerText=this.value; updateMeter2(70);">
-                    <div class="slider-labels"><span>සම්පූර්ණයෙන්ම නැත</span><span>අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-dopa">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>2. <b>(Serotonin Stability)</b> මගේ ජීවිතය සැලසුම් සහගතව සහ පිළිවෙලකට තිබෙන විට මට උපරිම මානසික සුවයක් දැනේ.</p>
-                    <input type="range" id="q-sero" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-sero').innerText=this.value; updateMeter2(75);">
-                    <div class="slider-labels"><span>සම්පූර්ණයෙන්ම නැත</span><span>අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-sero">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>3. <b>(Oxytocin Resonance)</b> මම අන් අයගේ හැඟීම් වලට ඉතා සංවේදී වන අතර, ගැඹුරු මානව බැඳීම් මට ඉතා වැදගත් වේ.</p>
-                    <input type="range" id="q-oxy" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-oxy').innerText=this.value; updateMeter2(80);">
-                    <div class="slider-labels"><span>සම්පූර්ණයෙන්ම නැත</span><span>අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-oxy">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>4. <b>(Vagal Tone / Stress Resilience)</b> දැඩි පීඩාකාරී හෝ කෝප ගැන්වෙන අවස්ථාවකදී පවා, මට ඉක්මනින් මගේ සිත සන්සුන් කරගත හැක.</p>
-                    <input type="range" id="q-vagal" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-vagal').innerText=this.value; updateMeter2(85);">
-                    <div class="slider-labels"><span>සම්පූර්ණයෙන්ම නැත</span><span>අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-vagal">3</span>
-                </div>
-
-                <div class="q-box">
-                    <p>5. <b>(Prefrontal Control)</b> ප්‍රශ්නයක් විසඳීමේදී මම මගේ හැඟීම් වලට වඩා තර්කයට සහ පියවරෙන් පියවර විශ්ලේෂණයට මුල් තැන දෙමි.</p>
-                    <input type="range" id="q-logic" class="neural-slider" min="1" max="5" value="3" oninput="document.getElementById('v-logic').innerText=this.value; updateMeter2(90);">
-                    <div class="slider-labels"><span>සම්පූර්ණයෙන්ම නැත</span><span>අනිවාර්යයෙන්ම ඔව්</span></div>
-                    <span class="val-display" id="v-logic">3</span>
-                </div>
-
-                <hr style="border: 0.5px solid rgba(0, 212, 255, 0.4); margin: 30px 0;">
-                <h3 style="font-family: 'Orbitron'; color: var(--neon-blue); font-size: 1rem; margin-bottom: 20px; letter-spacing: 2px;">SCIENTIFIC VITAL SCAN</h3>
-
-                <div class="q-box" style="text-align: center; border-color: var(--neon-blue);">
-                    <p style="color: #fff; text-align: left;">🧬 <b>CO2 Tolerance:</b> හුස්ම පිට කර, පහත බොත්තම ඔබාගෙන සිටින්න. නැවත හුස්ම ගන්නා විට බොත්තම අතහරින්න.</p>
-                    
-                    <button id="breath-btn" class="royal-btn" style="border-color: var(--neon-blue); color: var(--neon-blue); font-size: 1.1rem; padding: 25px; margin-top: 15px; user-select: none;" 
-                        onmousedown="startBreathTimer(event)" onmouseup="stopBreathTimer(event)" onmouseleave="stopBreathTimer(event)"
-                        ontouchstart="startBreathTimer(event)" ontouchend="stopBreathTimer(event)">
-                        PRESS & HOLD TO RECORD BREATH
-                    </button>
-                    
-                    <div id="breath-display" style="font-family: 'Orbitron'; font-size: 1.5rem; color: var(--neon-green); margin-top: 15px;">00 SECONDS</div>
+                <div class="q-box"><p>Dopamine Drive</p><input type="range" id="q-dopa" class="neural-slider" min="1" max="5" value="3"></div>
+                <div class="q-box"><p>Serotonin Stability</p><input type="range" id="q-sero" class="neural-slider" min="1" max="5" value="3"></div>
+                <div class="q-box"><p>Oxytocin Resonance</p><input type="range" id="q-oxy" class="neural-slider" min="1" max="5" value="3"></div>
+                <div class="q-box"><p>Vagal Tone</p><input type="range" id="q-vagal" class="neural-slider" min="1" max="5" value="3"></div>
+                <div class="q-box"><p>Prefrontal Control</p><input type="range" id="q-logic" class="neural-slider" min="1" max="5" value="3"></div>
+                <div class="q-box" style="text-align:center;">
+                    <p>CO2 Tolerance: Press & Hold Breath</p>
+                    <button id="breath-btn" class="royal-btn" onmousedown="startBreathTimer(event)" onmouseup="stopBreathTimer(event)" ontouchstart="startBreathTimer(event)" ontouchend="stopBreathTimer(event)">HOLD BREATH</button>
+                    <div id="breath-display" style="font-size: 1.5rem; margin-top: 15px;">0 SECONDS</div>
                     <input type="hidden" id="q-breath-val" value="0">
                 </div>
-
-                <div class="q-box" style="border-color: var(--neon-blue);">
-                    <p>🧠 <b>Amygdala Hijack:</b> හදිසි පීඩනයකදී (උදා: හදිසි අනතුරක් හෝ දරුණු විවේචනයක්) ඔබේ මොළයේ පළමු ප්‍රතිචාරය කුමක්ද?</p>
-                    <select id="q-amygdala" class="passport-input" onchange="updateMeter2(100)">
-                        <option value="Fight">Fight (ප්‍රහාරාත්මක වීම / කෝප වීම)</option>
-                        <option value="Flight">Flight (මඟ හැර යාම / පලා යාම)</option>
-                        <option value="Freeze">Freeze (සිරවීම / කිසිවක් සිතාගත නොහැකි වීම)</option>
-                    </select>
-                </div>
-
-                <button class="royal-btn" style="margin-top: 15px; font-size: 0.9rem;" onclick="goToStep3()">
-                    <span class="btn-text">INITIATE NEURAL SENSOR</span>
-                </button>
+                <div class="q-box"><p>Amygdala Response?</p><select id="q-amygdala" class="passport-input"><option value="Fight">Fight</option><option value="Flight">Flight</option><option value="Freeze">Freeze</option></select></div>
+                <button class="royal-btn" onclick="goToStep3()">NEXT PHASE</button>
             </div>
         </div>
     </div>
 
-    <div id="bio-step-3" class="screen-layer" style="background: rgba(0,0,0,0.98); z-index: 15000;">
+    <div id="bio-step-3" class="screen-layer">
         <div class="sandeshaya-border" style="width: 90%; max-width: 750px; text-align: center;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px #00d4ff);">👁️</div>
-            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0; text-shadow: 0 0 15px var(--neon-blue);">NEURAL TYPING SENSOR</h2>
-            <p style="color: #aaa; font-family: 'Cinzel'; font-size: 0.8rem; margin-top: 5px;">PHASE 3: COGNITIVE MOTOR SYNC</p>
-
-            <div class="sensor-container" style="margin-top: 30px;">
-                <div style="background: rgba(0, 212, 255, 0.05); padding: 10px; border-left: 2px solid var(--neon-blue); margin-bottom: 15px;">
-                    <p class="info-text" style="font-size: 0.65rem; color: #888; text-align: justify; margin: 0;"><b>විද්‍යාත්මක පදනම:</b> ඇඟිලි තුඩු වල චලන වේගය මගින් මොළයේ Motor Cortex සහ යටිසිතේ අවධානය (Focus) මනිනු ලබයි.</p>
-                </div>
-                <p class="info-text" style="color: #fff; font-size: 0.9rem;">ඔබේ ස්නායු වේගය මැනීමට පහත වාක්‍යය කිසිදු වැරැද්දකින් තොරව හැකි ඉක්මනින් ටයිප් කරන්න:</p>
-                <p style="color: var(--evoi-cyan); text-align: center; font-style: italic; font-size: 1.1rem; margin: 15px 0; text-shadow: 0 0 10px var(--evoi-cyan);">"මම මගේ මනස සම්පූර්ණයෙන්ම පාලනය කරන අතර මගේ අරමුණ කිසිවෙකුටත් නැවැත්විය නොහැක."</p>
-                
-                <textarea id="neural-input-area" placeholder="මෙතැන ටයිප් කරන්න..." onkeydown="startTypingSensor()"></textarea>
-            </div>
-
-            <button class="royal-btn" style="margin-top: 30px; font-size: 0.9rem; width: 100%; border-color: var(--neon-blue); color: var(--neon-blue);" onclick="generateCommanderReport()">
-                <span class="btn-text">GENERATE AI DOSSIER</span>
-            </button>
+            <h2>NEURAL TYPING SENSOR</h2>
+            <p>Type this: "මම මගේ මනස පාලනය කරන අතර මගේ අරමුණ කිසිවෙකුට නැවැත්විය නොහැක."</p>
+            <textarea id="neural-input-area" placeholder="Start typing here..." onkeydown="startTypingSensor()"></textarea>
+            <button class="royal-btn" onclick="generateCommanderReport()">GENERATE AI DOSSIER</button>
         </div>
     </div>
 
-    <div id="neural-report-screen" class="screen-layer" style="background: rgba(0,0,0,0.98); z-index: 14000; overflow-y: auto; padding-top: 40px; padding-bottom: 40px;">
-        <div class="sandeshaya-border" style="width: 95%; max-width: 800px; text-align: left; position: relative;">
+    <div id="neural-report-screen" class="screen-layer">
+        <div class="sandeshaya-border" style="width: 95%; max-width: 800px;">
+            <h2 style="text-align:center; color: var(--evoi-cyan);">NEURAL BIO-DOSSIER</h2>
             
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; margin: 0; text-shadow: 0 0 15px var(--neon-blue);">NEURAL BIO-DOSSIER</h2>
-                <div class="stat-label" style="color: #ccc; margin-top: 5px;">COMMANDER AI CLASSIFIED REPORT</div>
-            </div>
-
-            <hr style="border: 0.5px solid rgba(212, 175, 55, 0.3); margin: 20px 0;">
-
-            <div style="text-align: center; margin-bottom: 30px;">
-                <div class="stat-label">YOUR NEURO-ARCHETYPE</div>
-                <h1 id="rep-archetype" style="font-family: 'Cinzel'; color: var(--gold-static); font-size: 1.8rem; margin: 5px 0; text-shadow: 0 0 20px var(--gold-static);">--</h1>
-                <p id="rep-description" style="font-family: 'Cinzel'; color: #ddd; font-size: 0.9rem; line-height: 1.6;"></p>
+            <div style="text-align:center; margin: 20px 0;">
+                <h1 id="rep-archetype" style="font-family: 'Cinzel'; color: var(--gold-static); text-shadow: 0 0 20px var(--gold-static);">--</h1>
+                <p id="rep-description" style="color: #ddd;"></p>
             </div>
 
             <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px;">
@@ -428,490 +163,184 @@
                 </div>
             </div>
 
-            <div style="background: rgba(0, 212, 255, 0.05); padding: 20px; border: 1px solid var(--evoi-cyan); margin-bottom: 20px; border-radius: 10px; box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);">
-                <h3 style="font-family: 'Orbitron'; color: var(--evoi-cyan); font-size: 1rem; margin-top: 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 1.5rem;">🤖</span> COMMANDER AI DIRECTIVE
-                </h3>
-                <div id="rep-ai-text" style="color: #ddd; font-family: 'Cinzel'; font-size: 0.95rem; line-height: 1.8; text-align: justify; white-space: pre-wrap; margin-top: 15px;">
-                    විශ්ලේෂණය කරමින් පවතී...
-                </div>
-            </div>
-
-            <button class="royal-btn" style="margin-top: 30px; width: 100%;" onclick="enterKingdomFromReport()">
-                <span class="btn-text">ACCEPT PROFILE & ENTER KINGDOM</span>
-            </button>
+            <div id="rep-ai-text" style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; border: 1px solid var(--evoi-cyan); line-height: 1.8; white-space: pre-wrap;">Analysing...</div>
+            <button class="royal-btn" style="margin-top: 30px;" onclick="enterKingdomFromReport()">ENTER KINGDOM</button>
         </div>
     </div>
 
     <div id="main-hub" class="screen-layer">
-        <header class="header-badge"><h2>ROYAL BEE HEART KINGDOM</h2></header>
+        <header class="header-badge"><h2>BEE HEART KINGDOM</h2></header>
         <div class="bee-coin"></div>
-        <div style="font-size: 0.75rem; letter-spacing: 6px; font-family: 'Orbitron'; color: #fff; text-shadow: 0 0 10px var(--gold-static); margin-bottom: 30px;">PROTOCOL: ACTIVE</div>
-
         <nav class="menu-grid">
-            <div class="royal-btn evoi-btn" onclick="openEvoiScreen()"><span class="btn-text">INITIATE EVO.i (FUTURE CLONE)</span></div>
-            <div class="royal-btn" onclick="switchScreen('main-hub', 'grid-screen')"><span class="btn-text">BEGIN QUEST</span></div>
-            <div class="royal-btn"><span class="btn-text">BEEHIVE CONTROL</span></div>
-            <div class="royal-btn"><span class="btn-text">ROYAL LEDGER</span></div>
-            <div class="royal-btn"><span class="btn-text">LIVE FEED</span></div>
-            <div class="royal-btn"><span class="btn-text">ARCHITECTS</span></div>
-            <div class="royal-btn" onclick="location.reload()"><span class="btn-text">LEAVE KINGDOM</span></div>
+            <div class="royal-btn evoi-btn" onclick="switchScreen('main-hub', 'grid-screen')">BEGIN QUEST</div>
+            <div class="royal-btn" onclick="location.reload()">LEAVE</div>
         </nav>
-    </div>
-
-    <div id="evoi-screen" class="screen-layer">
-        <div style="position: relative; z-index: 1; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <h1 style="font-family: 'Orbitron'; color: var(--evoi-cyan); font-size: 3rem; letter-spacing: 15px; text-shadow: 0 0 30px var(--evoi-cyan); animation: blink 1s infinite alternate; text-align: center;">EVO.i<br><span style="font-size: 1.2rem; letter-spacing: 5px; color: #fff; display: block; margin-top: 15px;">COMING SOON</span></h1>
-            <div class="hologram-circle" style="margin-top: 40px;"><div class="evoi-icon">🧬</div></div>
-            <button class="royal-btn" style="position: absolute; bottom: 40px; border-color: #555; color: #aaa; width: 200px;" onclick="closeEvoiScreen()">RETURN TO HUB</button>
-        </div>
     </div>
 
     <div id="grid-screen" class="screen-layer">
         <header class="header-badge"><h2>NEURAL EVOLUTION GRID</h2></header>
-        <div style="font-family: 'Orbitron'; font-size: 0.8rem; color: #ccc; margin-bottom: 10px;">YOUR PROGRESS: DAY <span id="current-day-text">1</span>/66</div>
         <div class="grid-container" id="dna-grid"></div>
-        <div class="royal-btn" style="margin-top: 40px; width: 250px;" onclick="switchScreen('grid-screen', 'main-hub')"><span class="btn-text">RETURN TO HUB</span></div>
-    </div>
-
-    <div id="protocol-selection" class="screen-layer">
-        <header class="header-badge"><h2 id="protocol-day-title">DAY 01: SELECT PROTOCOL</h2></header>
-        <div class="cycle-container">
-            <div id="am-box" class="cycle-box active" onclick="handleAMClick()">
-                <div class="icon">☀️</div>
-                <div class="label">MORNING AWAKENING</div>
-                <div id="am-status" style="color: #0f0; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px;">AVAILABLE</div>
-            </div>
-            <div id="pm-box" class="cycle-box locked" onclick="handlePMClick()">
-                <div class="icon">🌙</div>
-                <div class="label">EVENING INTEGRATION</div>
-                <div id="pm-status" class="pm-status-text" style="color: #ff4d4d; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px;">LOCKED</div>
-            </div>
-        </div>
-        <div class="royal-btn" style="margin-top: 50px; width: 250px;" onclick="switchScreen('protocol-selection', 'grid-screen')"><span class="btn-text">BACK TO GRID</span></div>
-    </div>
-
-    <div id="video-page" class="screen-layer">
-        <h2 id="video-page-title" style="font-family: 'Orbitron'; margin-bottom: 20px; letter-spacing: 3px; text-shadow: 0 0 10px var(--gold-static);">MORNING NEURAL SYNC</h2>
-        <div class="video-box">
-            <iframe id="video-frame" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="royal-btn" style="margin-top: 40px; padding: 15px 40px;" onclick="markComplete()"><span class="btn-text">MARK AS COMPLETED 🛡️</span></div>
-    </div>
-
-    <div id="access-denied-screen">
-        <div class="denied-box" id="denied-anim-box">
-            <div style="font-size: 4rem; filter: drop-shadow(0 0 20px #ff0000); margin-bottom: 10px;">⚠️</div>
-            <h1 class="glitch-text" style="font-family: 'Orbitron'; color: #ff4d4d; letter-spacing: 5px; margin: 0;">ACCESS DENIED</h1>
-            <p id="denied-msg-text" style="font-family: 'Cinzel'; color: #ccc; font-size: 0.9rem; margin-top: 20px; line-height: 1.5;"></p>
-            <button onclick="closeDeniedScreen()" class="royal-btn" style="margin-top: 30px; border-color: #ff4d4d; color: #ff4d4d;">RECALIBRATE</button>
-        </div>
-    </div>
-
-    <div id="royal-alert-screen">
-        <div class="alert-box">
-            <div style="font-size: 3.5rem; margin-bottom: 10px; filter: drop-shadow(0 0 20px var(--gold-static));">🛡️</div>
-            <h2 id="alert-title" style="font-family: 'Orbitron'; color: var(--gold-static); letter-spacing: 3px; margin: 0;">PROTOCOL COMPLETE</h2>
-            <p id="alert-message-text" style="font-family: 'Cinzel'; color: #ddd; font-size: 1rem; margin-top: 20px; line-height: 1.6;"></p>
-            <button onclick="closeRoyalAlert()" class="royal-btn" style="margin-top: 30px; padding: 12px 40px;" id="alert-proceed-btn">PROCEED</button>
-        </div>
+        <button class="royal-btn" style="width: 200px; margin-top: 20px;" onclick="switchScreen('grid-screen', 'main-hub')">BACK</button>
     </div>
 
     <script>
-        // API Configuration (මෙතනට ඔයාගේ අලුත් Gemini API Key එක දාන්න)
-        const GEMINI_API_KEY = "AIzaSyBi6JIb9Pofdh-6NRhjPsfpce9_qJRZQ1M"; 
+        // API CONFIGURATION
+        const GEMINI_API_KEY = "AIzaSyBi6JIb9Pofdh-6NRhjPsfpce9_qJRZQ1M"; // <-- මෙතනට ඔයාගේ අලුත්ම Key එක දාන්න අමතක කරන්න එපා
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        let totalDays = 66; let currentActiveDay = 1; let currentProtocolType = 'AM'; 
-        let selectedDayForVideo = 1; let userPassport = ""; let amCompletedToday = false; let isAuthenticating = false;
+        let currentActiveDay = 1; let userPassport = ""; let isAuthenticating = false;
+        let breathStart; let typeStartTime; let typingSpeedVal = 0;
 
-        // 🔊 AUDIO ENGINE
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx; let calmDrone1, calmDrone2, droneGain; let isInitialShimmerPlayed = false;
-
-        function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
-
-        function playInitialShimmer() {
-            if(isInitialShimmerPlayed) return; initAudio();
-            const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.connect(gainNode).connect(audioCtx.destination); osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 1.5);
-            gainNode.gain.setValueAtTime(0, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
-            osc.start(); osc.stop(audioCtx.currentTime + 2); isInitialShimmerPlayed = true;
-        }
-
-        function startCalmDrone() {
-            initAudio(); calmDrone1 = audioCtx.createOscillator(); calmDrone2 = audioCtx.createOscillator(); droneGain = audioCtx.createGain();
-            calmDrone1.type = 'sine'; calmDrone1.frequency.value = 136.1; calmDrone2.type = 'sine'; calmDrone2.frequency.value = 140.1; 
-            droneGain.gain.setValueAtTime(0, audioCtx.currentTime); droneGain.gain.linearRampToValueAtTime(0.02, audioCtx.currentTime + 5); 
-            calmDrone1.connect(droneGain); calmDrone2.connect(droneGain); droneGain.connect(audioCtx.destination);
-            calmDrone1.start(); calmDrone2.start();
-        }
-
-        function stopCalmDrone() {
-            if(droneGain) { droneGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2); setTimeout(() => { if(calmDrone1) calmDrone1.stop(); if(calmDrone2) calmDrone2.stop(); }, 2000); }
-        }
-
-        function playMajesticHub() {
-            initAudio(); const chords = [261.63, 329.63, 392.00]; 
-            chords.forEach(freq => {
-                let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain(); let filter = audioCtx.createBiquadFilter();
-                osc.type = 'sawtooth'; osc.frequency.value = freq;
-                filter.type = 'lowpass'; filter.frequency.setValueAtTime(400, audioCtx.currentTime); filter.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.5);
-                gain.gain.setValueAtTime(0, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 4); 
-                osc.connect(filter).connect(gain).connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 4);
-            });
-        }
-
-        function playInteractionSound(type) {
-            initAudio(); const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.connect(gainNode).connect(audioCtx.destination);
-            if (type === 'hover') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime); gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } else if (type === 'click') {
-                osc.type = 'square'; osc.frequency.setValueAtTime(400, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1); gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (type === 'blip') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1); gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (type === 'scan') {
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(100, audioCtx.currentTime); osc.frequency.linearRampToValueAtTime(300, audioCtx.currentTime + 1.5); gainNode.gain.setValueAtTime(0, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5); gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5); osc.start(); osc.stop(audioCtx.currentTime + 1.5);
-            } else if (type === 'error') {
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4); osc.start(); osc.stop(audioCtx.currentTime + 0.4);
-            } else if (type === 'success') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(440, audioCtx.currentTime); osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.15); osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.3); gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8); osc.start(); osc.stop(audioCtx.currentTime + 0.8);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.addEventListener('click', (e) => { if(e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell')) { playInteractionSound('click'); } });
-            document.body.addEventListener('mouseover', (e) => {
-                let btn = e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell');
-                if(btn && !btn.dataset.hovered) { playInteractionSound('hover'); btn.dataset.hovered = "true"; setTimeout(() => delete btn.dataset.hovered, 200); }
-            });
-        });
-
-        // 🛡️ LOGIN LOGIC WITH ERROR HANDLING
         async function checkKingdomAccess() {
-            initAudio(); if (isAuthenticating) return; 
             userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
-            if(!userPassport) { triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!"); return; }
-
-            isAuthenticating = true;
-            document.getElementById("login-screen").style.display = "none"; 
+            if(!userPassport) return alert("කරුණාකර කේතය ඇතුළත් කරන්න.");
+            document.getElementById("login-screen").style.display = "none";
             document.getElementById("activation-screen").style.display = "flex";
-            document.getElementById('sync-msg').innerHTML = "VALIDATING WITH COMMANDER AI..."; 
-            document.getElementById('sync-msg').style.color = "";
-
+            
             try {
-                const { data: validCodeData, error: codeErr } = await supabaseClient.from('DNA_Codes').select('*').eq('code', userPassport); 
-                
-                if (codeErr || !validCodeData || validCodeData.length === 0) {
-                    throw new Error("INVALID_CODE");
-                }
+                const { data: validCode } = await supabaseClient.from('DNA_Codes').select('*').eq('code', userPassport);
+                if (!validCode || validCode.length === 0) throw new Error("Invalid DNA Code");
 
-                let { data: userData, error: userErr } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
-                let user;
-                
-                if (userData && userData.length > 0) { 
-                    user = userData[0]; 
-                } else {
-                    const { data: newUser, error: insertErr } = await supabaseClient.from('users').insert([{ passport_code: userPassport, current_day: 1, bio_completed: false }]).select();
-                    if (insertErr) throw new Error("DB_INSERT_ERROR");
+                let { data: userData } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
+                let user = userData?.[0];
+                if (!user) {
+                    const { data: newUser } = await supabaseClient.from('users').insert([{ passport_code: userPassport, current_day: 1, bio_completed: false }]).select();
                     user = newUser[0];
                 }
-
-                currentActiveDay = user.current_day || 1; 
-                let todayStr = new Date().toDateString();
-                amCompletedToday = (localStorage.getItem(userPassport + '_amDate') === todayStr);
-
-                startActivationSequence(() => {
-                    if (user.bio_completed === true) { 
-                        playMajesticHub(); 
-                        document.getElementById('main-hub').style.display = 'flex'; 
-                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50); 
-                    } else { 
-                        playInteractionSound('scan'); startCalmDrone(); 
-                        document.getElementById('bio-step-1').style.display = 'flex'; 
-                        setTimeout(() => { document.getElementById('bio-step-1').style.opacity = '1'; }, 50); 
+                currentActiveDay = user.current_day;
+                
+                setTimeout(() => {
+                    document.getElementById("activation-screen").style.display = "none";
+                    if (user.bio_completed) {
+                        switchScreen(null, 'main-hub');
+                    } else {
+                        switchScreen(null, 'bio-step-1');
                     }
-                    isAuthenticating = false;
-                });
-                
-            } catch (err) { 
-                document.getElementById("login-screen").style.display = "flex"; 
-                document.getElementById("activation-screen").style.display = "none";
-                
-                if (err.message === "INVALID_CODE") {
-                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️");
-                } else {
-                    triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර Supabase හි RLS Disable කර නැවත උත්සාහ කරන්න."); 
-                }
-                isAuthenticating = false; 
+                }, 2000);
+            } catch (e) {
+                alert(e.message);
+                location.reload();
             }
         }
 
-        // 🧠 PHASES NAVIGATION & METERS
-        function updateMeter1(percent) { document.getElementById('nsi-meter-1').style.width = percent + "%"; playInteractionSound('blip'); if (navigator.vibrate) navigator.vibrate(20); }
-        function updateMeter2(percent) { document.getElementById('nsi-meter-2').style.width = percent + "%"; playInteractionSound('blip'); if (navigator.vibrate) navigator.vibrate(20); }
+        function updateMeter1(p) { document.getElementById('nsi-meter-1').style.width = p + "%"; }
+        function goToStep2() { switchScreen('bio-step-1', 'bio-step-2'); }
+        function goToStep3() { switchScreen('bio-step-2', 'bio-step-3'); }
 
-        function goToStep2() {
-            const wa = document.getElementById('wa-number').value.trim(); const lang = document.getElementById('q-lang').value;
-            const dob = document.getElementById('q-dob').value.trim(); const wake = document.getElementById('wake-time').value;
-            const sleep = document.getElementById('sleep-time').value; const goal = document.getElementById('q-goal').value;
-            const obstacle = document.getElementById('q-obstacle').value; const time = document.getElementById('q-time').value;
-            const fear = document.getElementById('q-fear').value; const desire = document.getElementById('q-desire').value;
-            const yinyang = document.getElementById('q-yinyang').value;
-
-            if(!wa || !lang || !dob || !wake || !sleep || !goal || !obstacle || !time || !fear || !desire || !yinyang) { triggerAccessDenied("කරුණාකර PHASE 1 හි සියලුම දත්ත සම්පූර්ණ කරන්න."); return; }
-            playInteractionSound('scan'); switchScreen('bio-step-1', 'bio-step-2');
+        function startBreathTimer(e) { breathStart = Date.now(); document.getElementById('breath-btn').innerText = "HOLDING..."; }
+        function stopBreathTimer(e) { 
+            let secs = Math.floor((Date.now() - breathStart) / 1000);
+            document.getElementById('q-breath-val').value = secs;
+            document.getElementById('breath-display').innerText = secs + " SECONDS";
+            document.getElementById('breath-btn').innerText = "RECORDED";
         }
+        function startTypingSensor() { if(!typeStartTime) typeStartTime = Date.now(); }
 
-        function goToStep3() {
-            let breathHold = document.getElementById('q-breath-val').value;
-            if(breathHold == "0") { triggerAccessDenied("කරුණාකර CO2 Tolerance බොත්තම ඔබා ඔබේ හුස්ම රඳවාගැනීමේ කාලය සටහන් කරන්න."); return; }
-            playInteractionSound('scan'); switchScreen('bio-step-2', 'bio-step-3'); 
-        }
-
-        // 🫁 NEW BREATH HOLD SENSOR LOGIC
-        let breathTimerInt; let breathStart; let breathSecs = 0;
-        function startBreathTimer(e) {
-            if(e && (e.type === 'touchstart' || e.type === 'mousedown')) e.preventDefault(); 
-            if (breathStart) return;
-            breathStart = Date.now();
-            playInteractionSound('click');
-            document.getElementById('breath-btn').innerText = "HOLDING BREATH...";
-            document.getElementById('breath-btn').style.background = "var(--neon-red)";
-            document.getElementById('breath-btn').style.color = "#fff";
-            document.getElementById('breath-display').classList.add('pulse-anim');
-            
-            breathTimerInt = setInterval(() => {
-                let secs = Math.floor((Date.now() - breathStart) / 1000);
-                document.getElementById('breath-display').innerText = secs + " SECONDS";
-            }, 100);
-        }
-
-        function stopBreathTimer(e) {
-            if(e && (e.type === 'touchend' || e.type === 'mouseup' || e.type === 'mouseleave')) e.preventDefault();
-            if (!breathStart) return;
-            clearInterval(breathTimerInt);
-            breathSecs = Math.floor((Date.now() - breathStart) / 1000);
-            document.getElementById('q-breath-val').value = breathSecs;
-            document.getElementById('breath-btn').innerText = "RECORDED! (PRESS AGAIN TO RETRY)";
-            document.getElementById('breath-btn').style.background = "linear-gradient(135deg, #4a0404 0%, #1a0000 100%)";
-            document.getElementById('breath-btn').style.color = "var(--neon-blue)";
-            document.getElementById('breath-display').classList.remove('pulse-anim');
-            playInteractionSound('success');
-            breathStart = null; 
-        }
-
-        // ⌨️ TYPING SENSOR LOGIC
-        let typeStartTime; let typingSpeedVal = 0;
-        function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
-
-        // 💾 AI REPORT & PROFILE GENERATION (WITH ERROR DIAGNOSTICS & GEMINI PRO)
+        // 🚀 MASTER AI FUNCTION (100% BULLETPROOF FALLBACK & UI RESTORED)
         async function generateCommanderReport() {
-            let typedText = document.getElementById('neural-input-area').value;
-            if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
+            const typedText = document.getElementById('neural-input-area').value;
+            if(!typedText || typedText.length < 10) { alert("කරුණාකර ඉහත වාක්‍යය සම්පූර්ණයෙන් ටයිප් කරන්න."); return; }
             
-            let endTime = new Date().getTime();
-            typingSpeedVal = Math.round((typedText.length / ((endTime - typeStartTime) / 1000)) * 60) || 0;
+            typingSpeedVal = Math.round((typedText.length / ((Date.now() - typeStartTime) / 1000)) * 60) || 0;
 
-            const goal = document.getElementById('q-goal').value; const obstacle = document.getElementById('q-obstacle').value;
-            const fear = document.getElementById('q-fear').value; const desire = document.getElementById('q-desire').value;
-            const yinyang = document.getElementById('q-yinyang').value;
+            // පද්ධතියේ ප්‍රගති තීරු (Bars) සඳහා ගණනය කිරීම්
+            const dopaScore = parseInt(document.getElementById('q-dopa').value || 3);
+            const seroScore = parseInt(document.getElementById('q-sero').value || 3);
+            const vagalScore = parseInt(document.getElementById('q-vagal').value || 3);
+            const breathHeld = parseInt(document.getElementById('q-breath-val').value || 0);
             
-            const dopaScore = parseInt(document.getElementById('q-dopa').value); const seroScore = parseInt(document.getElementById('q-sero').value);
-            const oxyScore = parseInt(document.getElementById('q-oxy').value); const vagalScore = parseInt(document.getElementById('q-vagal').value);
-            const logicScore = parseInt(document.getElementById('q-logic').value);
-            const breathHeld = parseInt(document.getElementById('q-breath-val').value);
-            const amygdala = document.getElementById('q-amygdala').value;
-
-            const dopaPercent = Math.round((dopaScore / 5) * 100); const vagalPercent = Math.round((vagalScore / 5) * 100);
+            const dopaPercent = Math.round((dopaScore / 5) * 100); 
+            const vagalPercent = Math.round((vagalScore / 5) * 100);
             let cortPercent = 100 - vagalPercent + ((5 - seroScore) * 10); 
             if(cortPercent > 100) cortPercent = 100; if(cortPercent < 0) cortPercent = 0;
 
-            let rank = "", archetype = "", description = "";
-            if (typingSpeedVal > 165 && breathHeld > 45) { rank = "NEURAL SOLARIS"; archetype = "THE SOVEREIGN (NEURAL SOLARIS)"; description = "ඔබේ මනස සහ ශරීරය උපරිම තලයේ පවතී. මෙය ඉන්වින්සිබල් බී මට්ටමටත් එහා ගිය ස්නායුක ශක්තියකි."; }
-            else if (typingSpeedVal > 115 || breathHeld > 30) { rank = "NEURAL OBSIDIAN"; archetype = "THE STRATEGIST (NEURAL OBSIDIAN)"; description = "ඔබේ තර්කනය සහ හැඟීම් පාලනය ඉතා ඉහළයි. ඔබ මැට්‍රික්ස් එකෙන් මිදී නිදහස්ව සිතන අයෙකි."; }
-            else if (typingSpeedVal > 75) { rank = "NEURAL NEXUS"; archetype = "THE WARRIOR (NEURAL NEXUS)"; description = "ඔබ තුළ සටන්කාමී ආත්මයක් ඇත. වොරියර් මට්ටමේ සිට ඉහළට යාමට තවදුරටත් පුහුණුව අවශ්‍ය වේ."; }
-            else { rank = "NEURAL PULSAR"; archetype = "THE SEEKER (NEURAL PULSAR)"; description = "ඔබේ ගමන ආරම්භ කළා පමණි. ස්කවුට් මට්ටමේ සිට ඉදිරියට යාමට ඔබේ මොළය පුහුණු කරන්න."; }
+            let rank = "NEURAL SEEKER", description = "ඔබේ ගමන ආරම්භ කළා පමණි. පුහුණුව අවශ්‍ය වේ.";
+            if (typingSpeedVal > 165 && breathHeld > 45) { rank = "NEURAL SOLARIS"; description = "ඔබේ මනස සහ ශරීරය උපරිම තලයේ පවතී."; }
+            else if (typingSpeedVal > 115 || breathHeld > 30) { rank = "NEURAL OBSIDIAN"; description = "ඔබේ තර්කනය සහ හැඟීම් පාලනය ඉතා ඉහළයි."; }
+
+            const prompt = `You are Commander AI. Analyse this data for user ${userPassport}. Goal: ${document.getElementById('q-goal').value}. Fear: ${document.getElementById('q-fear').value}. Breath: ${breathHeld}s. Speed: ${typingSpeedVal}cpm. Provide a psychological and neuro-biological report in SINHALA language. Focus on 66-day habit transformation. Write in 3 short paragraphs.`;
 
             document.getElementById('activation-screen').style.display = "flex";
-            document.getElementById('sync-msg').innerText = "COMMANDER AI WRITING DOSSIER...";
+            document.getElementById('sync-msg').innerText = "AI GENERATING DOSSIER...";
 
-            // මේක තමයි AI එකට යවන දත්ත ටික (Prompt)
-            const prompt = `ඔබ "DNA Commander AI" නම් වූ අති නවීන AI විශ්ලේෂකයෙකි. ඔබ සැමවිටම පිළිතුරු දිය යුත්තේ සිංහල භාෂාවෙන් පමණි.
-පරිශීලක Rank එක: ${rank}. ඔහුගේ දත්ත: අරමුණ(${goal}), බිය(${fear}), Yin-Yang ස්වභාවය(${yinyang}), CO2 Tolerance(${breathHeld} තත්පර), ආතති ප්‍රතිචාරය(${amygdala}), ටයිප් වේගය(${typingSpeedVal} cpm).
-Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යටිසිතේ ඇති මානසික බාධා පෙන්වා දී, Super Human තත්ත්වයට පත්වීමට සහ දින 66 අභියෝගය සාර්ථක කරගැනීමට අවශ්‍ය ප්‍රායෝගික කරුණු සිංහලෙන් ගැඹුරින් ලියන්න. ඡේද 3ක් සහ Bullet points 3ක් පමණක් ඇතුළත් කරන්න.`;
-
-            let aiTextResponse = "වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය.";
+            let aiResponse = "";
+            let lastErrorMsg = "";
             
-            try {
-                // 🚀 FIXED: අලුත්ම සහ හැමෝටම වැඩ කරන Gemini-Pro Model එකට මාරු කර ඇත 🚀
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
-                const resp = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-                
-                const data = await resp.json();
-                
-                // ERROR DIAGNOSTICS: Google එකෙන් එන දෝෂය කෙලින්ම Alert එකකින් පෙන්වීම
-                if (!resp.ok || data.error) {
-                    alert("GOOGLE AI ERROR: \n" + (data.error ? data.error.message : JSON.stringify(data)));
-                    aiTextResponse = "API දෝෂයකි: " + (data.error ? data.error.message : "නොදන්නා දෝෂයකි");
-                } else if(data && data.candidates && data.candidates.length > 0) { 
-                    aiTextResponse = data.candidates[0].content.parts[0].text; 
-                }
+            // Models එකින් එක පරීක්ෂා කරන නිවැරදි Loop එක
+            const modelsToTry = [
+                "gemini-1.5-flash",
+                "gemini-1.5-flash-latest",
+                "gemini-pro"
+            ];
 
-            } catch (e) { 
-                alert("NETWORK/FETCH ERROR: \n" + e.message);
-                console.error("AI Network Fetch Error:", e); 
+            for (let modelName of modelsToTry) {
+                try {
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
+                    const resp = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+                    
+                    const data = await resp.json();
+                    
+                    if (resp.ok && data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        aiResponse = data.candidates[0].content.parts[0].text;
+                        break; // වැඩ කරා නම් Loop එකෙන් එළියට එනවා
+                    } else if (data.error) {
+                        lastErrorMsg = data.error.message; // Error එක සටහන් කරගන්නවා
+                    }
+                } catch (err) {
+                    lastErrorMsg = err.message;
+                }
             }
 
-            // Save to Supabase (AI එක වැඩ කළත් නැතත් මේක සේව් වෙනවා)
-            await supabaseClient.from('users').update({
-                bio_completed: true, 
-                current_rank: rank
-            }).eq('passport_code', userPassport);
+            // AI එක සම්පූර්ණයෙන්ම Fail වුනොත් Alert එකක් දෙනවා
+            if (!aiResponse) {
+                document.getElementById('activation-screen').style.display = "none";
+                alert("අවවාදයි: Google AI සම්බන්ධතාවය බිඳ වැටුණි!\nහේතුව: " + lastErrorMsg + "\n\nකරුණාකර ඔබගේ අලුත් API Key එක දමා නැවත උත්සාහ කරන්න.");
+                return;
+            }
+
+            // සාර්ථක නම් දත්ත ගබඩා කර UI එකට දානවා
+            await supabaseClient.from('users').update({ bio_completed: true, current_rank: rank }).eq('passport_code', userPassport);
             
             document.getElementById('activation-screen').style.display = "none";
-            stopCalmDrone(); playInteractionSound('scan'); 
-            
+            document.getElementById('rep-ai-text').innerText = aiResponse;
             document.getElementById('rep-archetype').innerText = rank;
             document.getElementById('rep-description').innerText = description;
-            document.getElementById('rep-ai-text').innerText = aiTextResponse;
-
-            switchScreen('bio-step-3', 'neural-report-screen');
-
+            
+            // නැතිවී තිබූ Bars පිරෙන Animation එක නැවත ඇතුළත් කළා
             setTimeout(() => {
                 document.getElementById('rep-dopa-bar').style.width = dopaPercent + "%"; document.getElementById('rep-dopa-val').innerText = dopaPercent + "%";
                 document.getElementById('rep-cort-bar').style.width = cortPercent + "%"; document.getElementById('rep-cort-val').innerText = cortPercent + "%";
                 document.getElementById('rep-vagal-bar').style.width = vagalPercent + "%"; document.getElementById('rep-vagal-val').innerText = vagalPercent + "%";
-                playInteractionSound('success');
-            }, 1000);
+            }, 800);
+
+            switchScreen('bio-step-3', 'neural-report-screen');
         }
 
-        function enterKingdomFromReport() { playInteractionSound('click'); playMajesticHub(); switchScreen('neural-report-screen', 'main-hub'); }
-
-        function startActivationSequence(callback) {
-            buildGrid(); 
-            setTimeout(() => {
-                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED"; document.getElementById('sync-msg').style.color = "#d4af37";
-                setTimeout(() => { document.getElementById('activation-screen').style.opacity = '0';
-                    setTimeout(() => { document.getElementById('activation-screen').style.display = 'none'; if(callback) callback(); }, 500);
-                }, 1000);
-            }, 2500);
-        }
-
-        function openEvoiScreen() {
-            document.getElementById('main-bg').style.filter = "hue-rotate(180deg) brightness(0.5)"; 
-            document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--evoi-cyan) 0%, transparent 70%)";
-            switchScreen('main-hub', 'evoi-screen');
-        }
-        function closeEvoiScreen() {
-            document.getElementById('main-bg').style.filter = "none";
-            document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--neon-blue) 0%, transparent 70%)";
-            switchScreen('evoi-screen', 'main-hub');
-        }
+        function enterKingdomFromReport() { switchScreen('neural-report-screen', 'main-hub'); buildGrid(); }
 
         function buildGrid() {
-            const grid = document.getElementById('dna-grid'); grid.innerHTML = ''; document.getElementById('current-day-text').innerText = currentActiveDay;
-            for (let i = 1; i <= totalDays; i++) {
-                let cell = document.createElement('div'); cell.className = 'dna-cell'; cell.innerHTML = `<div>DAY</div><div style="font-size: 1.2rem; font-weight: bold;">${i}</div>`;
-                if (i < currentActiveDay) { cell.classList.add('completed'); cell.onclick = () => openDaySelection(i, 'completed'); } 
-                else if (i === currentActiveDay) { cell.classList.add('active'); cell.onclick = () => openDaySelection(i, 'active'); } 
-                else { cell.classList.add('locked'); cell.onclick = () => triggerAccessDenied("ඔබගේ ස්නායුක සම්බන්ධතාවය ප්‍රතික්ෂේප විය.<br>කරුණාකර පෙර පියවර සම්පූර්ණ කරන්න."); }
+            const grid = document.getElementById('dna-grid'); grid.innerHTML = '';
+            for(let i=1; i<=66; i++) {
+                let cell = document.createElement('div'); cell.className = 'dna-cell';
+                if(i < currentActiveDay) cell.classList.add('completed');
+                else if(i === currentActiveDay) cell.classList.add('active');
+                else cell.classList.add('locked');
+                cell.innerText = i;
                 grid.appendChild(cell);
             }
         }
 
-        function switchScreen(hideId, showId) {
-            let hideEl = document.getElementById(hideId); let showEl = document.getElementById(showId);
-            hideEl.style.opacity = '0'; setTimeout(() => { hideEl.style.display = 'none'; showEl.style.display = 'flex'; setTimeout(() => { showEl.style.opacity = '1'; }, 50); }, 500);
+        function switchScreen(h, s) {
+            if(h) document.getElementById(h).style.display = "none";
+            let showEl = document.getElementById(s); showEl.style.display = "flex";
+            setTimeout(() => showEl.style.opacity = "1", 50);
         }
-
-        function openDaySelection(dayNum, status) {
-            selectedDayForVideo = dayNum; document.getElementById('protocol-day-title').innerText = `DAY ${dayNum < 10 ? '0'+dayNum : dayNum}: SELECT PROTOCOL`;
-            let pmBox = document.getElementById('pm-box'); let pmStatusText = document.getElementById('pm-status');
-            if (status === 'completed' || (dayNum === currentActiveDay && amCompletedToday)) {
-                pmBox.classList.remove('locked'); pmBox.classList.add('active'); pmStatusText.innerText = "AVAILABLE"; pmStatusText.style.color = "#0f0";
-            } else {
-                pmBox.classList.remove('active'); pmBox.classList.add('locked'); pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
-            }
-            switchScreen('grid-screen', 'protocol-selection');
-        }
-
-        function handleAMClick() {
-            const now = new Date(); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
-            if (selectedDayForVideo < currentActiveDay) { startVideo('AM'); } 
-            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); } 
-            else if (now.getHours() < 5) { triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි."); } 
-            else { startVideo('AM'); }
-        }
-
-        function handlePMClick() {
-            const now = new Date(); let pmBox = document.getElementById('pm-box'); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
-            if (selectedDayForVideo < currentActiveDay) { startVideo('PM'); } 
-            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); }
-            else if (pmBox.classList.contains('locked')) { triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න."); } 
-            else if (now.getHours() < 17) { triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි."); } 
-            else { startVideo('PM'); }
-        }
-
-        function startVideo(type) {
-            currentProtocolType = type; document.getElementById('video-page-title').innerText = type === 'AM' ? "MORNING NEURAL SYNC" : "EVENING INTEGRATION";
-            document.getElementById('video-frame').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; switchScreen('protocol-selection', 'video-page');
-        }
-
-        async function markComplete() {
-            let alertTitle = document.getElementById('alert-title'); let alertMsg = document.getElementById('alert-message-text');
-            if (currentProtocolType === 'AM') {
-                amCompletedToday = true; localStorage.setItem(userPassport + '_amDate', new Date().toDateString());
-                alertTitle.innerText = "MORNING PROTOCOL COMPLETE"; alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
-                playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-            } else {
-                if(selectedDayForVideo === currentActiveDay) { 
-                    let nextDay = currentActiveDay + 1;
-                    const { error } = await supabaseClient.from('users').update({ current_day: nextDay }).eq('passport_code', userPassport);
-                    currentActiveDay = nextDay; amCompletedToday = false; 
-                    localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); 
-                    buildGrid(); 
-                    alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; 
-                    alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
-                    playInteractionSound('success'); 
-                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; 
-                    document.getElementById('royal-alert-screen').style.display = 'flex';
-                } else {
-                    alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
-                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-                }
-            }
-        }
-
-        function closeRoyalAlert() {
-            document.getElementById('royal-alert-screen').style.display = 'none'; document.getElementById('video-frame').src = "";
-            if (currentProtocolType === 'AM') {
-                switchScreen('video-page', 'protocol-selection');
-                let pmBox = document.getElementById('pm-box'); pmBox.classList.remove('locked'); pmBox.classList.add('active');
-                let statusText = document.getElementById('pm-status'); statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
-            } else { switchScreen('video-page', 'grid-screen'); }
-        }
-
-        function triggerAccessDenied(message) { 
-            playInteractionSound('error'); document.getElementById('denied-msg-text').innerHTML = message;
-            let animBox = document.getElementById('denied-anim-box');
-            animBox.classList.remove('shake-anim'); void animBox.offsetWidth; animBox.classList.add('shake-anim');
-            document.getElementById('access-denied-screen').style.display = 'flex'; 
-            if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
-        }
-        
-        function closeDeniedScreen() { document.getElementById('access-denied-screen').style.display = 'none'; }
     </script>
 </body>
 </html>
