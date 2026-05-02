@@ -518,8 +518,8 @@
     </div>
 
     <script>
-        // API Configuration (OpenRouter - OpenAI GPT-4o-mini)
-        const OPENAI_API_KEY = "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";
+        // API Configuration (Google Gemini)
+        const GEMINI_API_KEY = "AIzaSyDR1SBxY0Gz0swR9HsWhAX431SrrR14r14";
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -712,7 +712,7 @@
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 💾 AI REPORT & PROFILE GENERATION (UPDATED WITH OPENAI & ERROR BYPASS)
+        // 💾 AI REPORT & PROFILE GENERATION (UPDATED WITH GEMINI API)
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -745,34 +745,25 @@
             document.getElementById('activation-screen').style.display = "flex";
             document.getElementById('sync-msg').innerText = "COMMANDER AI WRITING DOSSIER...";
 
-            // 3. OPENAI PROMPT (VIA OPENROUTER)
-            const systemPrompt = "ඔබ 'DNA Commander AI' නම් වූ අති නවීන AI විශ්ලේෂකයෙකි. ඔබ සැමවිටම පිළිතුරු දිය යුත්තේ සිංහල භාෂාවෙන් පමණි.";
-            const userPrompt = `පරිශීලක Rank එක: ${rank}. ඔහුගේ දත්ත: අරමුණ(${goal}), බිය(${fear}), Yin-Yang ස්වභාවය(${yinyang}), CO2 Tolerance(${breathHeld} තත්පර), ආතති ප්‍රතිචාරය(${amygdala}), ටයිප් වේගය(${typingSpeedVal} cpm).
-            Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යටිසිතේ ඇති මානසික බාධා පෙන්වා දී, Super Human තත්ත්වයට පත්වීමට සහ දින 66 අභියෝගය සාර්ථක කරගැනීමට අවශ්‍ය ප්‍රායෝගික කරුණු සිංහලෙන් ගැඹුරින් ලියන්න. ඡේද 3ක් සහ Bullet points 3ක් පමණක් ඇතුළත් කරන්න.`;
+            // 3. GEMINI AI PROMPT
+            const prompt = `ඔබ "DNA Commander AI" නම් වූ අති නවීන AI විශ්ලේෂකයෙකි. ඔබ සැමවිටම පිළිතුරු දිය යුත්තේ සිංහල භාෂාවෙන් පමණි.
+පරිශීලක Rank එක: ${rank}. ඔහුගේ දත්ත: අරමුණ(${goal}), බිය(${fear}), Yin-Yang ස්වභාවය(${yinyang}), CO2 Tolerance/හුස්ම රඳවාගැනීම(${breathHeld} තත්පර), ආතති ප්‍රතිචාරය(${amygdala}), ටයිප් වේගය(${typingSpeedVal} cpm).
+Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යටිසිතේ ඇති මානසික බාධා පෙන්වා දී, Super Human තත්ත්වයට පත්වීමට සහ දින 66 අභියෝගය සාර්ථක කරගැනීමට අවශ්‍ය ප්‍රායෝගික කරුණු සිංහලෙන් ගැඹුරින් ලියන්න. ඡේද 3ක් සහ Bullet points 3ක් පමණක් ඇතුළත් කරන්න.`;
 
-            let aiTextResponse = "AI වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.";
+            let aiTextResponse = "AI වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය. ඔබගේ අන්තර්ජාල සබඳතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.";
             
             try {
-                const resp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${OPENAI_API_KEY}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        model: "openai/gpt-4o-mini", 
-                        messages: [
-                            { role: "system", content: systemPrompt },
-                            { role: "user", content: userPrompt }
-                        ]
-                    })
+                const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
-                
                 const data = await resp.json();
-                if(data && data.choices && data.choices.length > 0) { 
-                    aiTextResponse = data.choices[0].message.content; 
-                } else {
-                    console.error("OpenAI Error:", data);
+                if(data && data.candidates && data.candidates[0].content) { 
+                    aiTextResponse = data.candidates[0].content.parts[0].text; 
+                } else if(data.error) {
+                    console.error("Gemini API Error:", data.error.message);
+                    aiTextResponse = "AI දෝෂයකි: " + data.error.message;
                 }
             } catch (e) { 
                 console.error("AI Fetch Error:", e); 
