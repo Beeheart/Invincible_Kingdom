@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="si">
 <head>
     <meta charset="UTF-8">
@@ -518,7 +518,7 @@
     </div>
 
     <script>
-        // API Configuration (Google Gemini FIXED Endpoint)
+        // API Configuration (මෙතනට ඔයාගේ අලුත් Gemini API Key එක දාන්න)
         const GEMINI_API_KEY = "AIzaSyBi6JIb9Pofdh-6NRhjPsfpce9_qJRZQ1M";
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
@@ -646,7 +646,7 @@
                 if (err.message === "INVALID_CODE") {
                     triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️");
                 } else {
-                    triggerAccessDenied("දත්ත සමුදායේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න."); 
+                    triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර Supabase හි RLS Disable කර නැවත උත්සාහ කරන්න."); 
                 }
                 isAuthenticating = false; 
             }
@@ -796,3 +796,122 @@ Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යට�
                 playInteractionSound('success');
             }, 1000);
         }
+
+        function enterKingdomFromReport() { playInteractionSound('click'); playMajesticHub(); switchScreen('neural-report-screen', 'main-hub'); }
+
+        function startActivationSequence(callback) {
+            buildGrid(); 
+            setTimeout(() => {
+                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED"; document.getElementById('sync-msg').style.color = "#d4af37";
+                setTimeout(() => { document.getElementById('activation-screen').style.opacity = '0';
+                    setTimeout(() => { document.getElementById('activation-screen').style.display = 'none'; if(callback) callback(); }, 500);
+                }, 1000);
+            }, 2500);
+        }
+
+        function openEvoiScreen() {
+            document.getElementById('main-bg').style.filter = "hue-rotate(180deg) brightness(0.5)"; 
+            document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--evoi-cyan) 0%, transparent 70%)";
+            switchScreen('main-hub', 'evoi-screen');
+        }
+        function closeEvoiScreen() {
+            document.getElementById('main-bg').style.filter = "none";
+            document.getElementById('main-glow').style.background = "radial-gradient(circle, var(--neon-blue) 0%, transparent 70%)";
+            switchScreen('evoi-screen', 'main-hub');
+        }
+
+        function buildGrid() {
+            const grid = document.getElementById('dna-grid'); grid.innerHTML = ''; document.getElementById('current-day-text').innerText = currentActiveDay;
+            for (let i = 1; i <= totalDays; i++) {
+                let cell = document.createElement('div'); cell.className = 'dna-cell'; cell.innerHTML = `<div>DAY</div><div style="font-size: 1.2rem; font-weight: bold;">${i}</div>`;
+                if (i < currentActiveDay) { cell.classList.add('completed'); cell.onclick = () => openDaySelection(i, 'completed'); } 
+                else if (i === currentActiveDay) { cell.classList.add('active'); cell.onclick = () => openDaySelection(i, 'active'); } 
+                else { cell.classList.add('locked'); cell.onclick = () => triggerAccessDenied("ඔබගේ ස්නායුක සම්බන්ධතාවය ප්‍රතික්ෂේප විය.<br>කරුණාකර පෙර පියවර සම්පූර්ණ කරන්න."); }
+                grid.appendChild(cell);
+            }
+        }
+
+        function switchScreen(hideId, showId) {
+            let hideEl = document.getElementById(hideId); let showEl = document.getElementById(showId);
+            hideEl.style.opacity = '0'; setTimeout(() => { hideEl.style.display = 'none'; showEl.style.display = 'flex'; setTimeout(() => { showEl.style.opacity = '1'; }, 50); }, 500);
+        }
+
+        function openDaySelection(dayNum, status) {
+            selectedDayForVideo = dayNum; document.getElementById('protocol-day-title').innerText = `DAY ${dayNum < 10 ? '0'+dayNum : dayNum}: SELECT PROTOCOL`;
+            let pmBox = document.getElementById('pm-box'); let pmStatusText = document.getElementById('pm-status');
+            if (status === 'completed' || (dayNum === currentActiveDay && amCompletedToday)) {
+                pmBox.classList.remove('locked'); pmBox.classList.add('active'); pmStatusText.innerText = "AVAILABLE"; pmStatusText.style.color = "#0f0";
+            } else {
+                pmBox.classList.remove('active'); pmBox.classList.add('locked'); pmStatusText.innerText = "LOCKED"; pmStatusText.style.color = "#ff4d4d";
+            }
+            switchScreen('grid-screen', 'protocol-selection');
+        }
+
+        function handleAMClick() {
+            const now = new Date(); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
+            if (selectedDayForVideo < currentActiveDay) { startVideo('AM'); } 
+            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); } 
+            else if (now.getHours() < 5) { triggerAccessDenied("අද දින උදෑසන ප්‍රොටොකෝලය විවෘත වන්නේ පාන්දර 5:00 න් පසුවයි."); } 
+            else { startVideo('AM'); }
+        }
+
+        function handlePMClick() {
+            const now = new Date(); let pmBox = document.getElementById('pm-box'); let todayStr = now.toDateString(); let lastCompleted = localStorage.getItem(userPassport + '_lastCompletedDate');
+            if (selectedDayForVideo < currentActiveDay) { startVideo('PM'); } 
+            else if (lastCompleted === todayStr) { triggerAccessDenied("ඔබ අද දිනට අදාළ මෙහෙයුම් දැනටමත් අවසන් කර ඇත.<br>මීළඟ දවස හෙට පාන්දර 5:00 න් පසු විවෘත වේ. ⏳"); }
+            else if (pmBox.classList.contains('locked')) { triggerAccessDenied("කරුණාකර පළමුව උදෑසන (Morning) ප්‍රොටොකෝලය අවසන් කරන්න."); } 
+            else if (now.getHours() < 17) { triggerAccessDenied("සවස ප්‍රොටොකෝලය විවෘත වන්නේ සවස 5:00 න් පසුවයි."); } 
+            else { startVideo('PM'); }
+        }
+
+        function startVideo(type) {
+            currentProtocolType = type; document.getElementById('video-page-title').innerText = type === 'AM' ? "MORNING NEURAL SYNC" : "EVENING INTEGRATION";
+            document.getElementById('video-frame').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; switchScreen('protocol-selection', 'video-page');
+        }
+
+        async function markComplete() {
+            let alertTitle = document.getElementById('alert-title'); let alertMsg = document.getElementById('alert-message-text');
+            if (currentProtocolType === 'AM') {
+                amCompletedToday = true; localStorage.setItem(userPassport + '_amDate', new Date().toDateString());
+                alertTitle.innerText = "MORNING PROTOCOL COMPLETE"; alertMsg.innerHTML = "නියමයි! උදෑසන ප්‍රොටොකෝලය අවසන්.<br>දැන් ඔබට සවස ප්‍රොටොකෝලය (Evening) Unlock විය හැක.";
+                playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
+            } else {
+                if(selectedDayForVideo === currentActiveDay) { 
+                    let nextDay = currentActiveDay + 1;
+                    const { error } = await supabaseClient.from('users').update({ current_day: nextDay }).eq('passport_code', userPassport);
+                    currentActiveDay = nextDay; amCompletedToday = false; 
+                    localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); 
+                    buildGrid(); 
+                    alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; 
+                    alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
+                    playInteractionSound('success'); 
+                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; 
+                    document.getElementById('royal-alert-screen').style.display = 'flex';
+                } else {
+                    alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
+                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
+                }
+            }
+        }
+
+        function closeRoyalAlert() {
+            document.getElementById('royal-alert-screen').style.display = 'none'; document.getElementById('video-frame').src = "";
+            if (currentProtocolType === 'AM') {
+                switchScreen('video-page', 'protocol-selection');
+                let pmBox = document.getElementById('pm-box'); pmBox.classList.remove('locked'); pmBox.classList.add('active');
+                let statusText = document.getElementById('pm-status'); statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
+            } else { switchScreen('video-page', 'grid-screen'); }
+        }
+
+        function triggerAccessDenied(message) { 
+            playInteractionSound('error'); document.getElementById('denied-msg-text').innerHTML = message;
+            let animBox = document.getElementById('denied-anim-box');
+            animBox.classList.remove('shake-anim'); void animBox.offsetWidth; animBox.classList.add('shake-anim');
+            document.getElementById('access-denied-screen').style.display = 'flex'; 
+            if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
+        }
+        
+        function closeDeniedScreen() { document.getElementById('access-denied-screen').style.display = 'none'; }
+    </script>
+</body>
+</html>
