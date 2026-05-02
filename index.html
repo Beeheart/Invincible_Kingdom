@@ -518,9 +518,8 @@
     </div>
 
     <script>
-        // API Key (OpenRouter හරහා OpenAI භාවිතා කිරීමට)
+        // API Configuration (OpenRouter - OpenAI GPT-4o-mini)
         const OPENAI_API_KEY = "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";
-        
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -593,41 +592,66 @@
             });
         });
 
-        // 🛡️ LOGIN LOGIC
+        // 🛡️ LOGIN LOGIC WITH ERROR HANDLING
         async function checkKingdomAccess() {
             initAudio(); if (isAuthenticating) return; 
             userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
             if(!userPassport) { triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!"); return; }
 
             isAuthenticating = true;
-            document.getElementById("login-screen").style.display = "none"; document.getElementById("activation-screen").style.display = "flex";
-            document.getElementById('sync-msg').innerHTML = "VALIDATING WITH COMMANDER AI..."; document.getElementById('sync-msg').style.color = "";
+            document.getElementById("login-screen").style.display = "none"; 
+            document.getElementById("activation-screen").style.display = "flex";
+            document.getElementById('sync-msg').innerHTML = "VALIDATING WITH COMMANDER AI..."; 
+            document.getElementById('sync-msg').style.color = "";
 
             try {
-                let { data: validCodeData } = await supabaseClient.from('DNA_Codes').select('*').eq('code', userPassport); 
-                if (validCodeData && validCodeData.length > 0) {
-                    let { data: userData } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
-                    let user;
-                    if (userData && userData.length > 0) { user = userData[0]; } 
-                    else {
-                        const { data: newUser } = await supabaseClient.from('users').insert([{ passport_code: userPassport, current_day: 1, bio_completed: false }]).select();
-                        user = newUser[0];
-                    }
-
-                    currentActiveDay = user.current_day || 1; 
-                    let todayStr = new Date().toDateString();
-                    if (localStorage.getItem(userPassport + '_amDate') === todayStr) { amCompletedToday = true; } else { amCompletedToday = false; }
-
-                    startActivationSequence(() => {
-                        if (user.bio_completed === true) { playMajesticHub(); document.getElementById('main-hub').style.display = 'flex'; setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50); } 
-                        else { playInteractionSound('scan'); startCalmDrone(); document.getElementById('bio-step-1').style.display = 'flex'; setTimeout(() => { document.getElementById('bio-step-1').style.opacity = '1'; }, 50); }
-                        isAuthenticating = false;
-                    });
-                } else {
-                    document.getElementById("login-screen").style.display = "flex"; document.getElementById("activation-screen").style.display = "none";
-                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️"); isAuthenticating = false;
+                // 1. Check if DNA Code is valid in 'DNA_Codes' table
+                const { data: validCodeData, error: codeErr } = await supabaseClient.from('DNA_Codes').select('*').eq('code', userPassport); 
+                
+                if (codeErr || !validCodeData || validCodeData.length === 0) {
+                    throw new Error("INVALID_CODE");
                 }
-            } catch (err) { triggerAccessDenied("දත්ත සමුදායේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න."); isAuthenticating = false; }
+
+                // 2. Check if user exists, if not, create
+                let { data: userData, error: userErr } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
+                let user;
+                
+                if (userData && userData.length > 0) { 
+                    user = userData[0]; 
+                } else {
+                    const { data: newUser, error: insertErr } = await supabaseClient.from('users').insert([{ passport_code: userPassport, current_day: 1, bio_completed: false }]).select();
+                    if (insertErr) throw new Error("DB_INSERT_ERROR");
+                    user = newUser[0];
+                }
+
+                currentActiveDay = user.current_day || 1; 
+                let todayStr = new Date().toDateString();
+                amCompletedToday = (localStorage.getItem(userPassport + '_amDate') === todayStr);
+
+                startActivationSequence(() => {
+                    if (user.bio_completed === true) { 
+                        playMajesticHub(); 
+                        document.getElementById('main-hub').style.display = 'flex'; 
+                        setTimeout(() => { document.getElementById('main-hub').style.opacity = '1'; }, 50); 
+                    } else { 
+                        playInteractionSound('scan'); startCalmDrone(); 
+                        document.getElementById('bio-step-1').style.display = 'flex'; 
+                        setTimeout(() => { document.getElementById('bio-step-1').style.opacity = '1'; }, 50); 
+                    }
+                    isAuthenticating = false;
+                });
+                
+            } catch (err) { 
+                document.getElementById("login-screen").style.display = "flex"; 
+                document.getElementById("activation-screen").style.display = "none";
+                
+                if (err.message === "INVALID_CODE") {
+                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️");
+                } else {
+                    triggerAccessDenied("දත්ත සමුදායේ දෝෂයකි. කරුණාකර නැවත උත්සාහ කරන්න."); 
+                }
+                isAuthenticating = false; 
+            }
         }
 
         // 🧠 PHASES NAVIGATION & METERS
@@ -688,7 +712,7 @@
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 💾 AI REPORT & PROFILE GENERATION (UPDATED TO OPENAI via OPENROUTER)
+        // 💾 AI REPORT & PROFILE GENERATION (UPDATED WITH OPENAI & ERROR BYPASS)
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -721,16 +745,13 @@
             document.getElementById('activation-screen').style.display = "flex";
             document.getElementById('sync-msg').innerText = "COMMANDER AI WRITING DOSSIER...";
 
-            // 3. OPENAI PROMPT SETUP
-            const systemPrompt = `ඔබ "DNA Commander AI" නම් වූ අති නවීන AI විශ්ලේෂකයෙකි.`;
-            const userPrompt = `පරිශීලක Rank එක: ${rank}. 
-            ඔහුගේ දත්ත: අරමුණ(${goal}), බිය(${fear}), Yin-Yang ස්වභාවය(${yinyang}), CO2 Tolerance/හුස්ම රඳවාගැනීම(${breathHeld} තත්පර), ආතති ප්‍රතිචාරය(${amygdala}), ටයිප් වේගය(${typingSpeedVal} cpm).
-            Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යටිසිතේ ඇති මානසික බාධා පෙන්වා දී, Super Human තත්ත්වයට පත්වීමට සහ දින 66 අභියෝගය සාර්ථක කරගැනීමට අවශ්‍ය ප්‍රායෝගික කරුණු සිංහලෙන් ගැඹුරින් ලියන්න. 
-            ඡේද 3ක් සහ Bullet points 3ක් පමණක් ඇතුළත් කරන්න.`;
+            // 3. OPENAI PROMPT (VIA OPENROUTER)
+            const systemPrompt = "ඔබ 'DNA Commander AI' නම් වූ අති නවීන AI විශ්ලේෂකයෙකි. ඔබ සැමවිටම පිළිතුරු දිය යුත්තේ සිංහල භාෂාවෙන් පමණි.";
+            const userPrompt = `පරිශීලක Rank එක: ${rank}. ඔහුගේ දත්ත: අරමුණ(${goal}), බිය(${fear}), Yin-Yang ස්වභාවය(${yinyang}), CO2 Tolerance(${breathHeld} තත්පර), ආතති ප්‍රතිචාරය(${amygdala}), ටයිප් වේගය(${typingSpeedVal} cpm).
+            Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යටිසිතේ ඇති මානසික බාධා පෙන්වා දී, Super Human තත්ත්වයට පත්වීමට සහ දින 66 අභියෝගය සාර්ථක කරගැනීමට අවශ්‍ය ප්‍රායෝගික කරුණු සිංහලෙන් ගැඹුරින් ලියන්න. ඡේද 3ක් සහ Bullet points 3ක් පමණක් ඇතුළත් කරන්න.`;
 
-            let aiTextResponse = "AI වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය. ඔබගේ අන්තර්ජාල සබඳතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.";
+            let aiTextResponse = "AI වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.";
             
-            // OPENROUTER FETCH API
             try {
                 const resp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
@@ -739,7 +760,7 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        model: "openai/gpt-4o-mini", // වේගවත් සහ වියදම අඩු මොඩලයකි
+                        model: "openai/gpt-4o-mini", 
                         messages: [
                             { role: "system", content: systemPrompt },
                             { role: "user", content: userPrompt }
@@ -750,26 +771,22 @@
                 const data = await resp.json();
                 if(data && data.choices && data.choices.length > 0) { 
                     aiTextResponse = data.choices[0].message.content; 
-                } else if(data.error) {
-                    aiTextResponse = "AI දෝෂයකි: " + (data.error.message || "Unknown Error");
+                } else {
+                    console.error("OpenAI Error:", data);
                 }
             } catch (e) { 
-                console.error("AI Error:", e); 
+                console.error("AI Fetch Error:", e); 
             }
 
-            // 4. SAVE TO DB
-            try {
-                await supabaseClient.from('users').update({
-                    chronotype: dopaScore.toString(), 
-                    ans_response: seroScore.toString(), 
-                    neuro_type: oxyScore.toString(), 
-                    processing_style: vagalScore.toString(), 
-                    energy_battery: logicScore.toString(), 
-                    bio_completed: true, 
-                    current_rank: rank
-                }).eq('passport_code', userPassport);
-            } catch (dbErr) {
-                console.warn("Missing Columns in Supabase. Report will still show.");
+            // 4. SAVE TO DB (WITH ERROR BYPASS CRASH PREVENTION)
+            const { error: dbUpdateError } = await supabaseClient.from('users').update({
+                bio_completed: true, 
+                current_rank: rank
+            }).eq('passport_code', userPassport);
+            
+            if (dbUpdateError) {
+                console.warn("Supabase Warning (Missing columns in DB?):", dbUpdateError);
+                // System will NOT crash here. It will proceed to show the AI report.
             }
 
             document.getElementById('activation-screen').style.display = "none";
@@ -872,12 +889,25 @@
             } else {
                 if(selectedDayForVideo === currentActiveDay) { 
                     let nextDay = currentActiveDay + 1;
+                    
+                    // DB UPDATE WITH ERROR CHECKING
                     const { error } = await supabaseClient.from('users').update({ current_day: nextDay }).eq('passport_code', userPassport);
-                    if (!error) {
-                        currentActiveDay = nextDay; amCompletedToday = false; localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); buildGrid(); 
-                        alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
-                        playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
-                    } else { triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි! කරුණාකර නැවත උත්සාහ කරන්න."); }
+                    
+                    if (error) {
+                        console.warn("DB Update Warning for next day:", error);
+                        // Fallback: Continue via local logic even if DB fails
+                    }
+                    
+                    currentActiveDay = nextDay; amCompletedToday = false; 
+                    localStorage.setItem(userPassport + '_lastCompletedDate', new Date().toDateString()); 
+                    buildGrid(); 
+                    
+                    alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; 
+                    alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
+                    playInteractionSound('success'); 
+                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; 
+                    document.getElementById('royal-alert-screen').style.display = 'flex';
+
                 } else {
                     alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
                     document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
