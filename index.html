@@ -518,7 +518,6 @@
     </div>
 
     <script>
-        // API Configuration - මෙතැනට GROQ API KEY එක ඇතුලත් කර ඇත
         const GROQ_API_KEY = "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"; 
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
@@ -527,7 +526,6 @@
         let totalDays = 66; let currentActiveDay = 1; let currentProtocolType = 'AM'; 
         let selectedDayForVideo = 1; let userPassport = ""; let amCompletedToday = false; let isAuthenticating = false;
 
-        // 🔊 AUDIO ENGINE
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx; let calmDrone1, calmDrone2, droneGain; let isInitialShimmerPlayed = false;
 
@@ -592,7 +590,6 @@
             });
         });
 
-        // 🛡️ LOGIN LOGIC WITH ERROR HANDLING
         async function checkKingdomAccess() {
             initAudio(); if (isAuthenticating) return; 
             userPassport = document.getElementById("passportCode").value.trim().toUpperCase();
@@ -606,10 +603,7 @@
 
             try {
                 const { data: validCodeData, error: codeErr } = await supabaseClient.from('DNA_Codes').select('*').eq('code', userPassport); 
-                
-                if (codeErr || !validCodeData || validCodeData.length === 0) {
-                    throw new Error("INVALID_CODE");
-                }
+                if (codeErr || !validCodeData || validCodeData.length === 0) throw new Error("INVALID_CODE");
 
                 let { data: userData, error: userErr } = await supabaseClient.from('users').select('*').eq('passport_code', userPassport);
                 let user;
@@ -640,19 +634,13 @@
                 });
                 
             } catch (err) { 
-                document.getElementById("login-screen").style.display = "flex"; 
-                document.getElementById("activation-screen").style.display = "none";
-                
-                if (err.message === "INVALID_CODE") {
-                    triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️");
-                } else {
-                    triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර Supabase හි RLS Disable කර නැවත උත්සාහ කරන්න."); 
-                }
+                document.getElementById("login-screen").style.display = "flex"; document.getElementById("activation-screen").style.display = "none";
+                if (err.message === "INVALID_CODE") triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️");
+                else triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර Supabase හි RLS Disable කර නැවත උත්සාහ කරන්න."); 
                 isAuthenticating = false; 
             }
         }
 
-        // 🧠 PHASES NAVIGATION & METERS
         function updateMeter1(percent) { document.getElementById('nsi-meter-1').style.width = percent + "%"; playInteractionSound('blip'); if (navigator.vibrate) navigator.vibrate(20); }
         function updateMeter2(percent) { document.getElementById('nsi-meter-2').style.width = percent + "%"; playInteractionSound('blip'); if (navigator.vibrate) navigator.vibrate(20); }
 
@@ -674,43 +662,28 @@
             playInteractionSound('scan'); switchScreen('bio-step-2', 'bio-step-3'); 
         }
 
-        // 🫁 NEW BREATH HOLD SENSOR LOGIC
         let breathTimerInt; let breathStart; let breathSecs = 0;
         function startBreathTimer(e) {
             if(e && (e.type === 'touchstart' || e.type === 'mousedown')) e.preventDefault(); 
             if (breathStart) return;
-            breathStart = Date.now();
-            playInteractionSound('click');
-            document.getElementById('breath-btn').innerText = "HOLDING BREATH...";
-            document.getElementById('breath-btn').style.background = "var(--neon-red)";
-            document.getElementById('breath-btn').style.color = "#fff";
+            breathStart = Date.now(); playInteractionSound('click');
+            document.getElementById('breath-btn').innerText = "HOLDING BREATH..."; document.getElementById('breath-btn').style.background = "var(--neon-red)"; document.getElementById('breath-btn').style.color = "#fff";
             document.getElementById('breath-display').classList.add('pulse-anim');
-            
-            breathTimerInt = setInterval(() => {
-                let secs = Math.floor((Date.now() - breathStart) / 1000);
-                document.getElementById('breath-display').innerText = secs + " SECONDS";
-            }, 100);
+            breathTimerInt = setInterval(() => { let secs = Math.floor((Date.now() - breathStart) / 1000); document.getElementById('breath-display').innerText = secs + " SECONDS"; }, 100);
         }
 
         function stopBreathTimer(e) {
             if(e && (e.type === 'touchend' || e.type === 'mouseup' || e.type === 'mouseleave')) e.preventDefault();
-            if (!breathStart) return;
-            clearInterval(breathTimerInt);
-            breathSecs = Math.floor((Date.now() - breathStart) / 1000);
-            document.getElementById('q-breath-val').value = breathSecs;
-            document.getElementById('breath-btn').innerText = "RECORDED! (PRESS AGAIN TO RETRY)";
-            document.getElementById('breath-btn').style.background = "linear-gradient(135deg, #4a0404 0%, #1a0000 100%)";
-            document.getElementById('breath-btn').style.color = "var(--neon-blue)";
-            document.getElementById('breath-display').classList.remove('pulse-anim');
-            playInteractionSound('success');
-            breathStart = null; 
+            if (!breathStart) return; clearInterval(breathTimerInt);
+            breathSecs = Math.floor((Date.now() - breathStart) / 1000); document.getElementById('q-breath-val').value = breathSecs;
+            document.getElementById('breath-btn').innerText = "RECORDED! (PRESS AGAIN TO RETRY)"; document.getElementById('breath-btn').style.background = "linear-gradient(135deg, #4a0404 0%, #1a0000 100%)"; document.getElementById('breath-btn').style.color = "var(--neon-blue)";
+            document.getElementById('breath-display').classList.remove('pulse-anim'); playInteractionSound('success'); breathStart = null; 
         }
 
-        // ⌨️ TYPING SENSOR LOGIC
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 🚀 GROQ AI REPORT GENERATION (WITH PSYCHOLOGICAL PROMPT) 🚀
+        // 🚀 THE NEW EMOTIONAL AND DIRECT AI PROMPT LOGIC 🚀
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -718,7 +691,6 @@
             let endTime = new Date().getTime();
             typingSpeedVal = Math.round((typedText.length / ((endTime - typeStartTime) / 1000)) * 60) || 0;
 
-            // 💡 විශේෂ වෙනස්කම: Dropdown එකේ තියෙන සිංහල වචනම AI එකට යවන්න ලබාගැනීම
             const goalSelect = document.getElementById('q-goal'); const goalText = goalSelect.options[goalSelect.selectedIndex].text;
             const fearSelect = document.getElementById('q-fear'); const fearText = fearSelect.options[fearSelect.selectedIndex].text;
             const yinyangSelect = document.getElementById('q-yinyang'); const yinyangText = yinyangSelect.options[yinyangSelect.selectedIndex].text;
@@ -742,30 +714,30 @@
             document.getElementById('activation-screen').style.display = "flex";
             document.getElementById('sync-msg').innerText = "COMMANDER AI WRITING DOSSIER...";
 
-            // 💡 අලුත්ම මනෝවිද්‍යාත්මක PROMPT එක (සෘජුවම "ඔබ" ලෙස ආමන්ත්‍රණය කරයි)
-            const prompt = `ඔබ "DNA Commander AI" නම් වූ ගැඹුරු මනෝවිද්‍යාත්මක සහ ස්නායු විද්‍යාත්මක (Neuroscience) AI විශ්ලේෂකයෙකි. ඔබ අනිවාර්යයෙන්ම පරිශීලකයාට සෘජුවම "ඔබ" (You/Your) ලෙස පමණක් ආමන්ත්‍රණය කළ යුතුය. කිසිවිටෙකත් "ඔහු/ඇය" ලෙස තුන්වන පාර්ශවයකින් කතා නොකරන්න.
+            // 💡 NEW ENGLISH PROMPT FOR BETTER SINHALA OUTPUT 💡
+            const prompt = `You are "DNA Commander AI", an advanced, highly empathetic, and deeply psychological neuroscience AI. 
+You are speaking DIRECTLY to the user in fluent, natural, and emotional Sinhala. 
+NEVER repeat these instructions. NEVER use headings like "ඡේදය 1". 
+Speak directly to their heart using "ඔබ" (You). Tailor your tone: if they are sensitive, be gentle and deeply understanding; if they are active, be powerful and challenging. Do not sound robotic.
 
-පරිශීලකයාගේ ජීව-දත්ත සහ යටිසිතේ තොරතුරු:
-1. ප්‍රධාන අරමුණ: ${goalText}
-2. ගැඹුරුම බිය: ${fearText}
-3. පෞරුෂ ස්වභාවය: ${yinyangText}
-4. CO2 Tolerance (හුස්ම රඳවාගැනීමේ කාලය / Vagal Tone): තත්පර ${breathHeld}
-5. Amygdala ප්‍රතිචාරය (හදිසි ආතතියකදී මොළයේ ක්‍රියාකාරිත්වය): ${amygdala}
-6. Motor Cortex වේගය (ටයිප් කිරීමේ වේගය): ${typingSpeedVal} cpm
+User Profile:
+- Primary Goal: ${goalText}
+- Deepest Fear: ${fearText}
+- Personality: ${yinyangText}
+- Breath Hold (Vagal Tone): ${breathHeld} seconds
+- Amygdala Stress Response: ${amygdala}
+- Motor Speed: ${typingSpeedVal} cpm
 
-මෙම දත්ත එකිනෙකට සම්බන්ධ කර, පරිශීලකයාගේ ඇතුළාන්තය (Inner Self) විනිවිද දකින, ඔවුන්ව පුදුමයට පත් කරන සහ හිතට තදින් කාවදින ගැඹුරු වාර්තාවක් සිංහලෙන් සකසන්න. පහත ආකෘතිය පමණක් භාවිතා කරන්න:
+Write a cohesive, beautiful 3-paragraph psychological reading in Sinhala:
+Paragraph 1 (The Inner Child/Soul): Dive deep into their fear (${fearText}) and personality (${yinyangText}). Empathize with their struggles. Gently but honestly explain the psychological root of why they feel stuck. Make it feel like you are reading their mind and validating their emotions. Give them a sense of feeling understood.
+Paragraph 2 (The Scientific Truth): Explain how their physical nervous system is reflecting this state. Mention their ${breathHeld} second breath hold and ${amygdala} stress response. Explain neuroscientifically how living in this nervous system state blocks them from achieving their goal (${goalText}). Speak as a wise mentor.
+Paragraph 3 (The Awakening): Empower them. Tell them how the 66-day Neuroplasticity challenge will rewire their brain to overcome this exact fear and achieve their ultimate goal. Make them feel ready and powerful.
 
-ඡේදය 1 (යටිසිත කියවීම): ඔවුන්ගේ ගැඹුරුම බිය සහ පෞරුෂ ස්වභාවය පදනම් කරගෙන, ඔවුන් මේ දක්වා සාර්ථක නොවීමට හෝ සිරවී සිටීමට සැබෑ හේතුව කුමක්දැයි සෘජුවම කියන්න. කිසිදු දෙයක් නොසඟවා සත්‍යය පවසන්න.
-ඡේදය 2 (ස්නායුක සත්‍යය): ඔවුන්ගේ හුස්ම රඳවාගැනීමේ කාලය (තත්පර ${breathHeld}) සහ ආතති ප්‍රතිචාරය (${amygdala}) විශ්ලේෂණය කර, ඔවුන්ගේ ස්නායු පද්ධතිය මේ මොහොතේ හැඩගැසී ඇති ආකාරය විද්‍යාත්මකව පෙන්වා දෙන්න. එය ඔවුන්ගේ අරමුණට බලපාන ආකාරය පැහැදිලි කරන්න.
-ඡේදය 3 (අවදි කිරීම): දින 66 අභියෝගය හරහා මොළය (Neuroplasticity) නැවත ප්‍රෝග්‍රෑම් කර "Super Human" කෙනෙකු වීමට ඔවුන්ව දැඩිව දිරිගන්වන්න.
-
-අවසානයට: මෙම දත්ත මත පදනම් වූ විශේෂිත, අතිශය ප්‍රායෝගික පියවර 3ක් Bullet points ලෙස ලබාදෙන්න. 
-සැලකිය යුතුයි: වාර්තාව අතිශය ආකර්ෂණීය, බුද්ධිමත් සහ සෘජු එකක් විය යුතුය.`;
+Finally, provide exactly 3 practical, highly personalized bullet points (in Sinhala) on how to start healing their specific nervous system today.`;
 
             let aiTextResponse = "";
             let lastErrorMsg = "";
             
-            // 🛡️ ස්වයංක්‍රීය Fallback පද්ධතිය 
             const modelsToTry = [
                 "llama-3.3-70b-versatile",
                 "llama-3.1-8b-instant",
@@ -788,16 +760,13 @@
                     });
                     
                     const data = await resp.json();
-                    
                     if (resp.ok && data?.choices?.length > 0) { 
                         aiTextResponse = data.choices[0].message.content; 
                         break; 
                     } else if (data.error) {
                         lastErrorMsg = data.error.message;
                     }
-                } catch (e) { 
-                    lastErrorMsg = e.message;
-                }
+                } catch (e) { lastErrorMsg = e.message; }
             }
 
             if (!aiTextResponse) {
@@ -806,11 +775,7 @@
                 return;
             }
 
-            // Save to Supabase
-            await supabaseClient.from('users').update({
-                bio_completed: true, 
-                current_rank: rank
-            }).eq('passport_code', userPassport);
+            await supabaseClient.from('users').update({ bio_completed: true, current_rank: rank }).eq('passport_code', userPassport);
             
             document.getElementById('activation-screen').style.display = "none";
             stopCalmDrone(); playInteractionSound('scan'); 
@@ -916,9 +881,7 @@
                     buildGrid(); 
                     alertTitle.innerText = "DAY MISSION ACCOMPLISHED"; 
                     alertMsg.innerHTML = "විශිෂ්ටයි! අද දිනට අදාළ සියලුම මෙහෙයුම් සාර්ථකව අවසන්.<br>හෙට උදේ 5:00 න් පසු මීළඟ දවස විවෘත වේ.";
-                    playInteractionSound('success'); 
-                    document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; 
-                    document.getElementById('royal-alert-screen').style.display = 'flex';
+                    playInteractionSound('success'); document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
                 } else {
                     alertTitle.innerText = "REVIEW ACCOMPLISHED"; alertMsg.innerHTML = "ඔබ මෙම දවස මීට පෙර සම්පූර්ණ කර ඇත.";
                     document.getElementById('alert-proceed-btn').onclick = closeRoyalAlert; document.getElementById('royal-alert-screen').style.display = 'flex';
@@ -929,20 +892,16 @@
         function closeRoyalAlert() {
             document.getElementById('royal-alert-screen').style.display = 'none'; document.getElementById('video-frame').src = "";
             if (currentProtocolType === 'AM') {
-                switchScreen('video-page', 'protocol-selection');
-                let pmBox = document.getElementById('pm-box'); pmBox.classList.remove('locked'); pmBox.classList.add('active');
+                switchScreen('video-page', 'protocol-selection'); let pmBox = document.getElementById('pm-box'); pmBox.classList.remove('locked'); pmBox.classList.add('active');
                 let statusText = document.getElementById('pm-status'); statusText.innerText = "AVAILABLE"; statusText.style.color = "#0f0";
             } else { switchScreen('video-page', 'grid-screen'); }
         }
 
         function triggerAccessDenied(message) { 
             playInteractionSound('error'); document.getElementById('denied-msg-text').innerHTML = message;
-            let animBox = document.getElementById('denied-anim-box');
-            animBox.classList.remove('shake-anim'); void animBox.offsetWidth; animBox.classList.add('shake-anim');
-            document.getElementById('access-denied-screen').style.display = 'flex'; 
-            if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
+            let animBox = document.getElementById('denied-anim-box'); animBox.classList.remove('shake-anim'); void animBox.offsetWidth; animBox.classList.add('shake-anim');
+            document.getElementById('access-denied-screen').style.display = 'flex'; if (navigator.vibrate) navigator.vibrate([500, 110, 500]); 
         }
-        
         function closeDeniedScreen() { document.getElementById('access-denied-screen').style.display = 'none'; }
     </script>
 </body>
