@@ -519,7 +519,7 @@
 
     <script>
         // API Configuration (මෙතනට ඔයාගේ අලුත් Gemini API Key එක දාන්න)
-        const GEMINI_API_KEY = "AIzaSyBi6JIb9Pofdh-6NRhjPsfpce9_qJRZQ1M";
+        const GEMINI_API_KEY = "AIzaSyBi6JIb9Pofdh-6NRhjPsfpce9_qJRZQ1M"; 
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -710,7 +710,7 @@
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 💾 AI REPORT & PROFILE GENERATION (WITH ERROR DIAGNOSTICS)
+        // 💾 AI REPORT & PROFILE GENERATION (WITH ERROR DIAGNOSTICS & GEMINI PRO)
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -749,8 +749,8 @@ Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යට�
             let aiTextResponse = "වාර්තාව සකස් කිරීමේදී දෝෂයක් ඇති විය.";
             
             try {
-                // Gemini 1.5 Flash API Call
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+                // 🚀 FIXED: අලුත්ම සහ හැමෝටම වැඩ කරන Gemini-Pro Model එකට මාරු කර ඇත 🚀
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
                 const resp = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
