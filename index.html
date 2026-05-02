@@ -519,7 +519,7 @@
 
     <script>
         // API Configuration (Google Gemini FIXED Endpoint)
-        const GEMINI_API_KEY = "AIzaSyDR1SBxY0Gz0swR9HsWhAX431SrrR14r14";
+        const GEMINI_API_KEY = "AIzaSyBi6JIb9Pofdh-6NRhjPsfpce9_qJRZQ1M";
         const supabaseUrl = 'https://gajjsbhyhvjvsaryalcq.supabase.co';
         const supabaseKey = 'sb_publishable_uyddAfuomC2WacawlDDgKg_D_MWt5u4';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -749,7 +749,7 @@ Neuroscience සහ Epigenetics ඇසුරින් මොහුගේ යට�
             
             // 🚀 NEW STRICT V1BETA GOOGLE GEMINI FETCH 🚀
             try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
                 const resp = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
