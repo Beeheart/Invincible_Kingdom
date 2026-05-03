@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="si">
 <head>
     <meta charset="UTF-8">
@@ -166,6 +166,24 @@
         .shake-anim { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 
         @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } .bee-coin { width: 200px; height: 200px; margin: 20px 0; } .header-badge { padding: 15px 30px; } .cycle-box { width: 140px; padding: 20px; } .sandeshaya-border { padding: 20px; width: 95%;} }
+        @media (max-width: 600px) {
+    .menu-grid {
+        grid-template-columns: 1fr !important; /* බටන් එක යට එක වැටෙන්න සලස්වයි */
+        gap: 15px !important;
+        padding: 0 20px;
+    }
+
+    .royal-btn {
+        width: 100% !important; /* බටන් එකේ පළල සම්පූර්ණ ඉඩ ගන්නා ලෙස */
+        font-size: 0.85rem !important; /* අකුරු වල ප්‍රමාණය මඳක් කුඩා කිරීම */
+        padding: 18px 10px !important;
+    }
+
+    .bee-coin {
+        width: 180px !important; /* කොයින් එකේ ප්‍රමාණය ෆෝන් එකට ගැලපෙන්න කුඩා කිරීම */
+        height: 180px !important;
+    }
+}
     </style>
 </head>
 <body>
