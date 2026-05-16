@@ -38,7 +38,7 @@
         }
 
         /* 🛡️ LOGIN SCREEN */
-        #login-screen { position: relative; z-index: 10000; height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        #login-screen { position: relative; z-index: 10000; height: 100vh; width: 100%; display: none; opacity: 0; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); transition: opacity 1s ease-in-out; }
         .login-box { background: linear-gradient(135deg, #2a0000 0%, #000 100%); border: 2px solid var(--gold-static); border-radius: 15px; padding: 40px; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
         
         /* ✨ FIXED INPUT BOX AESTHETICS */
@@ -58,8 +58,8 @@
         .val-display { font-family: 'Orbitron'; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: right; margin-top: -15px; display: block;}
 
         /* ⚡ ACTIVATION SCREEN */
-        #activation-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 25000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; }
+        #activation-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 25000; display: none; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s; }
+        .sync-text { font-family: 'Orbitron'; letter-spacing: 8px; font-size: 1.2rem; margin-bottom: 20px; animation: blink 0.5s infinite alternate; transition: all 0.3s ease; }
         .progress-container { width: 300px; height: 2px; background: #222; position: relative; }
         .progress-bar { width: 0%; height: 100%; background: var(--gold-static); box-shadow: 0 0 15px var(--gold-static); animation: grow 2.5s forwards; }
 
@@ -236,6 +236,10 @@
     </style>
 </head>
 <body>
+
+    <div id="phase1-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 30000; display: flex; align-items: center; justify-content: center; background: #000; transition: opacity 1s ease-in-out;">
+        <h1 style="font-family: 'Orbitron'; color: var(--gold-static); letter-spacing: 5px; text-shadow: 0 0 20px var(--gold-static); text-align: center; opacity: 0; transition: opacity 1.5s ease-in-out;" id="phase1-text">Welcome to Point Zero-B</h1>
+    </div>
 
     <div class="kingdom-bg" id="main-bg"></div>
     <div class="dna-glow" id="main-glow"></div>
@@ -650,6 +654,20 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- PHASE 1: Welcome Sequence Logic ---
+            setTimeout(() => {
+                document.getElementById('phase1-text').style.opacity = '1';
+                setTimeout(() => {
+                    document.getElementById('phase1-screen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('phase1-screen').style.display = 'none';
+                        let loginScreen = document.getElementById('login-screen');
+                        loginScreen.style.display = 'flex';
+                        setTimeout(() => { loginScreen.style.opacity = '1'; }, 50);
+                    }, 1000);
+                }, 3000);
+            }, 500);
+
             document.body.addEventListener('click', (e) => { if(e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell')) { playInteractionSound('click'); } });
             document.body.addEventListener('mouseover', (e) => {
                 let btn = e.target.closest('.royal-btn') || e.target.closest('.cycle-box') || e.target.closest('.dna-cell');
@@ -663,10 +681,24 @@
             if(!userPassport) { triggerAccessDenied("කරුණාකර ඔබගේ DNA කේතය ඇතුළත් කරන්න!"); return; }
 
             isAuthenticating = true;
-            document.getElementById("login-screen").style.display = "none"; 
-            document.getElementById("activation-screen").style.display = "flex";
-            document.getElementById('sync-msg').innerHTML = "VALIDATING WITH COMMANDER AI..."; 
-            document.getElementById('sync-msg').style.color = "";
+            document.getElementById("login-screen").style.opacity = "0";
+            setTimeout(() => { document.getElementById("login-screen").style.display = "none"; }, 500);
+            
+            let activationScreen = document.getElementById("activation-screen");
+            activationScreen.style.display = "flex";
+            activationScreen.style.opacity = "1";
+
+            let syncMsg = document.getElementById('sync-msg');
+            // PHASE 3: Authentication Sequence
+            syncMsg.innerHTML = "Authentication Successful.";
+            syncMsg.style.color = "var(--evoi-cyan)";
+            syncMsg.style.textShadow = "0 0 15px var(--evoi-cyan)";
+
+            setTimeout(() => {
+                if (isAuthenticating) {
+                    syncMsg.innerHTML = "Connecting to The G-Core-B...";
+                }
+            }, 1500);
 
             try {
                 const { data: validCodeData, error: codeErr } = await supabaseClient.from('DNA_Codes').select('*').eq('code', userPassport); 
@@ -701,7 +733,9 @@
                 });
                 
             } catch (err) { 
-                document.getElementById("login-screen").style.display = "flex"; document.getElementById("activation-screen").style.display = "none";
+                document.getElementById("login-screen").style.display = "flex"; 
+                setTimeout(() => { document.getElementById("login-screen").style.opacity = "1"; }, 50);
+                document.getElementById("activation-screen").style.display = "none";
                 if (err.message === "INVALID_CODE") triggerAccessDenied("අසම්මත ඩීඑන්ඒ කේතයකි!<br>මෙම කේතය Commander AI විසින් නිකුත් කර නොමැත. 🛡️");
                 else triggerAccessDenied("දත්ත ගබඩා කිරීමේ දෝෂයකි. කරුණාකර Supabase හි RLS Disable කර නැවත උත්සාහ කරන්න."); 
                 isAuthenticating = false; 
@@ -750,7 +784,6 @@
         let typeStartTime; let typingSpeedVal = 0;
         function startTypingSensor() { if(!typeStartTime) typeStartTime = new Date().getTime(); }
 
-        // 🚀 THE REAL AI ENGINE (GENERATIVE) WITH SINHALA PROMPTING 🚀
         async function generateCommanderReport() {
             let typedText = document.getElementById('neural-input-area').value;
             if(!typedText || typedText.length < 10) { triggerAccessDenied("කරුණාකර ඉහත වාක්‍යය නිවැරදිව ටයිප් කරන්න."); return; }
@@ -781,7 +814,6 @@
             document.getElementById('activation-screen').style.display = "flex";
             document.getElementById('sync-msg').innerText = "COMMANDER AI ANALYZING SOUL DATA...";
 
-            // 💡 POWERFUL SINHALA PROMPT WITH INSIGHT COMMANDS
             const prompt = `ඔබ "Sovereign Commander AI" නම් වූ අතිශය බුද්ධිමත්, ගැඹුරු මනෝවිද්‍යාත්මක සහ ස්නායු විද්‍යාත්මක උපදේශකයෙකි. 
 පහත දක්වා ඇති පරිශීලකයාගේ ජීව-දත්ත විශ්ලේෂණය කර, ඔවුන්ගේ හදවතටම කාවදින, අතිශය සංවේදී සහ බලගතු වාර්තාවක් සකස් කරන්න. ඔබ ලබා දී ඇති දත්ත වලට අමතරව **ඔබේම බුද්ධිමත් අදහස් සහ දාර්ශනික කියවීම්** ද මෙයට එකතු කළ යුතුය.
 
@@ -868,9 +900,11 @@
         function startActivationSequence(callback) {
             buildGrid(); 
             setTimeout(() => {
-                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED"; document.getElementById('sync-msg').style.color = "#d4af37";
+                document.getElementById('sync-msg').innerHTML = "STATUS: ACTIVATED"; 
+                document.getElementById('sync-msg').style.color = "#d4af37";
+                document.getElementById('sync-msg').style.textShadow = "none"; // Reset shadow
                 setTimeout(() => { document.getElementById('activation-screen').style.opacity = '0';
-                    setTimeout(() => { document.getElementById('activation-screen').style.display = 'none'; if(callback) callback(); }, 500);
+                    setTimeout(() => { document.getElementById('activation-screen').style.display = 'none'; document.getElementById('activation-screen').style.opacity = '1'; if(callback) callback(); }, 500);
                 }, 1000);
             }, 2500);
         }
